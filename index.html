@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="plugins/codemirror-5.65.10/lib/codemirror.css">
+        <link rel="stylesheet" href="plugins/bootstrap-5.2.3-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="plugins/bootstrap-icons-1.10.2/bootstrap-icons.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <div id="wrapper" class="container-fluid py-4 vh-100 position-relative">
+            <div id="header" class="container mt-4">
+                <h1>Objects!</h1>
+                <h2>Eine einfache objektorientierte Sprache für Grafikobjekte.</h2>
+            </div>
+            
+            <div id="content" class="container mt-3">
+                <div class="row">
+                    <div class="col">
+                        <textarea id="myTextarea"></textarea>
+                    </div>
+                    <div class="col">
+                        <canvas id="the-canvas" class="border">
+                    </div>
+                </div>
+                
+            </div>
+
+            <div id="footer" class="position-absolute bottom-0 start-50 translate-middle-x">
+                made by Christopher Wagner
+            </div>
+
+        </div>
+
+
+        
+
+
+        <!-- Create a simple CodeMirror instance -->
+        <script src="plugins/codemirror-5.65.10/lib/codemirror.js"></script>
+        <script src="plugins/codemirror-5.65.10/addon/display/panel.js"></script>
+        <script src="script/editor.js"></script>
+
+        <script src="plugins/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
