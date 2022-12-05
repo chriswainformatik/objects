@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+
         <link rel="stylesheet" href="plugins/codemirror-5.65.10/lib/codemirror.css">
         <link rel="stylesheet" href="plugins/bootstrap-5.2.3-dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="plugins/bootstrap-icons-1.10.2/bootstrap-icons.css">
@@ -11,23 +13,56 @@
         <div id="wrapper" class="container-fluid py-4 vh-100 position-relative">
             <div id="header" class="container mt-4">
                 <h1>Objects!</h1>
-                <h2>Eine einfache objektorientierte Sprache für Grafikobjekte.</h2>
+                <h2>Eine einfache objektorientierte Sprache für Grafikobjekte</h2>
             </div>
             
             <div id="content" class="container mt-3">
                 <div class="row">
                     <div class="col">
+                        <div id="canvas-top-panel" class="my-2 d-flex align-items-center justify-content-start">
+                            <button class="btn btn-success">Ausführen</button>
+                            <label for="veloxity" class="form-label ms-5 my-auto">Geschwindigkeit</label>
+                            <input type="range" class="form-range ms-4" min="0" max="5" step="0.5" id="velocity">
+                        </div>
                         <textarea id="myTextarea"></textarea>
                     </div>
                     <div class="col">
-                        <canvas id="the-canvas" class="border">
+                        <div id="canvas-top-panel" class="my-2 d-flex justify-content-end">
+                            <button class="btn btn-outline-secondary ms-2">
+                                <span class="bi bi-gear-fill"></span> Einstellungen
+                            </button>
+                            <button class="btn btn-outline-primary ms-2">
+                                <span class="bi bi-question-lg"></span> Hilfe
+                            </button>
+                        </div>
+                        <canvas id="the-canvas" class="border"></canvas>
+                        <!--
+                        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <pattern id="grid" width="25" height="25" patternUnits="userSpaceOnUse">
+                                    <path d="M 25 0 L 0 0 0 25" fill="none" stroke="gray" stroke-width="1"/>
+                                </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#grid)" />
+                        </svg>
+                        -->
+                        <!--
+                        <div class="w-100 row">
+                            <div class="col">
+                                <input class="form-check-input" type="checkbox" value="" id="check-show-grid">
+                                <label class="form-check-label" for="check-show-grid">
+                                    Gitternetzlinien anzeigen
+                                </label>
+                            </div>
+                        </div>
+                        -->
                     </div>
                 </div>
                 
             </div>
 
-            <div id="footer" class="position-absolute bottom-0 start-50 translate-middle-x">
-                made by Christopher Wagner
+            <div id="footer-wrapper" class="vw-100 text-center">
+                made by cw
             </div>
 
         </div>
@@ -40,6 +75,7 @@
         <script src="plugins/codemirror-5.65.10/lib/codemirror.js"></script>
         <script src="plugins/codemirror-5.65.10/addon/display/panel.js"></script>
         <script src="script/editor.js"></script>
+        <script src="script/canvas.js"></script>
 
         <script src="plugins/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
     </body>
