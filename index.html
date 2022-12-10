@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col">
                         <div id="canvas-top-panel" class="my-2 d-flex align-items-center justify-content-start">
-                            <button class="btn btn-success">Ausführen</button>
+                            <button id="btn-run-code" class="btn btn-success">Ausführen</button>
                             <label for="veloxity" class="form-label ms-5 my-auto">Geschwindigkeit</label>
                             <input type="range" class="form-range ms-4" min="0" max="5" step="0.5" id="velocity">
                         </div>
@@ -74,6 +74,7 @@
         <!-- Create a simple CodeMirror instance -->
         <script src="plugins/codemirror-5.65.10/lib/codemirror.js"></script>
         <script src="plugins/codemirror-5.65.10/addon/display/panel.js"></script>
+        <script src="script/coderunner.js"></script>
         <script src="script/editor.js"></script>
         <script src="script/canvas.js"></script>
 
