@@ -11,18 +11,21 @@
     <body>
 
         <div id="wrapper" class="container-fluid py-4 vh-100 position-relative">
-            <div id="header" class="container mt-4">
-                <h1>Objects!</h1>
-                <h2>Eine einfache objektorientierte Sprache für Grafikobjekte</h2>
+            <div id="header" class="container mt-4 d-flex flex-row align-items-center">
+                <div id="logo" style="max-width:200px;" class="me-3">
+                    <img src="assets/Logo.png" class="img-fluid" alt="Objects! Logo" />
+                </div>
+                <h1 style="display: none;">Objects!</h1>
+                <h2 class="logo-font my-auto">Eine einfache objektorientierte Sprache mit Grafikobjekten</h2>
             </div>
             
             <div id="content" class="container mt-3">
                 <div class="row">
                     <div class="col">
                         <div id="canvas-top-panel" class="my-2 d-flex align-items-center justify-content-start">
-                            <button id="btn-run-code" class="btn btn-success">Ausführen</button>
+                            <button id="btn-run-code" class="btn btn-success my-btn">Ausführen</button>
                             <label for="veloxity" class="form-label ms-5 my-auto">Geschwindigkeit</label>
-                            <input type="range" class="form-range ms-4" min="0" max="5" step="0.5" id="velocity">
+                            <input type="range" class="form-range ms-4 my-range" min="0" max="5" step="0.5" id="velocity">
                         </div>
                         <textarea id="myTextarea"></textarea>
                     </div>
@@ -31,7 +34,7 @@
                             <button class="btn btn-outline-secondary ms-2">
                                 <span class="bi bi-gear-fill"></span> Einstellungen
                             </button>
-                            <button class="btn btn-outline-primary ms-2">
+                            <button class="btn btn-outline-primary ms-2 my-outline-btn">
                                 <span class="bi bi-question-lg"></span> Hilfe
                             </button>
                         </div>
