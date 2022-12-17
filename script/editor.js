@@ -70,8 +70,14 @@ function runCode() {
         el.classList.remove('error-line')
     });
     runner.setLines(editor.getValue().split('\n'))
-    var errorLineNo = runner.checkSyntax()
-    if (errorLineNo > -1) {
-        editor.addLineClass(errorLineNo, "background", "error-line");
+    var syntaxErrorLineNo = runner.checkSyntax()
+    if (syntaxErrorLineNo > -1) {
+        editor.addLineClass(syntaxErrorLineNo, "background", "error-line")
+        console.log('Syntax error')
+    }
+    var semanticErrorLineNo = runner.checkSemantics()
+    if (semanticErrorLineNo > -1) {
+        editor.addLineClass(semanticErrorLineNo, "background", "error-line")
+        console.log('Semantics error')
     }
 }

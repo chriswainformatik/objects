@@ -1,12 +1,61 @@
 class CodeRunner {
+    classesList = [
+        'KREIS',
+        'RECHTECK',
+        'DREIECK'
+    ]
+
     lines = []
-    tokensList = []
+    linesAsTokensList = [[]]
+    instancesList = []
+
+    shapesToDraw = []
 
     constructor() {
     }
 
     setLines(ll) {
         this.lines = ll
+    }
+
+    checkSemantics() {
+        var i = 0
+        this.linesAsTokensList.forEach(line => {
+            // skip empty lines
+            if (line.length > 0) {
+                // instance definitions
+                if (line[1].equals(new Seperator(':'))) {
+                    try {
+                        var inst = this.createInstance(line[2].name)
+                        this.shapesToDraw.push(inst)
+                    } catch(error) {
+                        return i
+                    }
+                }
+                // method calls
+                if (line[1].equals(new Seperator('.'))) {
+
+                }
+            }
+            i++
+        })
+        return -1
+    }
+
+
+    createInstance(instanceName, className) {
+        if (this.classesList.find(className) == undefined) {
+            throw new UnknownClassNameError(i, line[2].name)
+        } else {
+            switch (className) {
+                case 'KREIS':
+                    return new KREIS(instanceName)
+                case 'RECHTECK':
+                    return new RECHTECK(instanceName)
+                case 'DREIECK':
+                    return new DREIECK(instanceName)
+            }
+        }
     }
 
     /**
@@ -20,7 +69,7 @@ class CodeRunner {
             var line = this.lines[i]
             line.replace(' ', '')
             try {
-                this.tokensList = this.getTokensFrom(i, line)
+                this.linesAsTokensList.push(this.getTokensFrom(i, line))
             } catch (error) {
                 var output = 'Error in line ' + i + ':\n' + error.lineText + '\n'
                 var indicator = ''
@@ -62,7 +111,10 @@ class CodeRunner {
                     if (line[i].match('[a-zA-Z0-9]')) {
                         state = 1
                     } else if (line[i] == '.' || line[i] == ':') {
-                        tokens.push(new InstanceName(line.substring(0, i)))
+                        var theInstance = new InstanceName(line.substring(0, i))
+                        tokens.push(theInstance)
+                        if (this.instancesList.find(inst => inst['name'] == theInstance.getName()) == undefined)
+                            this.instancesList.push(theInstance)
                         tokens.push(new Seperator(line[i]))
                         seperatorIndex = i
                         state = line[i] == '.' ? 2 : 8
@@ -146,21 +198,15 @@ class CodeRunner {
     
 }
 
-class InvalidInputCharacterError extends Error {
-    constructor(lineNumber, lineText, charNumber) {
-        super('Invalid input character: ' + lineText + ' (character ' + charNumber + ')')
-        this.lineNumber = lineNumber
-        this.lineText = lineText
-        this.charNumber = charNumber
-    }
-}
-
 class Token {
     constructor (name) {
         this.name = name   
     }
     getName() {
         return this.name
+    }
+    equals(other) {
+        return this.name == other.name
     }
 }
 
