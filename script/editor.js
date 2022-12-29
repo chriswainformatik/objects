@@ -25,7 +25,29 @@ document.getElementById('check-show-grid').addEventListener('change', function()
 */
 
 
-// deprecated
+function runCode() {
+    // remove error line marking
+    Array.from(document.getElementsByClassName('error-line')).forEach((el) => {
+        el.classList.remove('error-line')
+    });
+    runner.setLines(editor.getValue().split('\n'))
+    runner.runCode(setSyntaxError, setSemanticError)
+}
+
+function setSyntaxError(errorLine) {
+    editor.addLineClass(errorLine, "background", "error-line")
+    console.log('Syntax error')
+}
+
+function setSemanticError(errorLine) {
+    editor.addLineClass(errorLine, "background", "error-line")
+    console.log('Semantics error')
+}
+
+
+/**
+ * DEPRECATED
+ */
 function addEditorPanel() {
     var panel = document.createElement('div')
     panel.id = 'editor-top-panel'
@@ -61,23 +83,4 @@ function addEditorPanel() {
     panel.appendChild(silderWrapper)
 
     editor.addPanel(panel)
-}
-
-
-function runCode() {
-    // remove error line marking
-    Array.from(document.getElementsByClassName('error-line')).forEach((el) => {
-        el.classList.remove('error-line')
-    });
-    runner.setLines(editor.getValue().split('\n'))
-    var syntaxErrorLineNo = runner.checkSyntax()
-    if (syntaxErrorLineNo > -1) {
-        editor.addLineClass(syntaxErrorLineNo, "background", "error-line")
-        console.log('Syntax error')
-    }
-    var semanticErrorLineNo = runner.checkSemantics()
-    if (semanticErrorLineNo > -1) {
-        editor.addLineClass(semanticErrorLineNo, "background", "error-line")
-        console.log('Semantics error')
-    }
 }

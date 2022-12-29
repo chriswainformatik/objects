@@ -7,10 +7,26 @@ class InvalidInputCharacterError extends Error {
     }
 }
 
-class UnknownClassNameError extends Error {
+class NoSuchClassError extends Error {
     constructor(lineNumber, className) {
         super('Unknown class name in line ' + lineNumber + ': ' + className)
         this.lineNumber = lineNumber
         this.className = className
+    }
+}
+
+class NoSuchInstanceError extends Error {
+    constructor(lineNumber, instanceName) {
+        super('No such instance: ' + instanceName)
+        this.instanceName = instanceName
+        this.lineNumber = lineNumber
+    }
+}
+
+class NoSuchMethodError extends Error {
+    constructor(lineNumber, methodName) {
+        super('No such method: ' + methodName)
+        this.methodName = methodName
+        this.lineNumber = lineNumber
     }
 }

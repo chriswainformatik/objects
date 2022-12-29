@@ -1,15 +1,26 @@
 class CodeRunner {
     classesList = [
-        'KREIS',
-        'RECHTECK',
-        'DREIECK'
+        {
+            name: 'KREIS',
+            methods: [
+                'MittelpunktSetzen'
+            ],
+        },
+        {
+            name: 'RECHTECK',
+            methods: [],
+        },
+        {
+            name: 'DREIECK',
+            methods: [],
+        },
     ]
+
+    instancesList = []
 
     lines = []
     linesAsTokensList = [[]]
-    instancesList = []
 
-    shapesToDraw = []
 
     constructor() {
     }
@@ -18,34 +29,110 @@ class CodeRunner {
         this.lines = ll
     }
 
-    checkSemantics() {
-        var i = 0
-        this.linesAsTokensList.forEach(line => {
-            // skip empty lines
-            if (line.length > 0) {
-                // instance definitions
-                if (line[1].equals(new Seperator(':'))) {
-                    try {
-                        var inst = this.createInstance(line[2].name)
-                        this.shapesToDraw.push(inst)
-                    } catch(error) {
-                        return i
-                    }
-                }
-                // method calls
-                if (line[1].equals(new Seperator('.'))) {
 
+    /**
+     * Does the following line by line:
+     *  1. Check syntax
+     *  2. Check semantics
+     * Stops if an error is found at step 1 or step 2 and marks the corresponding line.
+     * 
+     * If there are no errors, executes the commands, line by line.
+     * 
+     * @param {*} syntaxError callback function if a syntax error occurs
+     * @param {*} semanticError callback function if a semantic error occurs
+     */
+    runCode(syntaxError, semanticError) {
+        for (var i = 0; i < this.lines.length; i++) {
+            var line = this.lines[i].toString()
+            // 1. check syntax
+            try {
+                //this.linesAsTokensList.push(this.getTokensFromLine(i, line))
+                this.checkSyntax(i, line)
+            } catch (error) {
+                var output = 'Error in line ' + i + ':\n' + error.lineText + '\n'
+                var indicator = ''
+                for (var j = 0; j < error.charNumber; j++) {
+                    indicator += ' '
                 }
+                indicator += '^'
+                output += indicator
+                console.log(output)
+
+                syntaxError(i)
+
+                return -1
             }
-            i++
+
+
+            // 2. check semantics
+            try {
+                this.checkSemantics(i, line)
+            } catch (error) {
+                console.log(error)
+                semanticError(i)
+                return -1
+            }
+
+        }
+
+        // 3. execute commands
+        i = 0
+        this.lines.forEach(line => {
+
         })
-        return -1
+    }
+
+
+
+    checkSemantics(lineNumber, line) {
+        line = line.toString()
+        var tokens = []
+        if (line.includes(':')) {
+            tokens = line.split(':')
+            var instanceName = tokens[0]
+            var className = tokens[1]
+            if (this.classesList.find(cls => cls.name == className) == undefined) {
+                throw new NoSuchClassError(lineNumber, className)
+            }
+            if (this.instancesList.find(inst => inst.name == instanceName) == undefined) {
+                this.instancesList.push({
+                    name: instanceName,
+                    class: className,
+                })
+            }
+        } else if (line.includes('.')) {
+            tokens = line.split('.')
+            var instanceName = tokens[0]
+            var method = tokens[1]
+            var methodName = method.split('(')[0]
+            var methodArguments = method.substring(0, method.length - 1).split('(')[1].split(',')
+            methodArguments.forEach((arg, i) => {
+                methodArguments[i] = arg.replace(' ', '')
+            })
+
+            var theClass = undefined
+            // check if instance exists
+            if (this.instancesList.find(inst => inst.name == instanceName) == undefined) {
+                throw new NoSuchInstanceError(lineNumber, instanceName)
+            } else {
+                console.log(this.instancesList)
+                var className = this.instancesList.find(inst => inst.name == instanceName).class
+                theClass = this.classesList.find(cls => cls.name == className)
+            }
+            // check if instance knows method
+            console.log(theClass)
+            if (theClass.methods.find(m => m == methodName) == undefined) {
+                throw new NoSuchMethodError(lineNumber, methodName)
+            }
+        }
+        
+        return true
     }
 
 
     createInstance(instanceName, className) {
-        if (this.classesList.find(className) == undefined) {
-            throw new UnknownClassNameError(i, line[2].name)
+        if (this.classesList.find(cls => cls.name == className) == undefined) {
+            throw new NoSuchClassError(i, line[2].name)
         } else {
             switch (className) {
                 case 'KREIS':
@@ -59,48 +146,16 @@ class CodeRunner {
     }
 
     /**
-     * Checks the syntax and returns the line number of the error line.
-     * Adds all the tokens to the tokensList.
+     * Reads a line character by character and veryfies the syntax using an automata.
      * 
-     * @returns The line number of the error line or -1 if there is no syntax error.
-     */
-    checkSyntax() {
-        for (var i = 0; i < this.lines.length; i++) {
-            var line = this.lines[i]
-            line.replace(' ', '')
-            try {
-                this.linesAsTokensList.push(this.getTokensFrom(i, line))
-            } catch (error) {
-                var output = 'Error in line ' + i + ':\n' + error.lineText + '\n'
-                var indicator = ''
-                for (var j = 0; j < error.charNumber; j++) {
-                    indicator += ' '
-                }
-                indicator += '^'
-                output += indicator
-                console.log(output)
-                return error.lineNumber
-                //this.editor.addLineClass(error.lineNumber, "background", "error-line");
-                //editor.markText({line:i,ch:error.charNumber},{line:i,ch:error.charNumber+1},{css: 'background-color: #ff0000'})
-            }
-        }
-        return -1
-    }
-
-    /**
-     * Reads a line character by character and returns all the tokens found in that line.
-     * 
-     * Tokens can be: instance name, class name, method call, seperators '.' or ':' (tokens are not validated here)
      * 
      * @param {int} lineNumber number of line to be read
      * @param {string} line line to be read
-     * @returns an array of tokens found in that line
      * @throws Error when an invalid character is read
      */
-    getTokensFrom(lineNumber, line) {
+    checkSyntax(lineNumber, line) {
         line = line.toString()
         var state = 1
-        var tokens = []
         var seperatorIndex = -1
         if (!line[0].match('[a-zA-Z]')) {
             this.invalidInputCharacterError(lineNumber, line, 0)
@@ -111,11 +166,6 @@ class CodeRunner {
                     if (line[i].match('[a-zA-Z0-9]')) {
                         state = 1
                     } else if (line[i] == '.' || line[i] == ':') {
-                        var theInstance = new InstanceName(line.substring(0, i))
-                        tokens.push(theInstance)
-                        if (this.instancesList.find(inst => inst['name'] == theInstance.getName()) == undefined)
-                            this.instancesList.push(theInstance)
-                        tokens.push(new Seperator(line[i]))
                         seperatorIndex = i
                         state = line[i] == '.' ? 2 : 8
                     } else {
@@ -139,7 +189,9 @@ class CodeRunner {
                     }
                     break;
                 case 4:
-                    if (line[i].match('[a-zäöüßA-ZÄÖÜ]')) {
+                    if (line[i] == ' ') {
+                        state = 4
+                    } else if (line[i].match('[a-zäöüßA-ZÄÖÜ]')) {
                         // string input for colors
                         state = 5
                     } else if (line[i].match('[0-9]')) {
@@ -152,6 +204,8 @@ class CodeRunner {
                 case 5:
                     if (line[i].match('[a-zäöüßA-ZÄÖÜ]')) {
                         state = 5
+                    } else if (line[i] == ',') {
+                        state = 4
                     } else if (line[i] == ')') {
                         tokens.push(line.substring(seperatorIndex+1, line.length))
                         state = 7
@@ -162,6 +216,8 @@ class CodeRunner {
                 case 6:
                     if (line[i].match('[0-9]')) {
                         state = 6
+                    } else if (line[i] == ',') {
+                        state = 4
                     } else if (line[i] == ')') {
                         state = 7
                     } else {
@@ -180,16 +236,13 @@ class CodeRunner {
                     break;
             }
         }
-        if (state == 7) {
-            var fullMethodCall = line.substring(seperatorIndex+1, line.length)
-            var methodName = fullMethodCall.split('(')[0]
-            var methodValue = fullMethodCall.split('(')[1].split(')')[0]
-            tokens.push(new MethodCall(methodName, methodValue))
-        } else if (state == 8) {
-            tokens.push(new ClassName(line.substring(seperatorIndex+1, line.length)))
+
+        if (state != 7 || state != 8) {
+            // something went wrong
+            return false
         }
 
-        return tokens
+        return true
     }
 
     invalidInputCharacterError(lineNumber, line, charNumber) {
