@@ -56,7 +56,7 @@ class CodeRunner {
                 this.checkSemantics(i, line)
             } catch (error) {
                 console.log(error)
-                semanticError(i)
+                semanticError(i, error)
                 return -1
             }
 

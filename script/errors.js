@@ -12,6 +12,7 @@ class NoSuchClassError extends Error {
         super('Unknown class name in line ' + lineNumber + ': ' + className)
         this.lineNumber = lineNumber
         this.className = className
+        this.germanText = 'Die Klasse <b><i>' + className +  '</i></b> existiert nicht!'
     }
 }
 
@@ -20,6 +21,7 @@ class NoSuchInstanceError extends Error {
         super('No such instance: ' + instanceName)
         this.instanceName = instanceName
         this.lineNumber = lineNumber
+        this.germanText = 'Das Objekt <b><i>' + instanceName + '</i></b> existiert nicht!'
     }
 }
 
@@ -28,5 +30,6 @@ class NoSuchMethodError extends Error {
         super('No such method: ' + methodName)
         this.methodName = methodName
         this.lineNumber = lineNumber
+        this.germanText = 'Die Methode <b><i>' + methodName + '</i></b> existiert nicht!'
     }
 }

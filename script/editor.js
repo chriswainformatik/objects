@@ -12,6 +12,11 @@ document.getElementsByClassName('CodeMirror')[0].classList.add('border')
 document.addEventListener('DOMContentLoaded', function () {
     runner = new CodeRunner(globalClassesList)
     document.getElementById('btn-run-code').addEventListener('click', runCode)
+    // enable popovers
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+    })
 }, false)
 
 
@@ -37,11 +42,34 @@ function runCode() {
 function setSyntaxError(errorLine) {
     editor.addLineClass(errorLine, "background", "error-line")
     console.log('Syntax error')
+
+    // add popover
+    var popover = new bootstrap.Popover(document.getElementsByClassName('error-line')[0], {
+        'html': true,
+        'content': '<p>Fehler in dieser Zeile!<br>Hast du dich vertippt?</p><div class="text-center"><small><i>Anklicken zum Schließen</i></small></div>',
+        'placement': 'bottom'
+    })
+    popover.show()
+    document.getElementsByClassName('popover')[0].addEventListener('click', () => {
+        popover.dispose()
+    })
+    
 }
 
-function setSemanticError(errorLine) {
+function setSemanticError(errorLine, error) {
     editor.addLineClass(errorLine, "background", "error-line")
     console.log('Semantics error')
+
+    // add popover
+    var popover = new bootstrap.Popover(document.getElementsByClassName('error-line')[0], {
+        'html': true,
+        'content': '<p>' + error.germanText +'<br>Hast du dich vertippt?</p><div class="text-center"><small><i>Anklicken zum Schließen</i></small></div>',
+        'placement': 'bottom'
+    })
+    popover.show()
+    document.getElementsByClassName('popover')[0].addEventListener('click', () => {
+        popover.dispose()
+    })
 }
 
 

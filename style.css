@@ -45,6 +45,23 @@
     background: #292f3d;
 }
 
+.popover {
+    border-color: #dc3545;
+}
+
+.popover:hover {
+    cursor: pointer;
+}
+
+.bs-popover-auto[data-popper-placement^=bottom]>.popover-arrow::before {
+    border-bottom-color: #dc3545 !important;
+}
+
+.popover-body {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
 /* ################################ */
 
 
