@@ -1,20 +1,6 @@
 class CodeRunner {
-    classesList = [
-        {
-            name: 'KREIS',
-            methods: [
-                'MittelpunktSetzen'
-            ],
-        },
-        {
-            name: 'RECHTECK',
-            methods: [],
-        },
-        {
-            name: 'DREIECK',
-            methods: [],
-        },
-    ]
+    classesList = []
+    methodsCaseSensitive = false
 
     instancesList = []
 
@@ -22,7 +8,8 @@ class CodeRunner {
     linesAsTokensList = [[]]
 
 
-    constructor() {
+    constructor(classesList) {
+        this.classesList = classesList
     }
 
     setLines(ll) {
@@ -115,14 +102,18 @@ class CodeRunner {
             if (this.instancesList.find(inst => inst.name == instanceName) == undefined) {
                 throw new NoSuchInstanceError(lineNumber, instanceName)
             } else {
-                console.log(this.instancesList)
                 var className = this.instancesList.find(inst => inst.name == instanceName).class
                 theClass = this.classesList.find(cls => cls.name == className)
             }
             // check if instance knows method
-            console.log(theClass)
-            if (theClass.methods.find(m => m == methodName) == undefined) {
-                throw new NoSuchMethodError(lineNumber, methodName)
+            if (this.methodsCaseSensitive) {
+                if (theClass.methods.find(m => m == methodName) == undefined) {
+                    throw new NoSuchMethodError(lineNumber, methodName)
+                }
+            } else {
+                if (theClass.methods.find(m => m.toLowerCase() == methodName.toLowerCase()) == undefined) {
+                    throw new NoSuchMethodError(lineNumber, methodName)
+                }
             }
         }
         

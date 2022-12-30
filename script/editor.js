@@ -10,7 +10,7 @@ document.getElementsByClassName('CodeMirror')[0].classList.add('border')
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    runner = new CodeRunner()
+    runner = new CodeRunner(globalClassesList)
     document.getElementById('btn-run-code').addEventListener('click', runCode)
 }, false)
 
