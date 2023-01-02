@@ -5,7 +5,9 @@ class CodeRunner {
     instancesList = []
 
     lines = []
-    linesAsTokensList = [[]]
+
+    // shapes as DOM elements that are drawn
+    DOMinstancesList = []
 
 
     constructor(classesList) {
@@ -65,7 +67,32 @@ class CodeRunner {
         // 3. execute commands
         i = 0
         this.lines.forEach(line => {
-
+            if (line.includes(':')) {
+                // create elements
+                var instanceName = line.split(':')[0]
+                var className = line.split(':')[1]
+                var shape = undefined
+                switch (className) {
+                    case 'KREIS':
+                        shape = new KREIS(instanceName)
+                        break;
+                    case 'RECHTECK':
+                        shape = new RECHTECK(instanceName)
+                        break;
+                    case 'DREIECK':
+                        shape = new DREIECK(instanceName)
+                        break;
+                    default:
+                        console.error('An error occured while running the code (after checking syntax and semantics)')
+                }
+                document.getElementById('the-canvas').appendChild(shape.create())
+                this.DOMinstancesList.push(shape)
+                console.log(shape.create())
+            } else if (line.includes('.')) {
+                // call methods
+            } else {
+                console.error('An error occured while running the code (after checking syntax and semantics)')
+            }
         })
     }
 
