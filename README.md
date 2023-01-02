@@ -15,5 +15,8 @@ Available lasses are:
  - `KREIS`
 
 ### TODO:
- - tooltip errors to show the user where and what exactely the error is
- - run the code (show the objects and change them by methods)
+ - fix tooltips
+ - run the code
+   - create shapes (✅)
+   - prevent duplicate shape names
+   - edit shapes by method calls
