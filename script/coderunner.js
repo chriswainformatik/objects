@@ -87,9 +87,11 @@ class CodeRunner {
                 }
                 document.getElementById('the-canvas').appendChild(shape.create())
                 this.DOMinstancesList.push(shape)
-                console.log(shape.create())
+                //console.log(shape.create())
             } else if (line.includes('.')) {
                 // call methods
+            } else if (line == '') {
+                // skip empty line
             } else {
                 console.error('An error occured while running the code (after checking syntax and semantics)')
             }
@@ -173,6 +175,8 @@ class CodeRunner {
      */
     checkSyntax(lineNumber, line) {
         line = line.toString()
+        if (line == '')
+            return
         var state = 1
         var seperatorIndex = -1
         if (!line[0].match('[a-zA-Z]')) {

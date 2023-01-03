@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // enable popovers
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-    return new bootstrap.Popover(popoverTriggerEl)
+        return new bootstrap.Popover(popoverTriggerEl)
     })
 }, false)
 
@@ -31,6 +31,8 @@ document.getElementById('check-show-grid').addEventListener('change', function()
 
 
 function runCode() {
+    // remove elements
+    document.getElementById('the-canvas').replaceChildren()
     // remove error line marking
     Array.from(document.getElementsByClassName('error-line')).forEach((el) => {
         el.classList.remove('error-line')

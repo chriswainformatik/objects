@@ -41,6 +41,7 @@ class KREIS extends SHAPE {
     create() {
         var element = document.createElement('div')
         element.id = this.instanceName
+        element.classList.add('graphical-object')
         element.style.position = 'absolute'
         element.style.top = (this.y - this.h/2) + 'px'
         element.style.left = (this.x - this.w/2) + 'px'
@@ -80,6 +81,7 @@ class RECHTECK extends SHAPE {
     create() {
         var element = document.createElement('div')
         element.id = this.instanceName
+        element.classList.add('graphical-object')
         element.style.position = 'absolute'
         element.style.top = this.y + 'px'
         element.style.left = this.x + 'px'
@@ -120,6 +122,7 @@ class DREIECK extends SHAPE {
 
         var elementWrapper = document.createElement('div')
         elementWrapper.id = this.instanceName
+        elementWrapper.classList.add('graphical-object')
         elementWrapper.style.position = 'absolute'
         elementWrapper.style.top = (this.y - this.baseLength) + 'px'
         elementWrapper.style.left = this.x + 'px'
