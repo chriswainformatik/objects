@@ -75,7 +75,7 @@ class RECHTECK extends SHAPE {
 
     positionSetzen(x, y) {
         this.x = x
-        this.y = y
+        this.y = y - this.h
     }
 
     create() {
