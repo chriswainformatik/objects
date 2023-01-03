@@ -110,11 +110,18 @@ class CodeRunner {
             if (this.classesList.find(cls => cls.name == className) == undefined) {
                 throw new NoSuchClassError(lineNumber, className)
             }
+            console.log(instanceName)
+            if (this.instancesList[0] != undefined)
+                console.log(instanceName == this.instancesList[0].name)
+            //console.log(this.instancesList.find(inst => inst.name == instanceName))
             if (this.instancesList.find(inst => inst.name == instanceName) == undefined) {
                 this.instancesList.push({
                     name: instanceName,
                     class: className,
                 })
+            } else {
+                // object has already been defined
+                throw new DuplicateInstanceError(lineNumber, instanceName)
             }
         } else if (line.includes('.')) {
             tokens = line.split('.')

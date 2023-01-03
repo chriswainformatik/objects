@@ -25,6 +25,15 @@ class NoSuchInstanceError extends Error {
     }
 }
 
+class DuplicateInstanceError extends Error {
+    constructor(lineNumber, instanceName) {
+        super('Duplicate instance: ' + instanceName)
+        this.instanceName = instanceName
+        this.lineNumber = lineNumber
+        this.germanText = 'Das Objekt <b><i>' + instanceName + '</i></b> wurde bereits erzeugt!'
+    }
+}
+
 class NoSuchMethodError extends Error {
     constructor(lineNumber, methodName) {
         super('No such method: ' + methodName)
