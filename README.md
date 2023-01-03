@@ -15,8 +15,9 @@ Available lasses are:
  - `KREIS`
 
 ### TODO:
- - fix tooltips
  - run the code
-   - create shapes (✅)
-   - prevent duplicate shape names
+   - create shapes ✅
+   - prevent duplicate shape names ✅
+   - check semantics of method calls (parameters list)
    - edit shapes by method calls
+   - make velocity changeable ✅

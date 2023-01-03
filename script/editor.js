@@ -46,12 +46,14 @@ function runCode() {
     runner.runCode(setSyntaxError, setSemanticError, setActiveLice)
 }
 
-function setActiveLice(lineNumber) {+
+function setActiveLice(lineNumber) {
     // remove active line marking
     Array.from(document.getElementsByClassName('active-line')).forEach((el) => {
         el.classList.remove('active-line')
     });
-    editor.addLineClass(lineNumber, "background", "active-line")
+    console.log(lineNumber)
+    if (lineNumber >= 0)
+        editor.addLineClass(lineNumber, "background", "active-line")
 }
 
 function setSyntaxError(errorLine) {

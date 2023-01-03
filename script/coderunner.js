@@ -77,8 +77,12 @@ class CodeRunner {
         var steps = setInterval(() => {
             this.runLine(i)
             i++
-            if (i == this.lines.length)
+            if (i == this.lines.length) {
                 clearInterval(steps)
+                setTimeout(function() {
+                    setActiveLice(-1)
+                }, this.stepDelay*1000)
+            }
         }, this.stepDelay*1000)
     }
 
