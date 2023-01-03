@@ -17,6 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
     })
+
+    // velocity control
+    document.getElementById('velocity').addEventListener('change', function(event) {
+        runner.setStepDelay(event.target.value)
+    })
 }, false)
 
 
@@ -38,7 +43,15 @@ function runCode() {
         el.classList.remove('error-line')
     });
     runner.setLines(editor.getValue().split('\n'))
-    runner.runCode(setSyntaxError, setSemanticError)
+    runner.runCode(setSyntaxError, setSemanticError, setActiveLice)
+}
+
+function setActiveLice(lineNumber) {+
+    // remove active line marking
+    Array.from(document.getElementsByClassName('active-line')).forEach((el) => {
+        el.classList.remove('active-line')
+    });
+    editor.addLineClass(lineNumber, "background", "active-line")
 }
 
 function setSyntaxError(errorLine) {

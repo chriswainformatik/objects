@@ -78,6 +78,10 @@
     background-color: #ffafaf;
 }
 
+.active-line {
+    background-color: #cacaca;
+}
+
 .invalid-character {
     background-color: #4b0000;
 }

@@ -1,4 +1,6 @@
 class CodeRunner {
+    stepDelay = 0.5
+
     classesList = []
     methodsCaseSensitive = false
 
@@ -18,6 +20,9 @@ class CodeRunner {
         this.lines = ll
     }
 
+    setStepDelay(delay) {
+        this.stepDelay = delay
+    }
 
     /**
      * Does the following line by line:
@@ -27,10 +32,11 @@ class CodeRunner {
      * 
      * If there are no errors, executes the commands, line by line.
      * 
-     * @param {*} syntaxError callback function if a syntax error occurs
-     * @param {*} semanticError callback function if a semantic error occurs
+     * @param {function} syntaxError callback function if a syntax error occurs
+     * @param {function} semanticError callback function if a semantic error occurs
+     * @param {function} setActiveLice callback function to mark the active line
      */
-    runCode(syntaxError, semanticError) {
+    runCode(syntaxError, semanticError, setActiveLice) {
         for (var i = 0; i < this.lines.length; i++) {
             var line = this.lines[i].toString()
             // 1. check syntax
@@ -66,38 +72,48 @@ class CodeRunner {
 
         // 3. execute commands
         i = 0
-        this.lines.forEach(line => {
-            if (line.includes(':')) {
-                // create elements
-                var instanceName = line.split(':')[0]
-                var className = line.split(':')[1]
-                var shape = undefined
-                switch (className) {
-                    case 'KREIS':
-                        shape = new KREIS(instanceName)
-                        break;
-                    case 'RECHTECK':
-                        shape = new RECHTECK(instanceName)
-                        break;
-                    case 'DREIECK':
-                        shape = new DREIECK(instanceName)
-                        break;
-                    default:
-                        console.error('An error occured while running the code (after checking syntax and semantics)')
-                }
-                document.getElementById('the-canvas').appendChild(shape.create())
-                this.DOMinstancesList.push(shape)
-                //console.log(shape.create())
-            } else if (line.includes('.')) {
-                // call methods
-            } else if (line == '') {
-                // skip empty line
-            } else {
-                console.error('An error occured while running the code (after checking syntax and semantics)')
-            }
-        })
+        this.runLine(i)
+        i++
+        var steps = setInterval(() => {
+            this.runLine(i)
+            i++
+            if (i == this.lines.length)
+                clearInterval(steps)
+        }, this.stepDelay*1000)
     }
 
+    runLine(i) {
+        setActiveLice(i)
+        var line = this.lines[i].toString()
+        if (line.includes(':')) {
+            // create elements
+            var instanceName = line.split(':')[0]
+            var className = line.split(':')[1]
+            var shape = undefined
+            switch (className) {
+                case 'KREIS':
+                    shape = new KREIS(instanceName)
+                    break;
+                case 'RECHTECK':
+                    shape = new RECHTECK(instanceName)
+                    break;
+                case 'DREIECK':
+                    shape = new DREIECK(instanceName)
+                    break;
+                default:
+                    console.error('An error occured while running the code (after checking syntax and semantics)')
+            }
+            document.getElementById('the-canvas').appendChild(shape.create())
+            this.DOMinstancesList.push(shape)
+            //console.log(shape.create())
+        } else if (line.includes('.')) {
+            // call methods
+        } else if (line == '') {
+            // skip empty line
+        } else {
+            console.error('An error occured while running the code (after checking syntax and semantics)')
+        }
+    }
 
 
     checkSemantics(lineNumber, line) {
@@ -110,10 +126,6 @@ class CodeRunner {
             if (this.classesList.find(cls => cls.name == className) == undefined) {
                 throw new NoSuchClassError(lineNumber, className)
             }
-            console.log(instanceName)
-            if (this.instancesList[0] != undefined)
-                console.log(instanceName == this.instancesList[0].name)
-            //console.log(this.instancesList.find(inst => inst.name == instanceName))
             if (this.instancesList.find(inst => inst.name == instanceName) == undefined) {
                 this.instancesList.push({
                     name: instanceName,
