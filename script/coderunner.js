@@ -38,7 +38,7 @@ class CodeRunner {
                 //this.linesAsTokensList.push(this.getTokensFromLine(i, line))
                 this.checkSyntax(i, line)
             } catch (error) {
-                var output = 'Error in line ' + i + ':\n' + error.lineText + '\n'
+                var output = 'Error in line ' + (i+1) + ':\n' + error.lineText + '\n'
                 var indicator = ''
                 for (var j = 0; j < error.charNumber; j++) {
                     indicator += ' '
@@ -225,7 +225,7 @@ class CodeRunner {
                     } else if (line[i] == ',') {
                         state = 4
                     } else if (line[i] == ')') {
-                        tokens.push(line.substring(seperatorIndex+1, line.length))
+                        //tokens.push(line.substring(seperatorIndex+1, line.length))
                         state = 7
                     } else {
                         this.invalidInputCharacterError(lineNumber, line, i)
