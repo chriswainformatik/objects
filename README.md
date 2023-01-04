@@ -5,7 +5,7 @@ This is supposed to be an educational application students can use to practice o
 
 Class and method names are German.
 
-Planned commands are:
+Available commands are:
  - `objectName:CLASSNAME` to create an object with a given name from a given class
  - `objectName.methodName(...)` to call methods provided by objects
   
