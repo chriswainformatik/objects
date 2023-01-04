@@ -108,6 +108,9 @@ class DREIECK extends SHAPE {
         this.h = 140
         this.y = 100
         this.fillColor = 'green'
+
+        // used to create the DOM element
+        this.baseLength = 100
     }
     
     breitesetzen(b) {
@@ -124,8 +127,6 @@ class DREIECK extends SHAPE {
     }
 
     create() {
-        var baseLength = 100
-
         var elementWrapper = document.createElement('div')
         elementWrapper.id = this.instanceName
         elementWrapper.classList.add('graphical-object')
@@ -133,8 +134,8 @@ class DREIECK extends SHAPE {
         elementWrapper.style.position = 'absolute'
         elementWrapper.style.top = (this.y - this.baseLength) + 'px'
         elementWrapper.style.left = this.x + 'px'
-        elementWrapper.style.width = baseLength + 'px'
-        elementWrapper.style.height = baseLength + 'px'
+        elementWrapper.style.width = this.baseLength + 'px'
+        elementWrapper.style.height = this.baseLength + 'px'
 
         elementWrapper.style.borderBottomStyle = this.lineStyle
         elementWrapper.style.borderBottomColor = this.lineColor
@@ -148,18 +149,18 @@ class DREIECK extends SHAPE {
         elementWrapper.style.borderRightWidth = this.lineWidth + 'px'
 
         elementWrapper.style.overflow = 'hidden'
-        elementWrapper.style.transformOrigin = '0 ' + baseLength + 'px'
+        elementWrapper.style.transformOrigin = '0 ' + this.baseLength + 'px'
 
-        var scaleX = this.w / baseLength
-        var scaleY = this.h / baseLength
+        var scaleX = this.w / this.baseLength
+        var scaleY = this.h / this.baseLength
         elementWrapper.style.transform = 'scaleX(' + scaleX + ') scaleY(' + scaleY + ')'
         
         var element = document.createElement('div')
         element.id = this.instanceName + '-inner'
-        var diagonalLength = ( Math.floor(Math.sqrt( Math.pow(baseLength-this.lineWidth,2) / 2 )) ) + 'px'
+        var diagonalLength = ( Math.floor(Math.sqrt( Math.pow(this.baseLength-this.lineWidth,2) / 2 )) ) + 'px'
         element.style.width = diagonalLength
         element.style.height = diagonalLength
-        element.style.transform = 'translateX(' + (baseLength/2-this.lineWidth) + 'px) translateY(' + (baseLength/2) + 'px) rotate(45deg)'
+        element.style.transform = 'translateX(' + (this.baseLength/2-this.lineWidth) + 'px) translateY(' + (this.baseLength/2) + 'px) rotate(45deg)'
         element.style.transformOrigin = '0 0'
 
         element.style.backgroundColor = this.fillColor
@@ -168,43 +169,6 @@ class DREIECK extends SHAPE {
         element.style.borderWidth = this.lineWidth + 'px'
 
         elementWrapper.appendChild(element)
-
-        /*
-        var element = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-        element.setAttribute('points', '0,0 100,0 50,100');
-        element.setAttribute("fill", "green");
-        element.style.position = 'relative'
-        element.style.top = this.y + 'px'
-        element.style.left = this.x + 'px'
-        element.style.width = 0
-        element.style.height = 0
-        */
-
-        /*
-        var triangleStyle = document.createElement("style");
-        triangleStyle.innerHTML =
-            '#' + this.instanceName + `:after {
-                position:absolute;
-                content:"";
-                width: 0;
-                height: 0;
-                margin-top: ` + this.lineWidth + ` px;
-                margin-left: ` + this.lineWidth + `px;
-                border-left: ` + this.h + `px solid transparent;
-                border-right: ` + this.h + `px solid transparent;
-                border-bottom: ` + this.w + `px solid ` + this.fillColor + `;
-            }
-            #` + this.instanceName + `:before {
-                position:absolute;
-                content:"";
-                width: 0;
-                height: 0;
-                border-left: ` + (this.lineWidth+this.h) + `px solid transparent;
-                border-right: ` + (this.lineWidth+this.h) + `px solid transparent;
-                border-bottom: ` + (this.lineWidth+this.w) + `px solid ` + this.lineColor + `;
-            }`
-            document.head.appendChild(triangleStyle);
-            */
 
         //return element
         return elementWrapper

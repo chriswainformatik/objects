@@ -52,16 +52,57 @@ function runCode() {
 
 function updateDOMObject(shape) {
     var element = document.getElementById(shape.instanceName)
-    element.style.top = shape.y + 'px'
-    element.style.left = shape.x + 'px'
-    element.style.width = shape.w + 'px'
-    element.style.height = shape.h + 'px'
-    element.style.backgroundColor = shape.fillColor
-    element.style.borderStyle = shape.lineStyle
-    element.style.borderColor = shape.lineColor
-    element.style.borderWidth = shape.lineWidth + 'px'
-    if (shape.constructor.name == 'KREIS') {
-        element.style.borderRadius = shape.w / 2 + 'px'
+    if (shape.constructor.name == 'DREIECK') {
+        // triangle is a bit more complicated
+        var elementWrapper = element
+        element = elementWrapper.firstChild
+        
+        elementWrapper.style.top = (shape.y - shape.baseLength) + 'px'
+        elementWrapper.style.left = shape.x + 'px'
+        elementWrapper.style.width = shape.baseLength + 'px'
+        elementWrapper.style.height = shape.baseLength + 'px'
+
+        elementWrapper.style.borderBottomStyle = shape.lineStyle
+        elementWrapper.style.borderBottomColor = shape.lineColor
+        elementWrapper.style.borderBottomWidth = shape.lineWidth + 'px'
+        // make the corners sharp
+        elementWrapper.style.borderLeftStyle = 'solid'
+        elementWrapper.style.borderLeftColor = 'transparent'
+        elementWrapper.style.borderLeftWidth = shape.lineWidth + 'px'
+        elementWrapper.style.borderRightStyle = 'solid'
+        elementWrapper.style.borderRightColor = 'transparent'
+        elementWrapper.style.borderRightWidth = shape.lineWidth + 'px'
+
+        elementWrapper.style.overflow = 'hidden'
+        elementWrapper.style.transformOrigin = '0 ' + shape.baseLength + 'px'
+
+        var scaleX = shape.w / shape.baseLength
+        var scaleY = shape.h / shape.baseLength
+        elementWrapper.style.transform = 'scaleX(' + scaleX + ') scaleY(' + scaleY + ')'
+        
+        element.id = shape.instanceName + '-inner'
+        var diagonalLength = ( Math.floor(Math.sqrt( Math.pow(shape.baseLength-shape.lineWidth,2) / 2 )) ) + 'px'
+        element.style.width = diagonalLength
+        element.style.height = diagonalLength
+        element.style.transform = 'translateX(' + (shape.baseLength/2-shape.lineWidth) + 'px) translateY(' + (shape.baseLength/2) + 'px) rotate(45deg)'
+        element.style.transformOrigin = '0 0'
+
+        element.style.backgroundColor = shape.fillColor
+        element.style.borderStyle = shape.lineStyle
+        element.style.borderColor = shape.lineColor
+        element.style.borderWidth = shape.lineWidth + 'px'
+    } else {
+        element.style.top = shape.y + 'px'
+        element.style.left = shape.x + 'px'
+        element.style.width = shape.w + 'px'
+        element.style.height = shape.h + 'px'
+        element.style.backgroundColor = shape.fillColor
+        element.style.borderStyle = shape.lineStyle
+        element.style.borderColor = shape.lineColor
+        element.style.borderWidth = shape.lineWidth + 'px'
+        if (shape.constructor.name == 'KREIS')
+            element.style.borderRadius = shape.w / 2 + 'px'
+        
     }
 }
 

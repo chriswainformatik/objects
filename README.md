@@ -24,3 +24,4 @@ Available lasses are:
    - make velocity changeable ✅
    - change delay to velocity on ui
  - settings as sidebar overlay
+ - code completion
