@@ -15,13 +15,10 @@ Available lasses are:
  - `KREIS`
 
 ### TODO:
- - run the code
-   - create shapes ✅
-   - prevent duplicate shape names ✅
-   - remove elements before re-running ✅
-   - check semantics of method calls (parameters list) ✅
-   - edit shapes by method calls ✅
-   - make velocity changeable ✅
-   - change delay to velocity on ui
+ - change delay to velocity on ui
  - settings as sidebar overlay
  - code completion
+ - fix bugs:
+   - change of triangle size also changes border size
+   - re-running code doesn't hide error popovers
+   - space character gets marked as error
