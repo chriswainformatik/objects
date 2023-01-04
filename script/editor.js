@@ -51,7 +51,6 @@ function setActiveLice(lineNumber) {
     Array.from(document.getElementsByClassName('active-line')).forEach((el) => {
         el.classList.remove('active-line')
     });
-    console.log(lineNumber)
     if (lineNumber >= 0)
         editor.addLineClass(lineNumber, "background", "active-line")
 }

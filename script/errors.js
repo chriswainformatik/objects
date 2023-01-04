@@ -42,3 +42,28 @@ class NoSuchMethodError extends Error {
         this.germanText = 'Die Methode <b><i>' + methodName + '</i></b> existiert nicht!'
     }
 }
+
+class WrongArgumentCountError extends Error {
+    constructor(lineNumber, methodName) {
+        super('Wrong number of arguments in method: ' + methodName)
+        this.methodName = methodName
+        this.lineNumber = lineNumber
+        this.germanText = 'Die Methode <b><i>' + methodName + '</i></b> benötigt weniger oder mehr Werte!'
+    }
+}
+
+class MyIllegalArgumentError extends Error {
+    constructor(lineNumber, methodName, argument, datatype) {
+        if (datatype === undefined) {
+            // value not allowed
+            super('Wrong argument value in method: ' + methodName + ' (argument ' + argument + ' is not allowed)')
+            this.germanText = 'Der Wert <b><i>' + argument +'</i></b> in der Methode <b><i>' + methodName + '</i></b> ist nicht erlaubt!'
+        } else {
+            // value must be a number
+            super('Wrong datatype in method: ' + methodName + ' (argument: ' + argument + ' must be ' + datatype + ')')
+            this.germanText = 'Der Wert <b><i>' + argument +'</i></b> in der Methode <b><i>' + methodName + '</i></b> ist keine Zahl!'
+        }
+        this.methodName = methodName
+            this.lineNumber = lineNumber
+    }
+}

@@ -88,6 +88,8 @@ class CodeRunner {
 
     runLine(i) {
         setActiveLice(i)
+        if (this.lines[i] === undefined)
+            return
         var line = this.lines[i].toString()
         if (line.includes(':')) {
             // create elements
@@ -109,7 +111,6 @@ class CodeRunner {
             }
             document.getElementById('the-canvas').appendChild(shape.create())
             this.DOMinstancesList.push(shape)
-            //console.log(shape.create())
         } else if (line.includes('.')) {
             // call methods
         } else if (line == '') {
@@ -151,20 +152,38 @@ class CodeRunner {
 
             var theClass = undefined
             // check if instance exists
-            if (this.instancesList.find(inst => inst.name == instanceName) == undefined) {
+            if (this.instancesList.find(inst => inst.name == instanceName) == undefined) 
                 throw new NoSuchInstanceError(lineNumber, instanceName)
-            } else {
-                var className = this.instancesList.find(inst => inst.name == instanceName).class
-                theClass = this.classesList.find(cls => cls.name == className)
-            }
+            
+            var className = this.instancesList.find(inst => inst.name == instanceName).class
+            theClass = this.classesList.find(cls => cls.name == className)
             // check if instance knows method
+            var theMethod = undefined
             if (this.methodsCaseSensitive) {
-                if (theClass.methods.find(m => m == methodName) == undefined) {
+                if (theClass.methods.find(m => m.name == methodName) == undefined) 
                     throw new NoSuchMethodError(lineNumber, methodName)
-                }
+                
+                theMethod = theClass.methods.find(m => m.name == methodName)
             } else {
-                if (theClass.methods.find(m => m.toLowerCase() == methodName.toLowerCase()) == undefined) {
+                if (theClass.methods.find(m => m.name.toLowerCase() == methodName.toLowerCase()) == undefined) 
                     throw new NoSuchMethodError(lineNumber, methodName)
+                
+                theMethod = theClass.methods.find(m => m.name.toLowerCase() == methodName.toLowerCase())
+            }
+            // check if parameters list is correct
+            if (methodArguments.length != theMethod.parameters.length) {
+                throw new WrongArgumentCountError(lineNumber, methodName)
+            }
+            for (var i = 0; i < methodArguments.length; i++) {
+                if (theMethod.parameters[i] == 'number') {
+                    // check if argument is a number
+                    if (isNaN(Number.parseInt(methodArguments[i]))) 
+                        throw new MyIllegalArgumentError(lineNumber, methodName, methodArguments[i], theMethod.parameters[i])
+                    
+                } else if (theMethod.parameters[i] == 'string') {
+                    // check if string is allowed value
+                    if (globalAllowedValues.find(v => v == methodArguments[i]) == undefined)
+                        throw new MyIllegalArgumentError(lineNumber, methodName, methodArguments[i])
                 }
             }
         }

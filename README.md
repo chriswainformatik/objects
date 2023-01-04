@@ -23,3 +23,4 @@ Available lasses are:
    - edit shapes by method calls
    - make velocity changeable ✅
    - change delay to velocity on ui
+ - settings as sidebar overlay
