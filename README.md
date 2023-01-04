@@ -18,9 +18,9 @@ Available lasses are:
  - run the code
    - create shapes ✅
    - prevent duplicate shape names ✅
-   - remove elements before re-running
-   - check semantics of method calls (parameters list)
-   - edit shapes by method calls
+   - remove elements before re-running ✅
+   - check semantics of method calls (parameters list) ✅
+   - edit shapes by method calls ✅
    - make velocity changeable ✅
    - change delay to velocity on ui
  - settings as sidebar overlay
