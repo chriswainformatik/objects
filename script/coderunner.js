@@ -8,8 +8,8 @@ class CodeRunner {
 
     lines = []
 
-    // shapes as DOM elements that are drawn
-    DOMinstancesList = []
+    // shapes as objects that are drawn
+    shapesList = []
 
 
     constructor(classesList) {
@@ -24,6 +24,11 @@ class CodeRunner {
         this.stepDelay = delay
     }
 
+    clearObjects() {
+        this.instancesList = []
+        this.shapesList = []
+    }
+
     /**
      * Does the following line by line:
      *  1. Check syntax
@@ -34,9 +39,10 @@ class CodeRunner {
      * 
      * @param {function} syntaxError callback function if a syntax error occurs
      * @param {function} semanticError callback function if a semantic error occurs
-     * @param {function} setActiveLice callback function to mark the active line
+     * @param {function} setActiveLine callback function to mark the active line
+     * @param {function} updateDOMObject callback function to update a DOM object
      */
-    runCode(syntaxError, semanticError, setActiveLice) {
+    runCode(syntaxError, semanticError, setActiveLine, updateDOMObject) {
         for (var i = 0; i < this.lines.length; i++) {
             var line = this.lines[i].toString()
             // 1. check syntax
@@ -72,25 +78,25 @@ class CodeRunner {
 
         // 3. execute commands
         i = 0
-        this.runLine(i)
+        this.runLine(i, updateDOMObject)
         i++
         var steps = setInterval(() => {
-            this.runLine(i)
+            this.runLine(i, updateDOMObject)
             i++
             if (i == this.lines.length) {
                 clearInterval(steps)
                 setTimeout(function() {
-                    setActiveLice(-1)
+                    setActiveLine(-1)
                 }, this.stepDelay*1000)
             }
         }, this.stepDelay*1000)
     }
 
-    runLine(i) {
-        setActiveLice(i)
-        if (this.lines[i] === undefined)
+    runLine(lineNumber, updateDOMObject) {
+        setActiveLine(lineNumber)
+        if (this.lines[lineNumber] === undefined)
             return
-        var line = this.lines[i].toString()
+        var line = this.lines[lineNumber].toString()
         if (line.includes(':')) {
             // create elements
             var instanceName = line.split(':')[0]
@@ -110,16 +116,28 @@ class CodeRunner {
                     console.error('An error occured while running the code (after checking syntax and semantics)')
             }
             document.getElementById('the-canvas').appendChild(shape.create())
-            this.DOMinstancesList.push(shape)
+            this.shapesList.push(shape)
         } else if (line.includes('.')) {
             // call methods
+            var theInstance = this.instancesList.find(inst => inst.name ==  line.split('.')[0])
+            var methodName = line.split('.')[1].split('(')[0]
+            var methodArguments = line.split('(')[1].substring(0, line.split('(')[1].length-1).split(',')
+            methodArguments.forEach((arg, i) => {
+                methodArguments[i] = arg.replace(' ', '')
+            })
+
+            // TODO: case sensitive methods
+            // call the method on the shape object
+            var theShape = this.shapesList.find(inst => inst.instanceName == theInstance.name)
+            theShape[methodName.toLowerCase()].apply(theShape,methodArguments)
+            // notify DOM object
+            updateDOMObject(theShape)
         } else if (line == '') {
             // skip empty line
         } else {
             console.error('An error occured while running the code (after checking syntax and semantics)')
         }
     }
-
 
     checkSemantics(lineNumber, line) {
         line = line.toString()

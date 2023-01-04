@@ -18,6 +18,10 @@ class SHAPE {
     create() {
         return undefined
     }
+
+    füllfarbesetzen(f) {
+        this.fillColor = globalColorNames[f]
+    }
 }
 
 class KREIS extends SHAPE {
@@ -27,13 +31,13 @@ class KREIS extends SHAPE {
         this.w = 60
         this.h = 60
     }
-    
-    radiusSetzen(r) {
+
+    radiussetzen(r) {
         this.w = r
         this.h = r
     }
 
-    mittelpunktSetzen(x, y) {
+    mittelpunktsetzen(x, y) {
         this.x = x
         this.y = y
     }
@@ -42,6 +46,7 @@ class KREIS extends SHAPE {
         var element = document.createElement('div')
         element.id = this.instanceName
         element.classList.add('graphical-object')
+        element.dataset.classname = 'KREIS'
         element.style.position = 'absolute'
         element.style.top = (this.y - this.h/2) + 'px'
         element.style.left = (this.x - this.w/2) + 'px'
@@ -65,15 +70,15 @@ class RECHTECK extends SHAPE {
         this.fillColor = 'blue'
     }
     
-    breiteSetzen(b) {
+    breitesetzen(b) {
         this.w = b
     }
 
-    längeSetzen(l) {
+    längesetzen(l) {
         this.h = l
     }
 
-    positionSetzen(x, y) {
+    positionsetzen(x, y) {
         this.x = x
         this.y = y - this.h
     }
@@ -82,6 +87,7 @@ class RECHTECK extends SHAPE {
         var element = document.createElement('div')
         element.id = this.instanceName
         element.classList.add('graphical-object')
+        element.dataset.classname = 'RECHTECK'
         element.style.position = 'absolute'
         element.style.top = this.y + 'px'
         element.style.left = this.x + 'px'
@@ -104,15 +110,15 @@ class DREIECK extends SHAPE {
         this.fillColor = 'green'
     }
     
-    breiteSetzen(b) {
+    breitesetzen(b) {
         this.w = b
     }
 
-    höheSetzen(h) {
+    höhesetzen(h) {
         this.h = h
     }
 
-    positionSetzen(x, y) {
+    positionsetzen(x, y) {
         this.x = x
         this.y = y - this.h
     }
@@ -123,6 +129,7 @@ class DREIECK extends SHAPE {
         var elementWrapper = document.createElement('div')
         elementWrapper.id = this.instanceName
         elementWrapper.classList.add('graphical-object')
+        element.dataset.classname = 'DREIECK'
         elementWrapper.style.position = 'absolute'
         elementWrapper.style.top = (this.y - this.baseLength) + 'px'
         elementWrapper.style.left = this.x + 'px'

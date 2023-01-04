@@ -8,6 +8,7 @@ editor.on('change', function() {
 })
 document.getElementsByClassName('CodeMirror')[0].classList.add('border')
 
+var popovers = []
 
 document.addEventListener('DOMContentLoaded', function () {
     runner = new CodeRunner(globalClassesList)
@@ -38,19 +39,41 @@ document.getElementById('check-show-grid').addEventListener('change', function()
 function runCode() {
     // remove elements
     document.getElementById('the-canvas').replaceChildren()
-    // remove error line marking
-    Array.from(document.getElementsByClassName('error-line')).forEach((el) => {
-        el.classList.remove('error-line')
-    });
+    runner.clearObjects()
+    // remove error marking
+    popovers.forEach(p => {
+        p.dispose()
+    })
+    popovers = []
+    clearLineBackgrounds()
     runner.setLines(editor.getValue().split('\n'))
-    runner.runCode(setSyntaxError, setSemanticError, setActiveLice)
+    runner.runCode(setSyntaxError, setSemanticError, setActiveLine, updateDOMObject)
 }
 
-function setActiveLice(lineNumber) {
+function updateDOMObject(shape) {
+    var element = document.getElementById(shape.instanceName)
+    element.style.top = shape.y + 'px'
+    element.style.left = shape.x + 'px'
+    element.style.width = shape.w + 'px'
+    element.style.height = shape.h + 'px'
+    element.style.backgroundColor = shape.fillColor
+    element.style.borderStyle = shape.lineStyle
+    element.style.borderColor = shape.lineColor
+    element.style.borderWidth = shape.lineWidth + 'px'
+    if (shape.constructor.name == 'KREIS') {
+        element.style.borderRadius = shape.w / 2 + 'px'
+    }
+}
+
+function clearLineBackgrounds() {
+    for (var i = 0; i < editor.lineCount(); i++) {
+        editor.removeLineClass(i, "background")
+    }
+}
+
+function setActiveLine(lineNumber) {
     // remove active line marking
-    Array.from(document.getElementsByClassName('active-line')).forEach((el) => {
-        el.classList.remove('active-line')
-    });
+    clearLineBackgrounds()
     if (lineNumber >= 0)
         editor.addLineClass(lineNumber, "background", "active-line")
 }
@@ -83,6 +106,7 @@ function setSemanticError(errorLine, error) {
         'placement': 'bottom'
     })
     popover.show()
+    popovers.push(popover)
     document.getElementsByClassName('popover')[0].addEventListener('click', () => {
         popover.dispose()
     })
