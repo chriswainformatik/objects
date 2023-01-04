@@ -129,7 +129,7 @@ class DREIECK extends SHAPE {
         var elementWrapper = document.createElement('div')
         elementWrapper.id = this.instanceName
         elementWrapper.classList.add('graphical-object')
-        element.dataset.classname = 'DREIECK'
+        elementWrapper.dataset.classname = 'DREIECK'
         elementWrapper.style.position = 'absolute'
         elementWrapper.style.top = (this.y - this.baseLength) + 'px'
         elementWrapper.style.left = this.x + 'px'
