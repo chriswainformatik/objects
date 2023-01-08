@@ -24,3 +24,5 @@ Available lasses are:
    - change of triangle size also changes border size
    - re-running code doesn't hide error popovers
    - space character gets marked as error
+   - only changing the color of a triangle also moves the triangle
+   
