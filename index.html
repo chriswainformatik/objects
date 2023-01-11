@@ -38,10 +38,20 @@
                     </div>
                     <div class="col">
                         <div id="canvas-top-panel" class="my-2 d-flex justify-content-end">
+                            <!--
                             <button type="button" class="btn btn-outline-secondary ms-2" data-bs-toggle="modal" data-bs-target="#settingsModal">
                                 <span class="bi bi-gear-fill"></span> Einstellungen
                             </button>
+                            -->
+                            <button type="button" id="btn-sidebar-settings-show" class="btn btn-outline-secondary ms-2">
+                                <span class="bi bi-gear-fill"></span> Einstellungen
+                            </button>
+                            <!--
                             <button type="button" class="btn btn-outline-primary ms-2 my-outline-btn" data-bs-toggle="modal" data-bs-target="#helpModal">
+                                <span class="bi bi-question-lg"></span> Hilfe
+                            </button>
+                            -->
+                            <button type="button" id="btn-sidebar-help-show" class="btn btn-outline-primary ms-2 my-outline-btn">
                                 <span class="bi bi-question-lg"></span> Hilfe
                             </button>
                         </div>
@@ -71,6 +81,123 @@
                 </div>
                 
             </div>
+
+
+            <div id="sidebar-underlay" class="w-100 h-100"></div>
+
+            <div id="sidebar-settings" class="sidebar container p-4 h-100 bg-white border-start">
+                <div class="d-flex justify-content-between">
+                    <h2 class="mt-4">Einstellungen</h2>
+                    <button type="button" id="btn-sidebar-settings-close" class="btn-close" aria-label="Close"></button>
+                </div>
+                
+                <div class="container">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check-methods-case-sensitive">
+                    <label class="form-check-label" for="check-methods-case-sensitive">
+                        Methoden sind case-sensitiv
+                    </label>
+                    </div>
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check-show-grid" disabled>
+                    <label class="form-check-label" for="check-show-grid">
+                        Gitternetzlinien anzeigen
+                    </label>
+                    </div>
+                </div>
+                <div class="container mt-4">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn btn-primary">Speichern</button>
+                </div>
+            </div>
+
+            <div id="sidebar-help" class="sidebar container p-4 h-100 bg-white border-start">
+                <div class="d-flex justify-content-between">
+                    <h2 class="mt-4" id="helpModalLabel">Hilfe</h2>
+                    <button type="button" id="btn-sidebar-help-close" class="btn-close" aria-label="Close"></button>
+                </div>
+                <div class="container">
+                    <div class="container mt-2 mb-5">
+                        <h5>Inhalt</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#befehle">Wie gibt man Befehle ein?</a></li>
+                            <li><a href="#klassen">Welche Klassen gibt es?</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="container mb-5">
+                        <a name="befehle"><h5>Befehle eingeben</h5></a>
+                    <p>
+                        <strong>Objects</strong> kann zwei verschiedene Befehle verarbeiten: Erzeugen von Objekten und Methodenaufrufe.
+                    </p>
+                    <h6>Erzeugen von Objekten</h6>
+                    <p>
+                        Du kannst Objekte erzeugen, indem du die Kurzschreibweise für <i>Objekte gehört zu Klasse</i> verwendest. Beispiel:
+                    </p>
+                    
+                    <div class="help-code-example">
+                        <code>vorderrad:KREIS</code>
+                    </div>
+
+                    <p>
+                        Der Befehl erzeugt ein Objekt de Klasse <i>KREIS</i> namens <i>vorderrad</i>.
+                    </p>
+
+                    <h6>Aufrufen von Methoden</h6>
+                    <p>
+                        Du kannst Methoden von Objekten aufrufen, indem du die Punktschreibweise verwendest. Beispiel:
+                    </p>
+                    
+                    <div class="help-code-example">
+                        <code>vorderrad.MittelpunktSetzen(20, 50)</code>
+                    </div>
+
+                    <p>
+                        Der Befehl setzt den Mittelpunkt des Objekts <i>vorderrad</i> auf die Koordinaten (20|50). Hat eine Methode mehrere Eingabewerte (wie im Beispiel die x- und die y-Koordinate), so werden diese durch ein Komma abgetrennt.
+                    </p>
+
+                    <p>
+                        <span class="text-danger">Achtung:</span> Du kannst nur Methoden von Objekten aufrufen, die du vorher erzeugt hast!
+                    </p>
+                    </div>
+                    
+                    <div class="container mb-5">
+                        <a name="klassen"><h5>Klassen</h5></a>
+                        <p>Du kannst Objekte folgender Klassen erzeugen. Du kannst die genannten Methoden verwenden.</p>
+                        <p>
+                            <h6>KREIS</h6>
+                            <ul>
+                                <li><code>MittelpunktSetzen(neueXKoordinate, neueYKoordinate)</code></li>
+                                <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
+                                <li><code>RadiusSetzen(neuerRadius)</code></li>
+                            </ul>
+                        </p>
+                        <p>
+                            <h6>RECHTECK</h6>
+                            <ul>
+                                <li><code>PositionSetzen(neueXKoordinate, neueYKoordinate)</code><br><span class="text-secondary">(setzt die Position der linken unteren Ecke)</span></li>
+                                <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
+                                <li><code>LängeSetzen(neueLänge)</code></li>
+                                <li><code>BreiteSetzen(neueBreite)</code></li>
+                            </ul>
+                        </p>
+                        <p>
+                            <h6>DREIECK</h6>
+                            <ul>
+                                <li><code>PositionSetzen(neueXKoordinate, neueYKoordinate)</code><br><span class="text-secondary">(setzt die Position der linken unteren Ecke)</span></li>
+                                <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
+                                <li><code>HöheSetzen(neueHöhe)</code></li>
+                                <li><code>BreiteSetzen(neueBreite)</code></li>
+                            </ul>
+                        </p>
+                    </div>
+                    
+                </div>
+                <div class="container">
+                    <button type="button" class="btn btn-secondary">Schließen</button>
+                </div>
+            </div>
+            
 
             <footer class="footer">
                 <div class="container text-center">
@@ -219,6 +346,7 @@
         <script src="script/coderunner.js"></script>
         <script src="script/editor.js"></script>
         <script src="script/canvas.js"></script>
+        <script src="script/sidebar.js"></script>
 
         <script src="plugins/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
     </body>

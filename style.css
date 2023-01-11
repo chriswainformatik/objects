@@ -114,3 +114,35 @@
     height: 60px;
     line-height: 60px;
 }
+
+.sidebar {
+    width: 480px;
+    position: fixed;
+    right: -480px;
+    top: 0;
+    box-shadow: -1px 0 10px #eeeeee;
+    overflow-y: scroll;
+}
+
+.sidebar-hide {
+    transform: translate(480px, 0);
+    transition: all ease-in 300ms;
+}
+
+.sidebar-show {
+    transform: translate(-480px, 0);
+    transition: all ease-in 300ms;
+}
+
+#sidebar-underlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: none;
+    background-color: #000000;
+    opacity: 0.5;
+}
+
+.sidebar-underlay-show {
+    display: block!important;
+}
