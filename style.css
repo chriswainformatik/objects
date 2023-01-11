@@ -100,10 +100,6 @@
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
     position: relative;
-    /*
-    border: solid #dee2e6;
-    border-width: 1px 0 0;
-    */
     background-color: #f8f9fa;
 }
 
@@ -132,17 +128,4 @@
 .sidebar-show {
     transform: translate(-480px, 0);
     transition: all ease-in 300ms;
-}
-
-#sidebar-underlay {
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: none;
-    background-color: #000000;
-    opacity: 0.5;
-}
-
-.sidebar-underlay-show {
-    display: block!important;
 }
