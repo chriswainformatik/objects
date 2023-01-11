@@ -35,11 +35,12 @@ class KREIS extends SHAPE {
     radiussetzen(r) {
         this.w = r
         this.h = r
+        this.mittelpunktsetzen(this.x, this.y)
     }
 
     mittelpunktsetzen(x, y) {
-        this.x = x
-        this.y = y
+        this.x = x - this.h/2
+        this.y = y - this.h/2
     }
     
     create() {

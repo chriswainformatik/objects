@@ -101,7 +101,9 @@ function updateDOMObject(shape) {
         element.style.borderColor = shape.lineColor
         element.style.borderWidth = shape.lineWidth + 'px'
         if (shape.constructor.name == 'KREIS')
-            element.style.borderRadius = shape.w / 2 + 'px'
+            element.style.top = (shape.y - shape.h/2) + 'px'
+            element.style.left = (shape.x - shape.h/2) + 'px'
+            element.style.borderRadius = shape.h/2 + 'px'
         
     }
 }
@@ -130,6 +132,7 @@ function setSyntaxError(errorLine) {
         'placement': 'bottom'
     })
     popover.show()
+    popovers.push(popover)
     document.getElementsByClassName('popover')[0].addEventListener('click', () => {
         popover.dispose()
     })

@@ -97,6 +97,7 @@ class CodeRunner {
         if (this.lines[lineNumber] === undefined)
             return
         var line = this.lines[lineNumber].toString()
+        line = line.replace(' ', '')
         if (line.includes(':')) {
             // create elements
             var instanceName = line.split(':')[0]
@@ -141,6 +142,7 @@ class CodeRunner {
 
     checkSemantics(lineNumber, line) {
         line = line.toString()
+        line = line.replace(' ', '')
         var tokens = []
         if (line.includes(':')) {
             tokens = line.split(':')
@@ -237,6 +239,7 @@ class CodeRunner {
         line = line.toString()
         if (line == '')
             return
+        line = line.replace(' ', '')
         var state = 1
         var seperatorIndex = -1
         if (!line[0].match('[a-zA-Z]')) {
