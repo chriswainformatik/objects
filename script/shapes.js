@@ -42,6 +42,11 @@ class KREIS extends SHAPE {
         this.x = x - this.h/2
         this.y = y - this.h/2
     }
+
+    füllfarbesetzen(f) {
+        this.fillColor = globalColorNames[f]
+        this.mittelpunktsetzen(this.x, this.y)
+    }
     
     create() {
         var element = document.createElement('div')
@@ -68,6 +73,7 @@ class RECHTECK extends SHAPE {
     constructor(instanceName) {
         super(instanceName)
         this.x = 100
+        this.y = 150
         this.fillColor = 'blue'
     }
     

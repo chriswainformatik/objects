@@ -129,3 +129,11 @@
     transform: translate(-480px, 0);
     transition: all ease-in 300ms;
 }
+
+.grid-line {
+    z-index: -100;
+}
+
+.grid-label {
+    z-index: -99;
+}
