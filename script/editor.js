@@ -38,7 +38,12 @@ document.getElementById('check-show-grid').addEventListener('change', function()
 
 function runCode() {
     // remove elements
-    document.getElementById('the-canvas').replaceChildren()
+    //document.getElementById('the-canvas').replaceChildren()
+    Array.from(document.getElementById('the-canvas').childNodes).forEach(c => {
+        if(c.classList.contains('graphical-object')) {
+            c.remove()
+        }
+    })
     runner.clearObjects()
     // remove error marking
     popovers.forEach(p => {
