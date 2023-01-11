@@ -16,27 +16,77 @@ document.addEventListener('DOMContentLoaded', function () {
     // set the editor height at this point because this script file gets loaded after the editor.js
     editor.setSize(cw, ch)
 
-}, false);
+    document.getElementById('check-show-grid').addEventListener('change', (e) => toggleGrid(e.target.checked))
+    document.getElementById('check-show-grid-labels').addEventListener('change', (e) => toggleGridLabels(e.target.checked))
 
-//canvas.style.backgroundImage = "url('data:image/svg+xml,<svg width=\"100%\" height=\"100%\" xmlns=\"http://www.w3.org/2000/svg\"><defs><pattern id=\"grid\" width=\"25\" height=\"25\" patternUnits=\"userSpaceOnUse\"><path d=\"M 25 0 L 0 0 0 25\" fill=\"none\" stroke=\"gray\" stroke-width=\"1\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"url(#grid)\" /></svg>')"
+}, false);
 
 function toggleGrid(gridOn) {
     var gridLines = document.getElementsByClassName('grid-line')
     Array.from(gridLines).forEach(gl => gl.parentNode.removeChild(gl))
-
+    
+    var gridColor = '#d0d0d0'
     var step = 50
     if (gridOn) {
-        for (var i = 0; i < cw/step; i++) {
+        for (var i = 1; i < cw/step; i++) {
             var gridLine = document.createElement('div')
             gridLine.classList.add('grid-line')
             gridLine.style.height = ch + 'px'
             gridLine.style.width = 0
-            gridLine.style.borderColor = '#a0a0a0'
-            gridLine.style.borderStyle = 'solid'
-            gridLine.style.position = 'relative'
+            gridLine.style.borderLeftColor = gridColor
+            gridLine.style.borderLeftStyle = 'solid'
+            gridLine.style.borderLeftWidth = '1px'
+            gridLine.style.position = 'absolute'
             gridLine.style.left = (i * step) + 'px'
             gridLine.style.top = 0
             canvas.append(gridLine)
+        }
+        for (var i = 1; i < ch/step; i++) {
+            var gridLine = document.createElement('div')
+            gridLine.classList.add('grid-line')
+            gridLine.style.height = 0
+            gridLine.style.width = cw + 'px'
+            gridLine.style.borderTopColor = gridColor
+            gridLine.style.borderTopStyle = 'solid'
+            gridLine.style.borderTopWidth = '1px'
+            gridLine.style.position = 'absolute'
+            gridLine.style.left = 0
+            gridLine.style.top = (i * step) + 'px'
+            canvas.append(gridLine)
+        }
+    }
+}
+
+function toggleGridLabels(labelsOn) {
+    var gridLabels = document.getElementsByClassName('grid-label')
+    Array.from(gridLabels).forEach(gl => gl.parentNode.removeChild(gl))
+    
+    var labelColor = '#d0d0d0'
+    var step = 50
+    if (labelsOn) {
+        for (var i = 0; i < cw/step; i++) {
+            var gridLabel = document.createElement('div')
+            gridLabel.classList.add('grid-label')
+            gridLabel.style.color = labelColor
+            gridLabel.style.fontSize = '8pt'
+            gridLabel.innerHTML = (i * step)
+            gridLabel.style.position = 'absolute'
+            gridLabel.style.left = (i * step + 2) + 'px'
+            gridLabel.style.top = 0
+            if (i == 0)
+            gridLabel.style.top = '2px'
+            canvas.append(gridLabel)
+        }
+        for (var i = 1; i < ch/step; i++) {
+            var gridLabel = document.createElement('div')
+            gridLabel.classList.add('grid-label')
+            gridLabel.style.color = labelColor
+            gridLabel.style.fontSize = '8pt'
+            gridLabel.innerHTML = (i * step)
+            gridLabel.style.position = 'absolute'
+            gridLabel.style.left = 0
+            gridLabel.style.top = (i * step + 2) + 'px'
+            canvas.append(gridLabel)
         }
     }
 }
