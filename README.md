@@ -18,7 +18,6 @@ Available lasses are:
 
 ### TODO:
  - change delay to velocity on ui
- - settings as sidebar overlay
  - code completion
  - fix bugs:
    - change of triangle size also changes border size
