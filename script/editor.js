@@ -106,8 +106,6 @@ function updateDOMObject(shape) {
         element.style.borderColor = shape.lineColor
         element.style.borderWidth = shape.lineWidth + 'px'
         if (shape.constructor.name == 'KREIS')
-            element.style.top = (shape.y - shape.h/2) + 'px'
-            element.style.left = (shape.x - shape.h/2) + 'px'
             element.style.borderRadius = shape.h/2 + 'px'
         
     }
