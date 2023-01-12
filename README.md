@@ -19,5 +19,7 @@ Available lasses are:
 ### TODO:
  - change delay to velocity on ui
  - code completion
+ - show created objects (as in BlueJ)
+ - class cards
  - fix bugs:
    - change of triangle size also changes border size
