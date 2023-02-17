@@ -293,10 +293,8 @@ class CodeRunner {
                     if (line[i].match('[a-zäöüßA-ZÄÖÜ]')) {
                         // string input for colors
                         state = 5
-                    } else if (line[i].match('[0-9]')) {
-                        // numeric input
-                        state = 6
                     } else {
+                        // numeric input only without quotes
                         this.invalidInputCharacterError(lineNumber, line, i)
                     }
                     break;
@@ -330,9 +328,6 @@ class CodeRunner {
                         state = 4
                     } else if (line[i] == ')' && !quoteOpen) {
                         state = 7
-                    } else if (line[i] == '"' && quoteOpen) {
-                        quoteOpen = false
-                        state = 61
                     } else {
                         this.invalidInputCharacterError(lineNumber, line, i)
                     }
