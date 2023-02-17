@@ -23,4 +23,5 @@ Available lasses are:
  - class cards
  - fix bugs:
    - change of triangle size also changes border size
-   - changing position of triangles doesn't work the expected way
+   - changing position of triangles doesn't work the expected way 
+   

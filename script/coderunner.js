@@ -97,7 +97,7 @@ class CodeRunner {
         if (this.lines[lineNumber] === undefined)
             return
         var line = this.lines[lineNumber].toString()
-        line = line.replace(' ', '')
+        line = line.replaceAll(' ', '')
         if (line.includes(':')) {
             // create elements
             var instanceName = line.split(':')[0]
@@ -124,7 +124,8 @@ class CodeRunner {
             var methodName = line.split('.')[1].split('(')[0]
             var methodArguments = line.split('(')[1].substring(0, line.split('(')[1].length-1).split(',')
             methodArguments.forEach((arg, i) => {
-                methodArguments[i] = arg.replace(' ', '')
+                methodArguments[i] = arg.replaceAll(' ', '')
+                methodArguments[i] = arg.replaceAll('"', '')
             })
 
             // TODO: case sensitive methods
@@ -142,7 +143,7 @@ class CodeRunner {
 
     checkSemantics(lineNumber, line) {
         line = line.toString()
-        line = line.replace(' ', '')
+        line = line.replaceAll(' ', '')
         var tokens = []
         if (line.includes(':')) {
             tokens = line.split(':')
@@ -167,7 +168,8 @@ class CodeRunner {
             var methodName = method.split('(')[0]
             var methodArguments = method.substring(0, method.length - 1).split('(')[1].split(',')
             methodArguments.forEach((arg, i) => {
-                methodArguments[i] = arg.replace(' ', '')
+                methodArguments[i] = arg.replaceAll(' ', '')
+                methodArguments[i] = arg.replaceAll('"', '')
             })
 
             var theClass = undefined
@@ -211,7 +213,6 @@ class CodeRunner {
         return true
     }
 
-
     createInstance(instanceName, className) {
         if (this.classesList.find(cls => cls.name == className) == undefined) {
             throw new NoSuchClassError(i, line[2].name)
@@ -239,12 +240,13 @@ class CodeRunner {
         line = line.toString()
         if (line == '')
             return
-        line = line.replace(' ', '')
+        line = line.replaceAll(' ', '')
         var state = 1
         var seperatorIndex = -1
         if (!line[0].match('[a-zA-Z]')) {
             this.invalidInputCharacterError(lineNumber, line, 0)
         }
+        var quoteOpen = false
         for (var i = 1; i < line.length; i++) {
             switch(state) {
                 case 1:
@@ -274,9 +276,21 @@ class CodeRunner {
                     }
                     break;
                 case 4:
-                    if (line[i] == ' ') {
-                        state = 4
+                    if (line[i] == '"') {
+                        state = 41
+                        quoteOpen = true
                     } else if (line[i].match('[a-zäöüßA-ZÄÖÜ]')) {
+                        // string input for colors
+                        state = 5
+                    } else if (line[i].match('[0-9]')) {
+                        // numeric input
+                        state = 6
+                    } else {
+                        this.invalidInputCharacterError(lineNumber, line, i)
+                    }
+                    break;
+                case 41:
+                    if (line[i].match('[a-zäöüßA-ZÄÖÜ]')) {
                         // string input for colors
                         state = 5
                     } else if (line[i].match('[0-9]')) {
@@ -289,19 +303,42 @@ class CodeRunner {
                 case 5:
                     if (line[i].match('[a-zäöüßA-ZÄÖÜ]')) {
                         state = 5
-                    } else if (line[i] == ',') {
+                    } else if (line[i] == ',' && !quoteOpen) {
                         state = 4
-                    } else if (line[i] == ')') {
+                    } else if (line[i] == ')' && !quoteOpen) {
                         //tokens.push(line.substring(seperatorIndex+1, line.length))
                         state = 7
+                    } else if (line[i] == '"' && quoteOpen) {
+                        quoteOpen = false
+                        state = 51
                     } else {
                         this.invalidInputCharacterError(lineNumber, line, i)
                     }
                     break;
+                case 51:
+                    if (line[i] == ',') {
+                        state = 4
+                    } else if (line[i] == ')' && !quoteOpen) {
+                        state = 7
+                    } else {
+                        this.invalidInputCharacterError(lineNumber, line, i)
+                    }
                 case 6:
                     if (line[i].match('[0-9]')) {
                         state = 6
-                    } else if (line[i] == ',') {
+                    } else if (line[i] == ',' && !quoteOpen) {
+                        state = 4
+                    } else if (line[i] == ')' && !quoteOpen) {
+                        state = 7
+                    } else if (line[i] == '"' && quoteOpen) {
+                        quoteOpen = false
+                        state = 61
+                    } else {
+                        this.invalidInputCharacterError(lineNumber, line, i)
+                    }
+                    break;
+                case 61:
+                    if (line[i] == ',') {
                         state = 4
                     } else if (line[i] == ')') {
                         state = 7
@@ -322,7 +359,7 @@ class CodeRunner {
             }
         }
 
-        if (state != 7 || state != 8) {
+        if (state != 7 && state != 8) {
             // something went wrong
             return false
         }
