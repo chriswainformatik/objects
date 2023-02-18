@@ -53,6 +53,7 @@
                 
             </div>
 
+            <!-- Settings sidebar -->
             <div id="sidebar-settings" class="sidebar container p-4 h-100 bg-white border-start">
                 <div class="d-flex justify-content-between">
                     <h2 class="mt-4">Einstellungen</h2>
@@ -80,11 +81,12 @@
                         </div>
                 </div>
                 <div class="container mt-4">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
-                    <button type="button" class="btn btn-primary">Speichern</button>
+                    <button type="button" class="btn btn-secondary" id="btn-sidebar-settings-cancel">Schließen</button>
+                    <!--<button type="button" class="btn btn-primary" id="btn-sidebar-settings-save">Speichern</button>-->
                 </div>
             </div>
 
+            <!-- Help sidebar -->
             <div id="sidebar-help" class="sidebar container p-4 h-100 bg-white border-start">
                 <div class="d-flex justify-content-between">
                     <h2 class="mt-4" id="helpModalLabel">Hilfe</h2>
@@ -131,6 +133,14 @@
                     </p>
 
                     <p>
+                        Werte, die keine Zahlen sind (z.B. Farben), können auch in Anführungszeichen angegeben werden:
+                    </p>
+
+                    <div class="help-code-example">
+                        <code>vorderrad.FüllfarbeSetzen("schwarz")</code>
+                    </div>
+
+                    <p>
                         <span class="text-danger">Achtung:</span> Du kannst nur Methoden von Objekten aufrufen, die du vorher erzeugt hast!
                     </p>
                     </div>
@@ -167,8 +177,8 @@
                     </div>
                     
                 </div>
-                <div class="container">
-                    <button type="button" class="btn btn-secondary">Schließen</button>
+                <div class="container mt-4">
+                    <button type="button" class="btn btn-secondary" id="btn-sidebar-help-cancel">Schließen</button>
                 </div>
             </div>
             

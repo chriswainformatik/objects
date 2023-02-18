@@ -1,7 +1,10 @@
 document.getElementById('btn-sidebar-settings-close').addEventListener('click', () => hideSidebar('settings'))
+//document.getElementById('btn-sidebar-settings-save').addEventListener('click', () => hideSidebar('settings'))
+document.getElementById('btn-sidebar-settings-cancel').addEventListener('click', () => hideSidebar('settings'))
 document.getElementById('btn-sidebar-settings-show').addEventListener('click', () => showSidebar('settings'))
 
 document.getElementById('btn-sidebar-help-close').addEventListener('click', () => hideSidebar('help'))
+document.getElementById('btn-sidebar-help-cancel').addEventListener('click', () => hideSidebar('help'))
 document.getElementById('btn-sidebar-help-show').addEventListener('click', () => showSidebar('help'))
 
 
