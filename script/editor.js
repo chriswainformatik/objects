@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // velocity control
     document.getElementById('velocity').addEventListener('change', function(event) {
-        runner.setStepDelay(event.target.value)
+        runner.setStepDelay(2 - event.target.value)
     })
 }, false)
 
