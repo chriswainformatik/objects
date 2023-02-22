@@ -1,7 +1,41 @@
+/*
+ * Objects Language Definition
+ */
+CodeMirror.defineSimpleMode("objectslang", {
+    start: [
+        { regex: /[a-zA-Z][a-zA-Z0-9]*/, token: "identifier", next: "seperator"}
+    ],
+    seperator: [
+        { regex: /:/, token: "seperator", next: "instancecreation" },
+        { regex: /./, token: "seperator", next: "methodcall" }
+    ],
+    instancecreation: [
+        { regex: /[A-Z]*/, token: "classname", next: "start" }
+    ],
+    methodcall: [
+        { regex: /[a-zäöüA-ZÄÖÜ][a-zäöüßA-ZÄÖÜ0-9]*/, token: "methodcall", next: "paranthesis" } 
+    ],
+    paranthesis: [
+        { regex: /\(/, next: "param" },
+        { regex: /\)/, next: "start" }
+    ],
+    param: [
+        { regex: /[0-9]+/, token: "number", next: "paramseperator" },
+        { regex: /("[a-zA-Z][a-zA-Z0-9]*"|[a-zA-Z][a-zA-Z0-9]*)/ , token: "string", next: "paramseperator" }
+    ],
+    paramseperator: [
+        { regex: /,/, next: "param" },
+        { regex: /\)/, next: "start" }
+    ]
+})
+
+
 var runner = undefined
 
 var editor = CodeMirror.fromTextArea(myTextarea, {
-    lineNumbers: true
+    lineNumbers: true,
+    extraKeys: {"Ctrl-Space": "autocomplete"},
+    mode: "objectslang"
 });
 editor.on('change', function() {
     //console.log(editor.getValue())

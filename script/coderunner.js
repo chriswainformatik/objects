@@ -26,6 +26,7 @@ class CodeRunner {
 
     clearObjects() {
         this.instancesList = []
+        globalInstancesList = this.instancesList
         this.shapesList = []
     }
 
@@ -153,10 +154,12 @@ class CodeRunner {
                 throw new NoSuchClassError(lineNumber, className)
             }
             if (this.instancesList.find(inst => inst.name == instanceName) == undefined) {
-                this.instancesList.push({
+                var newInstance = {
                     name: instanceName,
                     class: className,
-                })
+                }
+                this.instancesList.push(newInstance)
+                globalInstancesList.push(newInstance)
             } else {
                 // object has already been defined
                 throw new DuplicateInstanceError(lineNumber, instanceName)

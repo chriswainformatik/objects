@@ -17,7 +17,6 @@ Available lasses are:
  - `KREIS`
 
 ### TODO:
- - change delay to velocity on ui
  - code completion
  - show created objects (as in BlueJ)
  - class cards

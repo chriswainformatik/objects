@@ -138,3 +138,21 @@
 .grid-label {
     z-index: -99;
 }
+
+/* CodeMirror Syntax Highlighting */
+.cm-identifier {
+    color: rgb(204, 40, 122);
+}
+
+.cm-methodcall {
+    color: #219;
+}
+
+.cm-instancename {
+    /*color: #01748E;*/
+    color: #26602E;
+}
+
+.cm-number {
+    color: dimgray !important;
+}
