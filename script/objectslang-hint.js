@@ -67,11 +67,11 @@ function objectslangHint(editor, options) {
             var instancename = editor.getTokenAt(Pos(cur.line, token.start)).string;
             var classname = getClassNameFor(instancename)
             autocompletelist = getMethodNamesListFor(classname)
-            token.start++
-            token.end++
         } else {
             return
         }
+        token.start++
+        token.end++
     } else if (token.type == 'classname') {
         var list = getClassNamesList()
         for (var i = 0; i < list.length; i++) {

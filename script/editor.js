@@ -34,7 +34,6 @@ var runner = undefined
 
 var editor = CodeMirror.fromTextArea(myTextarea, {
     lineNumbers: true,
-    //extraKeys: {"Ctrl-Space": "autocomplete"}, // see autocompletion check box
     mode: "objectslang"
 });
 editor.on('change', function() {
@@ -62,11 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('check-enable-autocomplete').addEventListener('change', (e) => toggleAutocompletion(e.target.checked))
 }, false)
 
+
 function toggleAutocompletion(enabled) {
     if (enabled) {
-        editor.setOption('extraKeys', '{"Ctrl-Space": "autocomplete"}')
+        editor.addKeyMap({ 'Ctrl-Space' : 'autocomplete' })
     } else {
-        editor.setOption('extraKeys', '')
+        editor.removeKeyMap('Ctrl-Space')
     }
 }
 
