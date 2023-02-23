@@ -117,7 +117,30 @@ class CodeRunner {
                 default:
                     console.error('An error occured while running the code (after checking syntax and semantics)')
             }
-            document.getElementById('the-canvas').appendChild(shape.create())
+            //document.getElementById('the-canvas').appendChild(shape.create())
+            var context = document.getElementById('the-canvas-overlay').getContext('2d')
+            context.fillStyle = shape.fillColor
+            switch (shape.type) {
+                case 'circle':
+                    context.beginPath()
+                    context.arc(shape.x, shape.y, shape.w, 0, 2 * Math.PI, false)
+                    context.fill()
+                    // TODO: draw line
+                    break;
+                case 'rectangle':
+                    context.fillRect(shape.x, shape.y, shape.w, shape.h)
+                    // TODO: draw line
+                    break;
+                case 'triangle':
+                    context.beginPath()
+                    context.moveTo(shape.x, shape.y)
+                    context.lineTo(shape.x+shape.w, shape.y)
+                    context.lineTo(shape.x+shape.w/2, shape.y-shape.h)
+                    context.lineTo(shape.x, shape.y)
+                    context.fill()
+                    // TODO: draw line
+                    break;
+            }
             this.shapesList.push(shape)
         } else if (line.includes('.')) {
             // call methods

@@ -74,6 +74,11 @@
     position: relative;
 }
 
+#the-canvas-overlay {
+    position: relative;
+    image-rendering: pixelated;
+}
+
 .error-line {
     background-color: #ffafaf;
 }

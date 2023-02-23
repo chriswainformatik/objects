@@ -7,6 +7,7 @@ class SHAPE {
     lineColor = 'black'
     lineWidth = 4
     lineStyle = 'solid'
+    type = undefined
 
     constructor(instanceName) {
         this.instanceName = instanceName
@@ -30,6 +31,9 @@ class KREIS extends SHAPE {
         super(instanceName)
         this.w = 60
         this.h = 60
+        this.y = 150
+        this.x = 100
+        this.type = 'circle'
     }
 
     radiussetzen(r) {
@@ -75,6 +79,7 @@ class RECHTECK extends SHAPE {
         this.x = 100
         this.y = 150
         this.fillColor = 'blue'
+        this.type = 'rectangle'
     }
     
     breitesetzen(b) {
@@ -111,10 +116,11 @@ class RECHTECK extends SHAPE {
 class DREIECK extends SHAPE {
     constructor(instanceName) {
         super(instanceName)
-        this.w = 120
-        this.h = 140
+        this.w = 150
+        this.h = 100
         this.y = 100
         this.fillColor = 'green'
+        this.type = 'triangle'
 
         // used to create the DOM element
         this.baseLength = 100
