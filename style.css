@@ -74,7 +74,7 @@
     position: relative;
 }
 
-#the-canvas-overlay {
+.shape-canvas {
     position: relative;
     image-rendering: pixelated;
 }

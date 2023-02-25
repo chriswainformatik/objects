@@ -70,17 +70,6 @@ function toggleAutocompletion(enabled) {
     }
 }
 
-
-/*
-document.getElementById('check-show-grid').addEventListener('change', function() {
-    if (this.checked)
-        toggleGrid(true)
-    else
-        toggleGrid(false)
-})
-*/
-
-
 function runCode() {
     // remove elements
     //document.getElementById('the-canvas').replaceChildren()
@@ -101,58 +90,69 @@ function runCode() {
 }
 
 function updateDOMObject(shape) {
+    /**
+     * Helper function to draw or stroke polygon shapes.
+     * 
+     * @param {*} context context to draw on
+     * @param {*} points points of the polygon
+     * @param {*} type 'fill' or 'stroke'
+     */
+    function drawShape(context, points, type) {
+        context.beginPath()
+        context.moveTo(points[0][0], points[0][1])
+        for (var i = 1; i < points.length; i++) {
+            context.lineTo(points[i][0], points[i][1])
+        }
+        context.closePath()
+        if (type == 'fill') {
+            context.fill()
+        } else if (type == 'stroke') {
+            context.stroke()
+        }
+    }
+
     var element = document.getElementById(shape.instanceName)
-    if (shape.constructor.name == 'DREIECK') {
-        // triangle is a bit more complicated
-        var elementWrapper = element
-        element = elementWrapper.firstChild
-        
-        elementWrapper.style.top = (shape.y - shape.baseLength) + 'px'
-        elementWrapper.style.left = shape.x + 'px'
-        elementWrapper.style.width = shape.baseLength + 'px'
-        elementWrapper.style.height = shape.baseLength + 'px'
+    element.style.top = (shape.y - shape.h) + 'px'
+    element.style.left = shape.x + 'px'
+    element.width = shape.w
+    element.height = shape.h
+    var context = element.getContext('2d')
+    context.clearRect(0, 0, element.width, element.height)
+    context.fillStyle = shape.fillColor
+    context.strokeStyle = shape.lineColor
+    context.lineWidth = shape.lineWidth
+    context.lineJoin = 'milter'
+    if (shape.type == 'triangle') {
+        // define points
+        var points = [
+            [0, shape.h],
+            [shape.w, shape.h],
+            [shape.w/2, 0],
+            [0, shape.h]
+        ]
+        // fill the area of the triangle
+        drawShape(context, points, 'fill')
 
-        elementWrapper.style.borderBottomStyle = shape.lineStyle
-        elementWrapper.style.borderBottomColor = shape.lineColor
-        elementWrapper.style.borderBottomWidth = shape.lineWidth + 'px'
-        // make the corners sharp
-        elementWrapper.style.borderLeftStyle = 'solid'
-        elementWrapper.style.borderLeftColor = 'transparent'
-        elementWrapper.style.borderLeftWidth = shape.lineWidth + 'px'
-        elementWrapper.style.borderRightStyle = 'solid'
-        elementWrapper.style.borderRightColor = 'transparent'
-        elementWrapper.style.borderRightWidth = shape.lineWidth + 'px'
-
-        elementWrapper.style.overflow = 'hidden'
-        elementWrapper.style.transformOrigin = '0 ' + shape.baseLength + 'px'
-
-        var scaleX = shape.w / shape.baseLength
-        var scaleY = shape.h / shape.baseLength
-        elementWrapper.style.transform = 'scaleX(' + scaleX + ') scaleY(' + scaleY + ')'
-        
-        element.id = shape.instanceName + '-inner'
-        var diagonalLength = ( Math.floor(Math.sqrt( Math.pow(shape.baseLength-shape.lineWidth,2) / 2 )) ) + 'px'
-        element.style.width = diagonalLength
-        element.style.height = diagonalLength
-        element.style.transform = 'translateX(' + (shape.baseLength/2-shape.lineWidth) + 'px) translateY(' + (shape.baseLength/2) + 'px) rotate(45deg)'
-        element.style.transformOrigin = '0 0'
-
-        element.style.backgroundColor = shape.fillColor
-        element.style.borderStyle = shape.lineStyle
-        element.style.borderColor = shape.lineColor
-        element.style.borderWidth = shape.lineWidth + 'px'
-    } else {
-        element.style.top = shape.y + 'px'
-        element.style.left = shape.x + 'px'
-        element.style.width = shape.w + 'px'
-        element.style.height = shape.h + 'px'
-        element.style.backgroundColor = shape.fillColor
-        element.style.borderStyle = shape.lineStyle
-        element.style.borderColor = shape.lineColor
-        element.style.borderWidth = shape.lineWidth + 'px'
-        if (shape.constructor.name == 'KREIS')
-            element.style.borderRadius = shape.h/2 + 'px'
-        
+        // this is a "don't touch - it works" code fragment
+        context.globalCompositeOperation = 'source-over'
+        drawShape(context, points, 'stroke')
+        context.globalCompositeOperation = 'destination-in'
+        drawShape(context, points, 'fill')
+        // "dont't touch - it works" end
+    } else if (shape.type == 'circle') {
+        element.style.top = (shape.y - shape.w/2) + 'px'
+        element.style.left = (shape.x - shape.w/2) + 'px'
+        context.beginPath()
+        context.arc(shape.w/2, shape.h/2, shape.w/2, 0, 2 * Math.PI, false)
+        context.fill()
+        context.lineWidth = context.lineWidth/2
+        context.beginPath()
+        context.arc(shape.w/2, shape.h/2, shape.w/2 - context.lineWidth/2.0, 0, 2 * Math.PI, false)
+        context.stroke()
+    } else if (shape.type == 'rectangle') {
+        console.log(shape)
+        context.fillRect(0, 0, shape.w, shape.h)
+        context.strokeRect(0, 0, shape.w, shape.h)
     }
 }
 

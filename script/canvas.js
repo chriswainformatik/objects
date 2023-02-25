@@ -4,20 +4,12 @@ var ch = -1
 
 document.addEventListener('DOMContentLoaded', function () {
     canvas = document.getElementById('the-canvas')
-    canvasOverlay = document.getElementById('the-canvas-overlay')
 
     cw = canvas.clientWidth
-    //canvas.setAttribute('width', cw)
     canvas.style.width = cw + 'px'
-    canvasOverlay.style.width = cw + 'px'
-    canvasOverlay.width = cw
     //var ch = cw*0.6
     ch = 350
-    //canvas.setAttribute('height', ch)
     canvas.style.height = ch + 'px'
-    canvasOverlay.style.height = ch + 'px'
-    canvasOverlay.height = ch
-    canvasOverlay.style.top = (-ch) + 'px'
 
     // set the editor height at this point because this script file gets loaded after the editor.js
     editor.setSize(cw, ch)

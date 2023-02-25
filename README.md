@@ -21,6 +21,5 @@ Available lasses are:
  - show created objects (as in BlueJ)
  - class cards
  - fix bugs:
-   - change of triangle size also changes border size; maybe use canvas on top of div for this: canvas for drawing shapes, div for drawing grid
-   - changing position of triangles doesn't work the expected way 
+   - ?
    
