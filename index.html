@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <title>Objects!</title>
 
         <link rel="stylesheet" href="plugins/codemirror-5.65.10/lib/codemirror.css">
         <link rel="stylesheet" href="plugins/codemirror-5.65.10/addon/hint/show-hint.css">
@@ -18,7 +19,31 @@
                 </div>
                 <h1 style="display: none;">Objects!</h1>
                 <h2 class="logo-font my-auto">Eine einfache objektorientierte Sprache mit Grafikobjekten</h2>
+                <span id="beta-badge" class="badge bg-warning text-dark" data-bs-toggle="modal" data-bs-target="#beta-modal">BETA</span>
             </div>
+
+            <!-- BETA info modal -->
+            <div class="modal fade" id="beta-modal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-body pt-6">
+                        <h5 class="mt-3">What's not working:</h5>
+                        <ul>
+                            <li>Stop button</li>
+                            <li>Methods for changing line width, line color, etc.</li>
+                        </ul>
+                        <h5>Known bugs:</h5>
+                        <ul>
+                            <li>you tell me</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+              
             
             <div id="content" class="container mt-3">
                 <div class="row">

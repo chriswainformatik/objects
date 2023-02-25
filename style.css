@@ -62,6 +62,10 @@
     border-color: #dc3545;
 }
 
+#beta-badge:hover {
+    cursor: pointer;
+}
+
 /* ################################ */
 
 
