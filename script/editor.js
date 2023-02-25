@@ -21,7 +21,7 @@ CodeMirror.defineSimpleMode("objectslang", {
     ],
     param: [
         { regex: /[0-9]+/, token: "number", next: "paramseperator" },
-        { regex: /("[a-zA-Z][a-zA-Z0-9]*"|[a-zA-Z][a-zA-Z0-9]*)/ , token: "string", next: "paramseperator" }
+        { regex: /("[a-zäöüA-ZÄÖÜ][a-zäöüßA-ZÄÖÜ0-9]*"|[a-zäöü?A-ZÄÖÜ][a-zäöüßA-ZÄÖÜ0-9]*)/ , token: "string", next: "paramseperator" }
     ],
     paramseperator: [
         { regex: /,/, next: "param" },
