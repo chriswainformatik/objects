@@ -81,6 +81,16 @@ function objectslangHint(editor, options) {
         }
     } else if (token.type == 'identifier') {
         // TODO
+    } else if (token.type == 'methodcall') {
+        var identifierToken = editor.getTokenAt(Pos(cur.line, token.start))
+        identifierToken = editor.getTokenAt(Pos(cur.line, identifierToken.start))
+        var classname = getClassNameFor(identifierToken.string)
+        var list = getMethodNamesListFor(classname)
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].startsWith(token.string)) {
+                autocompletelist.push(list[i])
+            }
+        }
     } else {
         return
     }
