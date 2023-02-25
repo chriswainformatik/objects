@@ -30,19 +30,23 @@ CodeMirror.defineSimpleMode("objectslang", {
 })
 
 
-var runner = undefined
-
+/**
+ * Create the CodeMirror instance.
+ */
 var editor = CodeMirror.fromTextArea(myTextarea, {
     lineNumbers: true,
     mode: "objectslang"
 });
-editor.on('change', function() {
-    //console.log(editor.getValue())
-})
 document.getElementsByClassName('CodeMirror')[0].classList.add('border')
 
+
+var runner = undefined
 var popovers = []
 
+
+/**
+ * Do a few things on startup.
+ */
 document.addEventListener('DOMContentLoaded', function () {
     runner = new CodeRunner(globalClassesList)
     document.getElementById('btn-run-code').addEventListener('click', runCode)
@@ -62,6 +66,11 @@ document.addEventListener('DOMContentLoaded', function () {
 }, false)
 
 
+/**
+ * Enables or disables autocompletion, depending on the parameter value.
+ * 
+ * @param {boolean} enabled 
+ */
 function toggleAutocompletion(enabled) {
     if (enabled) {
         editor.addKeyMap({ 'Ctrl-Space' : 'autocomplete' })
@@ -70,6 +79,9 @@ function toggleAutocompletion(enabled) {
     }
 }
 
+/**
+ * Clears all elements and re-runs the whole code.
+ */
 function runCode() {
     // remove elements
     //document.getElementById('the-canvas').replaceChildren()
@@ -89,6 +101,13 @@ function runCode() {
     runner.runCode(setSyntaxError, setSemanticError, setActiveLine, updateDOMObject)
 }
 
+/**
+ * Updates the DOM object representing a shape.
+ * Every shape is represented by a canvas object on which the shape is drawn.
+ * This method re-draws the shape on the canvas using all updated attribute values.
+ * 
+ * @param {SHAPE} shape The shape which the DOM object is representing
+ */
 function updateDOMObject(shape) {
     /**
      * Helper function to draw or stroke polygon shapes.
@@ -156,12 +175,20 @@ function updateDOMObject(shape) {
     }
 }
 
+/**
+ * Removes the background styles for each line in the editor.
+ */
 function clearLineBackgrounds() {
     for (var i = 0; i < editor.lineCount(); i++) {
         editor.removeLineClass(i, "background")
     }
 }
 
+/**
+ * Marks the given line as active.
+ * 
+ * @param {number} lineNumber The number of the line that will be marked as active.
+ */
 function setActiveLine(lineNumber) {
     // remove active line marking
     clearLineBackgrounds()
@@ -169,6 +196,11 @@ function setActiveLine(lineNumber) {
         editor.addLineClass(lineNumber, "background", "active-line")
 }
 
+/**
+ * Displays a syntax error popover for the given line.
+ * 
+ * @param {number} errorLine The number of the line where the syntax error occured.
+ */
 function setSyntaxError(errorLine) {
     editor.addLineClass(errorLine, "background", "error-line")
     console.log('Syntax error')
@@ -187,6 +219,12 @@ function setSyntaxError(errorLine) {
     
 }
 
+/**
+ * Displays a semantics error popover for the given line.
+ * 
+ * @param {number} errorLine The number of the line where the semantics error occured.
+ * @param {string} error The text of the error that explains the semantics error to the user.
+ */
 function setSemanticError(errorLine, error) {
     editor.addLineClass(errorLine, "background", "error-line")
     console.log('Semantics error')
@@ -202,45 +240,4 @@ function setSemanticError(errorLine, error) {
     document.getElementsByClassName('popover')[0].addEventListener('click', () => {
         popover.dispose()
     })
-}
-
-
-/**
- * DEPRECATED
- */
-function addEditorPanel() {
-    var panel = document.createElement('div')
-    panel.id = 'editor-top-panel'
-    panel.classList.add('row')
-    panel.classList.add('my-2')
-
-    var btnWrapper = document.createElement('div')
-    btnWrapper.classList.add('col-md-auto')
-    var btn = document.createElement('button')
-    btn.type = 'button'
-    btn.classList.add('btn')
-    btn.classList.add('btn-success')
-    btn.classList.add('btn-sm')
-    btn.innerHTML = '<span class="bi bi-caret-right-fill"></span> Ausführen '    
-    btn.addEventListener('click', runCode)
-    btnWrapper.appendChild(btn)
-    panel.appendChild(btnWrapper)
-
-    var silderWrapper = document.createElement('div')
-    silderWrapper.classList.add('col')
-    silderWrapper.classList.add('row')
-
-    var sliderLabel = document.createElement('div')
-    sliderLabel.classList.add('col-md-auto')
-    sliderLabel.innerHTML = '<label for="veloxity" class="form-label my-auto">Geschwindigkeit</label>'
-    silderWrapper.appendChild(sliderLabel)
-
-    var slider = document.createElement('div')
-    slider.classList.add('col')
-    slider.innerHTML = '<input type="range" class="form-range" min="0" max="5" step="0.5" id="velocity">'
-    silderWrapper.appendChild(slider)
-    
-    panel.appendChild(silderWrapper)
-
-    editor.addPanel(panel)
 }
