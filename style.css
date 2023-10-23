@@ -79,7 +79,7 @@
 }
 
 .shape-canvas {
-    position: relative;
+    position: absolute;
     image-rendering: pixelated;
 }
 
