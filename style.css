@@ -71,6 +71,10 @@
 
 /* Additional Styles */
 
+#github-logo:hover {
+    opacity: 0.5;
+}
+
 #the-canvas {
     width: 100%;
     /*height: 100%;*/
