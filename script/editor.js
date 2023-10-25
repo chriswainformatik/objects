@@ -93,7 +93,11 @@ function runCode() {
     runner.clearObjects()
     // remove error marking
     popovers.forEach(p => {
-        p.dispose()
+        try {
+            p.dispose()
+        } catch (error) {
+            console.log(error)
+        }
     })
     popovers = []
     clearLineBackgrounds()
