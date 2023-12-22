@@ -180,40 +180,124 @@
                     <div class="container mb-5">
                         <a name="klassen"><h5>Klassen</h5></a>
                         <p>Du kannst Objekte folgender Klassen erzeugen. Du kannst die genannten Methoden verwenden.</p>
+                        <div>
+                            <select class="form-select" aria-label="class card listing toggle" id="class-card-method-listing-toggle">
+                                <option value="listing" selected>Methodenauflistung verwenden</option>
+                                <option value="class-card">Klassenkarten verwenden</option>
+                              </select>
+                        </div>
                         <p>
-                            <h6>KREIS</h6>
-                            <ul>
-                                <li><code>MittelpunktSetzen(neueXKoordinate, neueYKoordinate)</code></li>
-                                <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
-                                <li><code>RadiusSetzen(neuerRadius)</code></li>
-                                <li><code>LinienartSetzen(neueArt)</code></li>
-                                <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
-                                <li><code>LinienstärkeSetzen(neueStärke)</code></li>
-                            </ul>
+                            <div class="class-card-wrapper">
+                                <table class="class-card">
+                                    <tr><th class="class-card-heading">KREIS</th></tr>
+
+                                    <tr><td>füllfarbe</td></tr>
+                                    <tr><td>linienart</td></tr>
+                                    <tr><td>linienfarbe</td></tr>
+                                    <tr><td>linienstärke</td></tr>
+                                    <tr><td>mittelpunktX</td></tr>
+                                    <tr><td>mittelpunktY</td></tr>
+                                    <tr><td class="class-card-last-attr">radius</td></tr>
+
+                                    <tr><td>FüllfarbeSetzen(neueFarbe)</td></tr>
+                                    <tr><td>LinienartSetzen(neueArt)</td></tr>
+                                    <tr><td>LinienfarbeSetzen(neueFarbe)</td></tr>
+                                    <tr><td>LinienstärkeSetzen(neueStärke)</td></tr>
+                                    <tr><td>MittelpunktSetzen(neueXKoordinate, neueYKoordinate)</td></tr>
+                                    <tr><td>RadiusSetzen(neuerRadius)</td></tr>
+                                </table>
+                            </div>
+                            
+                            <div class="method-listing-wrapper">
+                                <h6>KREIS</h6>
+                                <ul>
+                                    <li><code>MittelpunktSetzen(neueXKoordinate, neueYKoordinate)</code></li>
+                                    <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
+                                    <li><code>RadiusSetzen(neuerRadius)</code></li>
+                                    <li><code>LinienartSetzen(neueArt)</code></li>
+                                    <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
+                                    <li><code>LinienstärkeSetzen(neueStärke)</code></li>
+                                </ul>
+                            </div>
+                            
+                        </p>
+                        <p class="mt-4">
+                            <div class="class-card-wrapper">
+                                <table class="class-card">
+                                    <tr><th class="class-card-heading">RECHTECK</th></tr>
+
+                                    <tr><td>breite</td></tr>
+                                    <tr><td>füllfarbe</td></tr>
+                                    <tr><td>länge</td></tr>
+                                    <tr><td>linienart</td></tr>
+                                    <tr><td>linienfarbe</td></tr>
+                                    <tr><td>linienstärke</td></tr>
+                                    <tr><td>xKoordinate</td></tr>
+                                    <tr><td class="class-card-last-attr">yKoordinate</td></tr>
+
+                                    <tr><td>BreiteSetzen(neueBreite)</td></tr>
+                                    <tr><td>FüllfarbeSetzen(neueFarbe)</td></tr>
+                                    <tr><td>LängeSetzen(neueLänge)</td></tr>
+                                    <tr><td>LinienartSetzen(neueArt)</td></tr>
+                                    <tr><td>LinienfarbeSetzen(neueFarbe)</td></tr>
+                                    <tr><td>LinienstärkeSetzen(neueStärke)</td></tr>
+                                    <tr><td>PositionSetzen(neueXKoordinate, neueYKoordinate)*</td></tr>
+                                </table>
+                                <span class="text-secondary">*setzt die Position der linken unteren Ecke</span>
+                            </div>
+                            
+                            <div class="method-listing-wrapper">
+                                <h6>RECHTECK</h6>
+                                <ul>
+                                    <li><code>PositionSetzen(neueXKoordinate, neueYKoordinate)</code><br><span class="text-secondary">(setzt die Position der linken unteren Ecke)</span></li>
+                                    <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
+                                    <li><code>LängeSetzen(neueLänge)</code></li>
+                                    <li><code>BreiteSetzen(neueBreite)</code></li>
+                                    <li><code>LinienartSetzen(neueArt)</code></li>
+                                    <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
+                                    <li><code>LinienstärkeSetzen(neueStärke)</code></li>
+                                </ul>
+                            </div>
+                            
                         </p>
                         <p>
-                            <h6>RECHTECK</h6>
-                            <ul>
-                                <li><code>PositionSetzen(neueXKoordinate, neueYKoordinate)</code><br><span class="text-secondary">(setzt die Position der linken unteren Ecke)</span></li>
-                                <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
-                                <li><code>LängeSetzen(neueLänge)</code></li>
-                                <li><code>BreiteSetzen(neueBreite)</code></li>
-                                <li><code>LinienartSetzen(neueArt)</code></li>
-                                <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
-                                <li><code>LinienstärkeSetzen(neueStärke)</code></li>
-                            </ul>
-                        </p>
-                        <p>
-                            <h6>DREIECK</h6>
-                            <ul>
-                                <li><code>PositionSetzen(neueXKoordinate, neueYKoordinate)</code><br><span class="text-secondary">(setzt die Position der linken unteren Ecke)</span></li>
-                                <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
-                                <li><code>HöheSetzen(neueHöhe)</code></li>
-                                <li><code>BreiteSetzen(neueBreite)</code></li>
-                                <li><code>LinienartSetzen(neueArt)</code></li>
-                                <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
-                                <li><code>LinienstärkeSetzen(neueStärke)</code></li>
-                            </ul>
+                            <div class="class-card-wrapper">
+                                <table class="class-card">
+                                    <tr><th class="class-card-heading">DREIECK</th></tr>
+
+                                    <tr><td>breite</td></tr>
+                                    <tr><td>füllfarbe</td></tr>
+                                    <tr><td>länge</td></tr>
+                                    <tr><td>linienart</td></tr>
+                                    <tr><td>linienfarbe</td></tr>
+                                    <tr><td>linienstärke</td></tr>
+                                    <tr><td>xKoordinate</td></tr>
+                                    <tr><td class="class-card-last-attr">yKoordinate</td></tr>
+
+                                    <tr><td>BreiteSetzen(neueBreite)</td></tr>
+                                    <tr><td>FüllfarbeSetzen(neueFarbe)</td></tr>
+                                    <tr><td>LängeSetzen(neueLänge)</td></tr>
+                                    <tr><td>LinienartSetzen(neueArt)</td></tr>
+                                    <tr><td>LinienfarbeSetzen(neueFarbe)</td></tr>
+                                    <tr><td>LinienstärkeSetzen(neueStärke)</td></tr>
+                                    <tr><td>PositionSetzen(neueXKoordinate, neueYKoordinate)*</td></tr>
+                                </table>
+                                <span class="text-secondary">*setzt die Position der linken unteren Ecke</span>
+                            </div>
+                        
+                            <div class="method-listing-wrapper">
+                                <h6>DREIECK</h6>
+                                <ul>
+                                    <li><code>PositionSetzen(neueXKoordinate, neueYKoordinate)</code><br><span class="text-secondary">(setzt die Position der linken unteren Ecke)</span></li>
+                                    <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
+                                    <li><code>HöheSetzen(neueHöhe)</code></li>
+                                    <li><code>BreiteSetzen(neueBreite)</code></li>
+                                    <li><code>LinienartSetzen(neueArt)</code></li>
+                                    <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
+                                    <li><code>LinienstärkeSetzen(neueStärke)</code></li>
+                                </ul>
+                            </div>
+                        
                         </p>
                     </div>
                     
@@ -221,7 +305,7 @@
                 <div class="container mt-4">
                     <div class="d-flex flex-column">
                         <div class="d-flex flex-row justify-content-between align-items-center">
-                            <div>Version: 0.1.2-beta</div>
+                            <div>Version: 0.2.0-beta</div>
                             <div><a id="github-logo" href="https://github.com/chriswainformatik/objects"><img src="assets/github-mark.png" width="50" height="50"></a></div>
                         </div>
                     </div>

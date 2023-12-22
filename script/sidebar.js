@@ -7,6 +7,24 @@ document.getElementById('btn-sidebar-help-close').addEventListener('click', () =
 document.getElementById('btn-sidebar-help-cancel').addEventListener('click', () => hideSidebar('help'))
 document.getElementById('btn-sidebar-help-show').addEventListener('click', () => showSidebar('help'))
 
+document.getElementById('class-card-method-listing-toggle').addEventListener('change', (e) => {
+    var value = e.target.value
+    if (value == 'listing') {
+        Array.prototype.forEach.call(document.getElementsByClassName('method-listing-wrapper'), (el) => {
+            el.style.display = 'block'
+        })
+        Array.prototype.forEach.call(document.getElementsByClassName('class-card-wrapper'), (el) => {
+            el.style.display = 'none'
+        })
+    } else if (value == 'class-card') {
+        Array.prototype.forEach.call(document.getElementsByClassName('method-listing-wrapper'), (el) => {
+            el.style.display = 'none'
+        })
+        Array.prototype.forEach.call(document.getElementsByClassName('class-card-wrapper'), (el) => {
+            el.style.display = 'block'
+        })
+    }
+})
 
 function hideSidebar(name) {
     var sidebar = document.getElementById('sidebar-' + name)

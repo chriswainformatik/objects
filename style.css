@@ -169,3 +169,28 @@
 .cm-number {
     color: dimgray !important;
 }
+
+.class-card-wrapper {
+    display: none;
+}
+
+.class-card {
+    border-collapse: collapse;
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.class-card th, td {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.class-card-heading {
+    text-align: center;
+    border-bottom: #000000 solid 1px;
+}
+
+.class-card-last-attr {
+    border-bottom: #000000 solid 1px;
+}
