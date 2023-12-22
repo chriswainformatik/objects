@@ -17,10 +17,8 @@ Available lasses are:
  - `KREIS`
 
 ### TODO:
- - add methods for changing lines
  - show created objects (as in BlueJ)
- - class cards
- - make stop button work
+ - add stop button (?)
  - fix bugs:
    - ?
    
