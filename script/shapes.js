@@ -16,6 +16,18 @@ class SHAPE {
     füllfarbesetzen(f) {
         this.fillColor = globalColorNames[f]
     }
+
+    linienstärkesetzen(s) {
+        this.lineWidth = s
+    }
+
+    linienfarbesetzen(f) {
+        this.lineColor = globalColorNames[f]
+    }
+
+    linienartsetzen(a) {
+        this.lineStyle = globalLineStyleNames[a]
+    }
 }
 
 class KREIS extends SHAPE {

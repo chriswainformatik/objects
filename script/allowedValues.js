@@ -20,7 +20,11 @@ let globalAllowedValues = [
     'orange',
     'lila',
     'türkis',
-    'tuerkis'
+    'tuerkis',
+    'durchgezogen',
+    'standard',
+    'gestrichelt',
+    'gepunktet',
 ]
 
 let globalColorNames = {
@@ -41,4 +45,11 @@ let globalColorNames = {
     lila: 'purple',
     türkis: 'MediumTurquoise',
     tuerkis: 'MediumTurquoise'
+}
+
+let globalLineStyleNames = {
+    durchgezogen: 'solid',
+    standard: 'solid',
+    gestrichelt: 'dashed',
+    gepunktet: 'dotted'
 }

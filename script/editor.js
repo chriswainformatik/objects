@@ -118,9 +118,10 @@ function updateDOMObject(shape) {
      * 
      * @param {*} context context to draw on
      * @param {*} points points of the polygon
-     * @param {*} type 'fill' or 'stroke'
+     * @param {String} type 'fill' or 'stroke'
+     * @param {String} lineStyle 'solid' (default), 'dashed' or 'dotted'
      */
-    function drawShape(context, points, type) {
+    function drawShape(context, points, type, lineStyle='solid') {
         context.beginPath()
         context.moveTo(points[0][0], points[0][1])
         for (var i = 1; i < points.length; i++) {
@@ -130,7 +131,18 @@ function updateDOMObject(shape) {
         if (type == 'fill') {
             context.fill()
         } else if (type == 'stroke') {
+            context.setLineDash(getLineDash(lineStyle))
             context.stroke()
+        }
+    }
+
+    function getLineDash(lineStyle) {
+        if (lineStyle == 'solid') {
+            return []
+        } else if (lineStyle == 'dashed') {
+            return [2*context.lineWidth, 2*context.lineWidth]
+        } else if (lineStyle == 'dotted') {
+            return [0.5*context.lineWidth, context.lineWidth]
         }
     }
 
@@ -158,7 +170,7 @@ function updateDOMObject(shape) {
 
         // this is a "don't touch - it works" code fragment
         context.globalCompositeOperation = 'source-over'
-        drawShape(context, points, 'stroke')
+        drawShape(context, points, 'stroke', shape.lineStyle)
         context.globalCompositeOperation = 'destination-in'
         drawShape(context, points, 'fill')
         // "dont't touch - it works" end
@@ -171,10 +183,12 @@ function updateDOMObject(shape) {
         context.lineWidth = context.lineWidth/2
         context.beginPath()
         context.arc(shape.w/2, shape.h/2, shape.w/2 - context.lineWidth/2.0, 0, 2 * Math.PI, false)
+        context.setLineDash(getLineDash(shape.lineStyle))
         context.stroke()
     } else if (shape.type == 'rectangle') {
         console.log(shape)
         context.fillRect(0, 0, shape.w, shape.h)
+        context.setLineDash(getLineDash(shape.lineStyle))
         context.strokeRect(0, 0, shape.w, shape.h)
     }
 }

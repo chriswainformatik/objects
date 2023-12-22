@@ -21,6 +21,24 @@ let globalClassesList = [
                     'number' // r
                 ]
             },
+            {
+                name: 'LinienstärkeSetzen',
+                parameters: [
+                    'number'
+                ]
+            },
+            {
+                name: 'LinienfarbeSetzen',
+                parameters: [
+                    'string'
+                ]
+            },
+            {
+                name: 'LinienartSetzen',
+                parameters: [
+                    'string'
+                ]
+            },
         ],
     },
     {
@@ -51,6 +69,24 @@ let globalClassesList = [
                     'number' // b
                 ]
             },
+            {
+                name: 'LinienstärkeSetzen',
+                parameters: [
+                    'number'
+                ]
+            },
+            {
+                name: 'LinienfarbeSetzen',
+                parameters: [
+                    'string'
+                ]
+            },
+            {
+                name: 'LinienartSetzen',
+                parameters: [
+                    'string'
+                ]
+            },
         ],
     },
     {
@@ -79,6 +115,24 @@ let globalClassesList = [
                 name: 'BreiteSetzen',
                 parameters: [
                     'number' // b
+                ]
+            },
+            {
+                name: 'LinienstärkeSetzen',
+                parameters: [
+                    'number'
+                ]
+            },
+            {
+                name: 'LinienfarbeSetzen',
+                parameters: [
+                    'string'
+                ]
+            },
+            {
+                name: 'LinienartSetzen',
+                parameters: [
+                    'string'
                 ]
             },
         ],
