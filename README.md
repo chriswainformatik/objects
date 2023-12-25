@@ -17,7 +17,7 @@ Available lasses are:
  - `KREIS`
 
 ### TODO:
- - show created objects (as in BlueJ)
+ - save settings to local storage in browser
  - add stop button (?)
  - fix bugs:
    - ?
