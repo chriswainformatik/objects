@@ -26,6 +26,21 @@ document.getElementById('class-card-method-listing-toggle').addEventListener('ch
     }
 })
 
+document.addEventListener('DOMContentLoaded', function () {
+    const objectCardsWrapperCollapse = new bootstrap.Collapse('#object-cards-wrapper', {
+        toggle: false
+    })
+    document.getElementById('check-show-object-cards').addEventListener('change', (e) => toggleObjectCardsWrapper(e.target.checked))
+
+    function toggleObjectCardsWrapper(show) {
+        if (show) {
+            objectCardsWrapperCollapse.show()
+        } else {
+            objectCardsWrapperCollapse.hide()
+        }
+    }
+})
+
 function hideSidebar(name) {
     var sidebar = document.getElementById('sidebar-' + name)
     sidebar.classList.remove('sidebar-show')

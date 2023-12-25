@@ -19,7 +19,7 @@
                 </div>
                 <h1 style="display: none;">Objects!</h1>
                 <h2 class="logo-font my-auto">Eine einfache objektorientierte Sprache mit Grafikobjekten</h2>
-                <span id="beta-badge" class="badge bg-warning text-dark" data-bs-toggle="modal" data-bs-target="#beta-modal">BETA</span>
+                <span id="beta-badge" class="badge bg-warning text-dark">BETA</span>
             </div>
 
             <!-- BETA info modal -->
@@ -75,6 +75,41 @@
                     </div>
                 </div>
                 
+                <div class="row mt-4">
+                    <div class="row collapse" id="object-cards-wrapper">
+                        <div class="object-card d-flex flex-column">
+                            <div class="object-card-header">vorderrad:KREIS</div>
+                            <div>füllfarbe = "rot"</div>
+                            <div>radius = 200</div>
+                            <div>linienstärke = 2</div>
+                        </div>
+
+                        <div class="object-card d-flex flex-column">
+                            <div class="object-card-header">vorderrad:KREIS</div>
+                            <div>füllfarbe = "rot"</div>
+                            <div>radius = 200</div>
+                            <div>linienstärke = 2</div>
+                        </div>
+
+                        <script>
+                            var wrapper = document.getElementById('object-cards-wrapper');
+                            for (var i = 0; i < 10; i++) {
+                                var element = document.createElement('div')
+                                element.classList.add('object-card')
+                                element.classList.add('d-flex')
+                                element.classList.add('flex-column')
+                                var headerElement = document.createElement('div')
+                                headerElement.classList.add('object-card-header')
+                                headerElement.innerHTML = 'vorderrad:KREIS'
+                                element.append(headerElement)
+                                var attributeElement = document.createElement('div')
+                                attributeElement.innerHTML = 'füllfarbe = "rot"'
+                                element.append(attributeElement)
+                                //wrapper.append(element)
+                            }
+                        </script>
+                    </div>
+                </div>
             </div>
 
 
@@ -108,6 +143,12 @@
                         <input class="form-check-input" type="checkbox" value="" id="check-enable-autocomplete">
                         <label class="form-check-label" for="check-methods-case-sensitive">
                             Automatische Code-Vervollständigung (mit Strg + Leertaste)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="check-show-object-cards">
+                        <label class="form-check-label" for="check-show-object-cards">
+                            Objektkarten anzeigen
                         </label>
                     </div>
                 </div>
