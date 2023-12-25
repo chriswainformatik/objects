@@ -191,6 +191,108 @@ function updateDOMObject(shape) {
         context.setLineDash(getLineDash(shape.lineStyle))
         context.strokeRect(0, 0, shape.w, shape.h)
     }
+    updateObjectCards(shape)
+}
+
+/**
+ * Updates the object card corresponding to a shape.
+ * If it is a new object, an object card is created and added to the object cards view.
+ * If it is an existing object, the existing object card gets updated.
+ * @param {SHAPE} shape 
+ */
+function updateObjectCards(shape) {
+    var objectCard = document.getElementById('object-card-' + shape.instanceName)
+    if (objectCard == undefined) {
+        // create new object card
+        var wrapper = document.getElementById('object-cards-wrapper');
+        var element = document.createElement('div')
+        element.id = 'object-card-' + shape.instanceName
+        element.classList.add('object-card')
+        element.classList.add('d-flex')
+        element.classList.add('flex-column')
+        var headerElement = document.createElement('div')
+        headerElement.classList.add('object-card-header')
+        headerElement.innerHTML = shape.instanceName + ' : ' + shape.constructor.name
+        element.append(headerElement)
+        wrapper.append(element)
+    }
+
+    objectCard = document.getElementById('object-card-' + shape.instanceName)
+    updateAttributes(shape)
+
+    /**
+     * Updates the attributes inside the class card by removing and re-adding them
+     * 
+     * @param {SHAPE} shape The shape object of which the attributes are getting updated 
+     */
+    function updateAttributes(shape) {
+        var objectCardHeader = objectCard.firstChild
+        objectCard.innerHTML = ''
+        objectCard.append(objectCardHeader)
+
+        var attributesList = getAttributes(shape.constructor.name)
+        for (var i = 0; i < attributesList.length; i++) {
+            var attr = attributesList[i]
+            if (attr.name.length > 0) {
+                var attributeElement = document.createElement('div')
+                var quotes = ''
+                if (attr.type == 'string') {
+                    quotes = '"'
+                }
+                var value = shape[attr.name2]
+                if (shape.constructor.name == 'KREIS' && attr.name == 'radius') {
+                    value = shape['w']
+                }
+                if (attr.name.includes('farbe')) {
+                    for (var n in globalColorNames) {
+                        if (globalColorNames[n] == value) {
+                            value = n
+                        }
+                    }
+                } else if (attr.name.includes('art')) {
+                    for (var n in globalLineStyleNames) {
+                        if (globalLineStyleNames[n] == value) {
+                            value = n
+                        }
+                    }
+                }
+                attributeElement.innerHTML = attr.name + ' = ' + quotes + value + quotes
+                objectCard.append(attributeElement)
+            }
+        }
+    }
+
+    /**
+     * Returns the attributes (display names, internal names and types) of the given shape
+     * @param {*} sn Class name of the shape
+     * @return A list of attributes of the given shape. Each list item consists of the three propoerties name, name2 and type.
+     */
+    function getAttributes(sn) {
+        for (var i = 0; i < globalClassesList.length; i++) {
+            if (globalClassesList[i].name == sn) {
+                return globalClassesList[i].attributes
+            }
+        }
+        return null
+    }
+
+    /**
+     * Returns the data type of a given attribute and a given shape
+     * @param {*} sn Class name of the shape
+     * @param {*} a Attribute name
+     */
+    function getType(sn, a) {
+        for (var elmt in globalClassesList) {
+            if (elmt.name == sn) {
+                for (var att in elmt.attributes) {
+                    if (att.name2 == a) {
+                        return att.type
+                    }
+                }
+            }
+        }
+        return null
+    }
 }
 
 /**

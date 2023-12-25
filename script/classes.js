@@ -1,6 +1,55 @@
+// name: display name
+// name2: internal name
 let globalClassesList = [
     {
         name: 'KREIS',
+        attributes: [
+            {
+                name: 'füllfarbe',
+                name2: 'fillColor',
+                type: 'string'
+            },
+            {
+                name: 'linienart',
+                name2: 'lineStyle',
+                type: 'string'
+            },
+            {
+                name: 'linienfarbe',
+                name2: 'lineColor',
+                type: 'string'
+            },
+            {
+                name: 'linienstärke',
+                name2: 'lineWidth',
+                type: 'number'
+            },
+            {
+                name: 'mittelpunktX',
+                name2: 'x',
+                type: 'number'
+            },
+            {
+                name: 'mittelpunktY',
+                name2: 'y',
+                type: 'number'
+            },
+            {
+                name: 'radius',
+                name2: '',
+                type: 'number'
+            },
+            {
+                name: '',
+                name2: 'w',
+                type: 'number'
+            },
+            {
+                name: '',
+                name2: 'l',
+                type: 'number'
+            },
+        ],
         methods: [
             {
                 name: 'MittelpunktSetzen',
@@ -43,6 +92,48 @@ let globalClassesList = [
     },
     {
         name: 'RECHTECK',
+        attributes: [
+            {
+                name: 'breite',
+                name2: 'w',
+                type: 'number',
+            },
+            {
+                name: 'füllfarbe',
+                name2: 'fillColor',
+                type: 'string'
+            },
+            {
+                name: 'länge',
+                name2: 'h',
+                type: 'number'
+            },
+            {
+                name: 'linienart',
+                name2: 'lineStyle',
+                type: 'string'
+            },
+            {
+                name: 'linienfarbe',
+                name2: 'lineColor',
+                type: 'string'
+            },
+            {
+                name: 'linienstärke',
+                name2: 'lineWidth',
+                type: 'number'
+            },
+            {
+                name: 'xKoordinate',
+                name2: 'x',
+                type: 'number'
+            },
+            {
+                name: 'yKoordinate',
+                name2: 'y',
+                type: 'number'
+            },
+        ],
         methods: [
             {
                 name: 'PositionSetzen',
@@ -91,6 +182,48 @@ let globalClassesList = [
     },
     {
         name: 'DREIECK',
+        attributes: [
+            {
+                name: 'breite',
+                name2: 'w',
+                type: 'number',
+            },
+            {
+                name: 'füllfarbe',
+                name2: 'fillColor',
+                type: 'string'
+            },
+            {
+                name: 'höhe',
+                name2: 'h',
+                type: 'number'
+            },
+            {
+                name: 'linienart',
+                name2: 'lineStyle',
+                type: 'string'
+            },
+            {
+                name: 'linienfarbe',
+                name2: 'lineColor',
+                type: 'string'
+            },
+            {
+                name: 'linienstärke',
+                name2: 'lineWidth',
+                type: 'number'
+            },
+            {
+                name: 'xKoordinate',
+                name2: 'x',
+                type: 'number'
+            },
+            {
+                name: 'yKoordinate',
+                name2: 'y',
+                type: 'number'
+            },
+        ],
         methods: [
             {
                 name: 'PositionSetzen',

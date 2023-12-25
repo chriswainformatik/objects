@@ -77,37 +77,7 @@
                 
                 <div class="row mt-4">
                     <div class="row collapse" id="object-cards-wrapper">
-                        <div class="object-card d-flex flex-column">
-                            <div class="object-card-header">vorderrad:KREIS</div>
-                            <div>füllfarbe = "rot"</div>
-                            <div>radius = 200</div>
-                            <div>linienstärke = 2</div>
-                        </div>
-
-                        <div class="object-card d-flex flex-column">
-                            <div class="object-card-header">vorderrad:KREIS</div>
-                            <div>füllfarbe = "rot"</div>
-                            <div>radius = 200</div>
-                            <div>linienstärke = 2</div>
-                        </div>
-
-                        <script>
-                            var wrapper = document.getElementById('object-cards-wrapper');
-                            for (var i = 0; i < 10; i++) {
-                                var element = document.createElement('div')
-                                element.classList.add('object-card')
-                                element.classList.add('d-flex')
-                                element.classList.add('flex-column')
-                                var headerElement = document.createElement('div')
-                                headerElement.classList.add('object-card-header')
-                                headerElement.innerHTML = 'vorderrad:KREIS'
-                                element.append(headerElement)
-                                var attributeElement = document.createElement('div')
-                                attributeElement.innerHTML = 'füllfarbe = "rot"'
-                                element.append(attributeElement)
-                                //wrapper.append(element)
-                            }
-                        </script>
+                        
                     </div>
                 </div>
             </div>

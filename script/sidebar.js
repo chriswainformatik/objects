@@ -26,6 +26,9 @@ document.getElementById('class-card-method-listing-toggle').addEventListener('ch
     }
 })
 
+/**
+ * Toggle object cards from settings
+ */
 document.addEventListener('DOMContentLoaded', function () {
     const objectCardsWrapperCollapse = new bootstrap.Collapse('#object-cards-wrapper', {
         toggle: false
