@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function saveSettings() {
     localStorage.setItem('show-object-cards', document.getElementById('check-show-object-cards').checked)
+    document.getElementById('settings-saved-confirmation').classList.remove('d-none')
+    document.getElementById('settings-saved-confirmation').classList.remove('fade')
+    setTimeout(() => document.getElementById('settings-saved-confirmation').classList.add('fade'), 500)
 }
 
 
