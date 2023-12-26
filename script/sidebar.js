@@ -3,6 +3,9 @@ document.getElementById('btn-sidebar-settings-close').addEventListener('click', 
 document.getElementById('btn-sidebar-settings-cancel').addEventListener('click', () => hideSidebar('settings'))
 document.getElementById('btn-sidebar-settings-show').addEventListener('click', () => showSidebar('settings'))
 
+document.getElementById('btn-sidebar-settings-save').addEventListener('click', () => saveSettings())
+
+
 document.getElementById('btn-sidebar-help-close').addEventListener('click', () => hideSidebar('help'))
 document.getElementById('btn-sidebar-help-cancel').addEventListener('click', () => hideSidebar('help'))
 document.getElementById('btn-sidebar-help-show').addEventListener('click', () => showSidebar('help'))
@@ -26,15 +29,20 @@ document.getElementById('class-card-method-listing-toggle').addEventListener('ch
     }
 })
 
-/**
- * Toggle object cards from settings
- */
 document.addEventListener('DOMContentLoaded', function () {
+    // load settings from web storage
+    var showObjectCards = localStorage.getItem('show-object-cards') == 'true';
+    if (showObjectCards) {
+        document.getElementById('check-show-object-cards').checked = true
+    } else {
+        document.getElementById('check-show-object-cards').checked = false
+    }
+
+    // Toggle object cards from settings
     const objectCardsWrapperCollapse = new bootstrap.Collapse('#object-cards-wrapper', {
-        toggle: false
+        toggle: showObjectCards
     })
     document.getElementById('check-show-object-cards').addEventListener('change', (e) => toggleObjectCardsWrapper(e.target.checked))
-
     function toggleObjectCardsWrapper(show) {
         if (show) {
             objectCardsWrapperCollapse.show()
@@ -42,7 +50,14 @@ document.addEventListener('DOMContentLoaded', function () {
             objectCardsWrapperCollapse.hide()
         }
     }
+
 })
+
+function saveSettings() {
+    localStorage.setItem('show-object-cards', document.getElementById('check-show-object-cards').checked)
+}
+
+
 
 function hideSidebar(name) {
     var sidebar = document.getElementById('sidebar-' + name)
