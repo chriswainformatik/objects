@@ -210,3 +210,14 @@
     text-align: center;
     border-bottom: 1px solid #000000;
 }
+
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity linear;
+    -moz-transition: opacity linear;
+    -ms-transition: opacity linear;
+    -o-transition: opacity linear;
+    transition: opacity linear;
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
+}

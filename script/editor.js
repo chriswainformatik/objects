@@ -62,6 +62,11 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     // autocompletion options
+    // load settings from web storage
+    var enableAutocomplete = localStorage.getItem('enable-autocomplete') == 'true';
+    toggleAutocompletion(enableAutocomplete)
+    document.getElementById('check-enable-autocomplete').checked = enableAutocomplete
+    
     document.getElementById('check-enable-autocomplete').addEventListener('change', (e) => toggleAutocompletion(e.target.checked))
 }, false)
 

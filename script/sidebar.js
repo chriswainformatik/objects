@@ -54,6 +54,10 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 function saveSettings() {
+    localStorage.setItem('methods-case-sensitive', document.getElementById('check-methods-case-sensitive').checked)
+    localStorage.setItem('show-grid', document.getElementById('check-show-grid').checked)
+    localStorage.setItem('show-grid-labels', document.getElementById('check-show-grid-labels').checked)
+    localStorage.setItem('enable-autocomplete', document.getElementById('check-enable-autocomplete').checked)
     localStorage.setItem('show-object-cards', document.getElementById('check-show-object-cards').checked)
     document.getElementById('settings-saved-confirmation').classList.remove('d-none')
     document.getElementById('settings-saved-confirmation').classList.remove('fade')

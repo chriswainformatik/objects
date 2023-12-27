@@ -14,6 +14,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // set the editor height at this point because this script file gets loaded after the editor.js
     editor.setSize(cw, ch)
 
+    // toggle grid and labels if set in local storage
+    var enableGrid = localStorage.getItem('show-grid') == 'true';
+    toggleGrid(enableGrid)
+    document.getElementById('check-show-grid').checked = enableGrid
+
+    var enableGridLabels = localStorage.getItem('show-grid-labels') == 'true';
+    toggleGridLabels(enableGridLabels)
+    document.getElementById('check-show-grid-labels').checked = enableGridLabels
+
     document.getElementById('check-show-grid').addEventListener('change', (e) => toggleGrid(e.target.checked))
     document.getElementById('check-show-grid-labels').addEventListener('change', (e) => toggleGridLabels(e.target.checked))
 
