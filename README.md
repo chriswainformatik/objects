@@ -15,8 +15,9 @@ Available classes are:
  - `KREIS`
 
 ### TODO:
- - save settings to local storage in browser
- - add stop button (?)
+ - add an overview of allowed values for colors and line styles on the gui
+ - add the option to have case sensitive methods
+ - add stop button
  - fix bugs:
    - ?
 
