@@ -18,7 +18,6 @@ Available classes are:
  - add an overview of allowed values for colors and line styles on the gui
  - add the option to have case sensitive methods
  - add stop button
- - fix bugs:
-   - ?
+ - add an option to load/save the code plus clear all option
 
 Made with the help of [Bootstrap](https://getbootstrap.com/) and [CodeMirror](https://codemirror.net/)
