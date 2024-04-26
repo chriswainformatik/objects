@@ -221,3 +221,13 @@
     -webkit-transition-duration: 1s; /* Safari */
     transition-duration: 1s;
 }
+
+
+.sidebar-move-helper {
+    position: relative;
+    transition: all ease-in 300ms;
+}
+
+.sidebar-move-reverse-helper {
+    transition: all ease-in 300ms;
+}

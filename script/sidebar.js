@@ -65,11 +65,17 @@ function saveSettings() {
 }
 
 
+// save how far the content was moved when opening the sidebar
+var contentMovedBy = 0
 
 function hideSidebar(name) {
     var sidebar = document.getElementById('sidebar-' + name)
     sidebar.classList.remove('sidebar-show')
     sidebar.classList.add('sidebar-hide')
+    var helper = document.getElementsByClassName('sidebar-move-helper')[0]
+    helper.classList.remove('sidebar-move-helper')
+    helper.style.transform = 'translate(0,0)'
+    helper.classList.add('sidebar-move-reverse-helper')
 }
 
 function showSidebar(name) {
@@ -77,8 +83,32 @@ function showSidebar(name) {
     Array.from(document.getElementsByClassName('sidebar-show')).forEach(element => {
         element.classList.remove('sidebar-show')
     })
+    // move content to the side
+    let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    let contentDiv = document.getElementById('content')
+    var contentWidth = contentDiv.offsetWidth
+    let contentDivInner = contentDiv.children[0]
+    contentDivInner.classList.add('sidebar-move-helper')
+    var remainingSpace = (vw-contentWidth)/2
+    var moveDist = 0
+    var sidebarWidth = 480
+    if (remainingSpace <= 150) {
+        sidebarWidth = 300
+        moveDist = remainingSpace
+    } else if (remainingSpace >= 240) {
+        remainingSpace = 240
+        moveDist = sidebarWidth/2
+    } else {
+        sidebarWidth = remainingSpace*2
+        moveDist = sidebarWidth-remainingSpace
+    }
+    sidebarMovedBy = moveDist
+    contentDivInner.style.transform = 'translate(-' + moveDist + 'px,0)'
+
     // open just the one the user wants to see
     var sidebar = document.getElementById('sidebar-' + name)
     sidebar.classList.remove('sidebar-hide')
     sidebar.classList.add('sidebar-show')
+
+    sidebar.style.width = sidebarWidth + 'px'
 }
