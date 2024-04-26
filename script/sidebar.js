@@ -73,6 +73,11 @@ function hideSidebar(name) {
 }
 
 function showSidebar(name) {
+    // hide all open sidebars
+    Array.from(document.getElementsByClassName('sidebar-show')).forEach(element => {
+        element.classList.remove('sidebar-show')
+    })
+    // open just the one the user wants to see
     var sidebar = document.getElementById('sidebar-' + name)
     sidebar.classList.remove('sidebar-hide')
     sidebar.classList.add('sidebar-show')
