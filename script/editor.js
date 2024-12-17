@@ -330,18 +330,7 @@ function setSyntaxError(errorLine) {
     editor.addLineClass(errorLine, "background", "error-line")
     console.log('Syntax error')
 
-    // add popover
-    var popover = new bootstrap.Popover(document.getElementsByClassName('error-line')[0], {
-        'html': true,
-        'content': '<p>Fehler in dieser Zeile!<br>Hast du dich vertippt?</p><div class="text-center"><small><i>Anklicken zum Schließen</i></small></div>',
-        'placement': 'bottom'
-    })
-    popover.show()
-    popovers.push(popover)
-    document.getElementsByClassName('popover')[0].addEventListener('click', () => {
-        popover.dispose()
-    })
-    
+    displayPopover('<p>Fehler in dieser Zeile!<br>Hast du dich vertippt?</p><div class="text-center"><small><i>Anklicken zum Schließen</i></small></div>')
 }
 
 /**
@@ -354,10 +343,18 @@ function setSemanticError(errorLine, error) {
     editor.addLineClass(errorLine, "background", "error-line")
     console.log('Semantics error')
 
-    // add popover
+    displayPopover('<p>' + error.germanText +'<br>Hast du dich vertippt?</p><div class="text-center"><small><i>Anklicken zum Schließen</i></small></div>')
+}
+
+/**
+ * Displays a Popover showing the error message provided
+ * 
+ * @param {string} content HTML content of the error message
+ */
+function displayPopover(content) {
     var popover = new bootstrap.Popover(document.getElementsByClassName('error-line')[0], {
         'html': true,
-        'content': '<p>' + error.germanText +'<br>Hast du dich vertippt?</p><div class="text-center"><small><i>Anklicken zum Schließen</i></small></div>',
+        'content': content,
         'placement': 'bottom',
         'animation': false,
     })
