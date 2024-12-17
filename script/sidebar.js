@@ -102,6 +102,7 @@ function showSidebar(name) {
         sidebarWidth = remainingSpace*2
         moveDist = sidebarWidth-remainingSpace
     }
+    if (sidebarWidth)
     sidebarMovedBy = moveDist
     contentDivInner.style.transform = 'translate(-' + moveDist + 'px,0)'
 

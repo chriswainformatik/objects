@@ -358,7 +358,8 @@ function setSemanticError(errorLine, error) {
     var popover = new bootstrap.Popover(document.getElementsByClassName('error-line')[0], {
         'html': true,
         'content': '<p>' + error.germanText +'<br>Hast du dich vertippt?</p><div class="text-center"><small><i>Anklicken zum Schließen</i></small></div>',
-        'placement': 'bottom'
+        'placement': 'bottom',
+        'animation': false,
     })
     popover.show()
     popovers.push(popover)
