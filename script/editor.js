@@ -96,6 +96,7 @@ function runCode() {
         }
     })
     runner.clearObjects()
+    clearObjectCards()
     // remove error marking
     popovers.forEach(p => {
         try {
@@ -298,6 +299,13 @@ function updateObjectCards(shape) {
         }
         return null
     }
+}
+
+/**
+ * Removes all the object cards. This must be called everytime the code is run.
+ */
+function clearObjectCards() {
+    document.getElementById('object-cards-wrapper').innerHTML = '<div class="row"><h5>Objektkarten:</h5></div>'
 }
 
 /**
