@@ -68,6 +68,33 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('check-enable-autocomplete').checked = enableAutocomplete
     
     document.getElementById('check-enable-autocomplete').addEventListener('change', (e) => toggleAutocompletion(e.target.checked))
+
+    // save and load handlers
+    document.getElementById('btn-confirm-save-file').addEventListener('click', () => {
+        saveFile(document.getElementById('save-filename').value, editor.getValue())
+    })
+    document.getElementById('btn-load-sourcecode').addEventListener('click', () => {
+        document.getElementById('file-input').click()
+    })
+    document.getElementById('file-input').addEventListener('change', function(event) {
+        const file = event.target.files[0]
+        if (!file) return
+
+        if (file.type !== "text/plain" && !file.name.endsWith('.txt')) {
+            // Show error modal
+            document.getElementById('error-modal-body').textContent = "Bitte wähle eine Textdatei (.txt) aus."
+            var errorModal = new bootstrap.Modal(document.getElementById('error-modal'))
+            errorModal.show()
+            return
+        }
+
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            editor.setValue(e.target.result)
+        }
+        reader.readAsText(file)
+    })
+
 }, false)
 
 
@@ -371,4 +398,31 @@ function displayPopover(content) {
     document.getElementsByClassName('popover')[0].addEventListener('click', () => {
         popover.dispose()
     })
+}
+
+
+function saveFile(filename, data) {
+    filenameInput = document.getElementById('save-filename')
+    
+    if (!filename.trim()) {
+        filenameInput.classList.add('is-invalid');
+        return
+    } else {
+        filenameInput.classList.remove('is-invalid');
+    } 
+
+    filename += ".txt"
+
+    const blob = new Blob([data], {type: 'text/plain'});
+    if(window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    }
+    else{
+        const elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = filename;        
+        document.body.appendChild(elem);
+        elem.click();        
+        document.body.removeChild(elem);
+    }
 }
