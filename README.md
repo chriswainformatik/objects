@@ -18,9 +18,9 @@ The settings can be saved to the web storage of your browser.
  - Unpack it to a subfolder of your webserver or to a local folder.
  - Local: Open `index.html` to start.
 
-### TODO:
+### Future plans:
+ - add more methods (e.g. animated move)
  - add the option to have case sensitive methods
  - add stop button
- - add an option to load/save the code plus clear all option
 
 Made with [Bootstrap](https://getbootstrap.com/) and [CodeMirror](https://codemirror.net/)
