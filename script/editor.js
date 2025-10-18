@@ -43,6 +43,8 @@ document.getElementsByClassName('CodeMirror')[0].classList.add('border')
 var runner = undefined
 var popovers = []
 
+var editorExampleCode = undefined
+
 
 /**
  * Do a few things on startup.
@@ -95,8 +97,29 @@ document.addEventListener('DOMContentLoaded', function () {
         reader.readAsText(file)
     })
 
+    // example code button
+    document.getElementById('example-code-modal').addEventListener('shown.bs.modal', () => {
+        if (editorExampleCode == undefined) {
+            editorExampleCode = CodeMirror.fromTextArea(document.getElementById('example-code-editor'), {
+                lineNumbers: true,
+                mode: "objectslang",
+                readOnly: 'nocursor'
+            })
+            editorExampleCode.setValue(generateExampleCode())
+        }
+    })
+    document.getElementById('btn-insert-example-code').addEventListener('click', () => editor.setValue(editor.getValue()+generateExampleCode()+'\n'))
+
 }, false)
 
+
+/**
+ * Shows example code inside the editor. Example code is added at the end of existing code.
+ */
+function generateExampleCode() {
+    var exampleCode = 'k1:KREIS\nk1.FüllfarbeSetzen("blau")\n\nr1:RECHTECK\nr1.PositionSetzen(250, 100)'
+    return exampleCode
+}
 
 /**
  * Enables or disables autocompletion, depending on the parameter value.
@@ -400,7 +423,13 @@ function displayPopover(content) {
     })
 }
 
-
+/**
+ * Saves the given data to a txt file with the given name.
+ * 
+ * @param {*} filename name of the txt file
+ * @param {*} data data to be saved
+ * @returns 
+ */
 function saveFile(filename, data) {
     filenameInput = document.getElementById('save-filename')
     

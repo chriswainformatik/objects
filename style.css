@@ -112,6 +112,14 @@
     background-color: #f8f9fa;
 }
 
+#example-code-modal .CodeMirror {
+    height: auto;
+}
+
+#example-code-editor {
+    display: none;
+}
+
 .footer {
     position: absolute;
     bottom: 0;
