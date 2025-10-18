@@ -254,7 +254,7 @@ function updateObjectCards(shape) {
     updateAttributes(shape)
 
     /**
-     * Updates the attributes inside the class card by removing and re-adding them
+     * Updates the attributes inside the object card by removing and re-adding them
      * 
      * @param {SHAPE} shape The shape object of which the attributes are getting updated 
      */
@@ -274,7 +274,7 @@ function updateObjectCards(shape) {
                 }
                 var value = shape[attr.name2]
                 if (shape.constructor.name == 'KREIS' && attr.name == 'radius') {
-                    value = shape['w']
+                    value = shape['w']/2
                 }
                 if (attr.name.includes('farbe')) {
                     for (var n in globalColorNames) {
