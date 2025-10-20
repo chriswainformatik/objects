@@ -13,12 +13,16 @@ Available objects and methods: See help section of the app.
 
 The settings can be saved to the web storage of your browser.
 
-### Installation
+## Installation
+### Option 1: Manual install
  - Download [the latest release](https://github.com/chriswainformatik/objects/releases) from GitHub.
  - Unpack it to a subfolder of your webserver or to a local folder.
  - Local: Open `index.html` to start.
 
-### Future plans:
+### Option 2: Use install script
+ - Download [`install.sh`](https://github.com/chriswainformatik/objects/blob/main/install.sh) and run it.
+
+## Future plans:
  - add more methods (e.g. animated move)
  - add the option to have case sensitive methods
  - add stop button
