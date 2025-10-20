@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 # Download and unpack latest chriswainformatik/objects release into a chosen directory.
+# When using this script you don't need to download anything else manually, just this file.
 # 
 # Usage:
-#   download_unpack_objects.sh [DEST]
+#   ./install.sh [DEST]
 #   If DEST is omitted the script will prompt and default to /var/www/objects/objects-latest
 # 
 # Requirements:
