@@ -3,7 +3,7 @@
  */
 CodeMirror.defineSimpleMode("objectslang", {
     start: [
-        { regex: /[a-zA-Z][a-zA-Z0-9]*/, token: "identifier", next: "seperator"}
+        { regex: /[a-zA-Z][a-zA-Z0-9]*/, token: "identifier", next: "seperator" }
     ],
     seperator: [
         { regex: /:/, token: "seperator", next: "instancecreation" },
@@ -13,7 +13,7 @@ CodeMirror.defineSimpleMode("objectslang", {
         { regex: /[A-Z]*/, token: "classname", next: "start" }
     ],
     methodcall: [
-        { regex: /[a-zäöüA-ZÄÖÜ][a-zäöüßA-ZÄÖÜ0-9]*/, token: "methodcall", next: "paranthesis" } 
+        { regex: /[a-zäöüA-ZÄÖÜ][a-zäöüßA-ZÄÖÜ0-9]*/, token: "methodcall", next: "paranthesis" }
     ],
     paranthesis: [
         { regex: /\(/, next: "param" },
@@ -21,7 +21,7 @@ CodeMirror.defineSimpleMode("objectslang", {
     ],
     param: [
         { regex: /[0-9]+/, token: "number", next: "paramseperator" },
-        { regex: /("[a-zäöüA-ZÄÖÜ][a-zäöüßA-ZÄÖÜ0-9]*"|[a-zäöü?A-ZÄÖÜ][a-zäöüßA-ZÄÖÜ0-9]*)/ , token: "string", next: "paramseperator" }
+        { regex: /("[a-zäöüA-ZÄÖÜ][a-zäöüßA-ZÄÖÜ0-9]*"|[a-zäöü?A-ZÄÖÜ][a-zäöüßA-ZÄÖÜ0-9]*)/, token: "string", next: "paramseperator" }
     ],
     paramseperator: [
         { regex: /,/, next: "param" },
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     // velocity control
-    document.getElementById('velocity').addEventListener('change', function(event) {
+    document.getElementById('velocity').addEventListener('change', function (event) {
         runner.setStepDelay(2 - event.target.value)
     })
 
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var enableAutocomplete = localStorage.getItem('enable-autocomplete') == 'true';
     toggleAutocompletion(enableAutocomplete)
     document.getElementById('check-enable-autocomplete').checked = enableAutocomplete
-    
+
     document.getElementById('check-enable-autocomplete').addEventListener('change', (e) => toggleAutocompletion(e.target.checked))
 
     // save and load handlers
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('btn-load-sourcecode').addEventListener('click', () => {
         document.getElementById('file-input').click()
     })
-    document.getElementById('file-input').addEventListener('change', function(event) {
+    document.getElementById('file-input').addEventListener('change', function (event) {
         const file = event.target.files[0]
         if (!file) return
 
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const reader = new FileReader()
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             editor.setValue(e.target.result)
         }
         reader.readAsText(file)
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
             editorExampleCode.setValue(generateExampleCode())
         }
     })
-    document.getElementById('btn-insert-example-code').addEventListener('click', () => editor.setValue(editor.getValue()+generateExampleCode()+'\n'))
+    document.getElementById('btn-insert-example-code').addEventListener('click', () => editor.setValue(editor.getValue() + generateExampleCode() + '\n'))
 
 }, false)
 
@@ -128,7 +128,7 @@ function generateExampleCode() {
  */
 function toggleAutocompletion(enabled) {
     if (enabled) {
-        editor.addKeyMap({ 'Ctrl-Space' : 'autocomplete' })
+        editor.addKeyMap({ 'Ctrl-Space': 'autocomplete' })
     } else {
         editor.removeKeyMap('Ctrl-Space')
     }
@@ -140,11 +140,13 @@ function toggleAutocompletion(enabled) {
 function runCode() {
     // remove elements
     //document.getElementById('the-canvas').replaceChildren()
+    /*
     Array.from(document.getElementById('the-canvas').childNodes).forEach(c => {
-        if(c.classList.contains('graphical-object')) {
+        if (c.classList.contains('graphical-object')) {
             c.remove()
         }
     })
+    */
     runner.clearObjects()
     clearObjectCards()
     // remove error marking
@@ -158,7 +160,7 @@ function runCode() {
     popovers = []
     clearLineBackgrounds()
     runner.setLines(editor.getValue().split('\n'))
-    runner.runCode(setSyntaxError, setSemanticError, setActiveLine, updateDOMObject)
+    runner.runCode(setSyntaxError, setSemanticError, setActiveLine, null, redrawCanvas)
 }
 
 /**
@@ -169,38 +171,8 @@ function runCode() {
  * @param {SHAPE} shape The shape which the DOM object is representing
  */
 function updateDOMObject(shape) {
-    /**
-     * Helper function to draw or stroke polygon shapes.
-     * 
-     * @param {*} context context to draw on
-     * @param {*} points points of the polygon
-     * @param {String} type 'fill' or 'stroke'
-     * @param {String} lineStyle 'solid' (default), 'dashed' or 'dotted'
-     */
-    function drawShape(context, points, type, lineStyle='solid') {
-        context.beginPath()
-        context.moveTo(points[0][0], points[0][1])
-        for (var i = 1; i < points.length; i++) {
-            context.lineTo(points[i][0], points[i][1])
-        }
-        context.closePath()
-        if (type == 'fill') {
-            context.fill()
-        } else if (type == 'stroke') {
-            context.setLineDash(getLineDash(lineStyle))
-            context.stroke()
-        }
-    }
 
-    function getLineDash(lineStyle) {
-        if (lineStyle == 'solid') {
-            return []
-        } else if (lineStyle == 'dashed') {
-            return [2*context.lineWidth, 2*context.lineWidth]
-        } else if (lineStyle == 'dotted') {
-            return [0.5*context.lineWidth, context.lineWidth]
-        }
-    }
+    
 
     var element = document.getElementById(shape.instanceName)
     element.style.top = (shape.y - shape.h) + 'px'
@@ -218,7 +190,7 @@ function updateDOMObject(shape) {
         var points = [
             [0, shape.h],
             [shape.w, shape.h],
-            [shape.w/2, 0],
+            [shape.w / 2, 0],
             [0, shape.h]
         ]
         // fill the area of the triangle
@@ -231,14 +203,14 @@ function updateDOMObject(shape) {
         drawShape(context, points, 'fill')
         // "dont't touch - it works" end
     } else if (shape.type == 'circle') {
-        element.style.top = (shape.y - shape.w/2) + 'px'
-        element.style.left = (shape.x - shape.w/2) + 'px'
+        element.style.top = (shape.y - shape.w / 2) + 'px'
+        element.style.left = (shape.x - shape.w / 2) + 'px'
         context.beginPath()
-        context.arc(shape.w/2, shape.h/2, shape.w/2, 0, 2 * Math.PI, false)
+        context.arc(shape.w / 2, shape.h / 2, shape.w / 2, 0, 2 * Math.PI, false)
         context.fill()
-        context.lineWidth = context.lineWidth/2
+        context.lineWidth = context.lineWidth / 2
         context.beginPath()
-        context.arc(shape.w/2, shape.h/2, shape.w/2 - context.lineWidth/2.0, 0, 2 * Math.PI, false)
+        context.arc(shape.w / 2, shape.h / 2, shape.w / 2 - context.lineWidth / 2.0, 0, 2 * Math.PI, false)
         context.setLineDash(getLineDash(shape.lineStyle))
         context.stroke()
     } else if (shape.type == 'rectangle') {
@@ -248,6 +220,130 @@ function updateDOMObject(shape) {
         context.strokeRect(0, 0, shape.w, shape.h)
     }
     updateObjectCards(shape)
+}
+
+/**
+ * Helper function to define different line styles.
+ * 
+ * @param {*} lineStyle 
+ * @returns 
+ */
+function getLineDash(lineStyle) {
+        if (lineStyle == 'solid') {
+            return []
+        } else if (lineStyle == 'dashed') {
+            return [2 * context.lineWidth, 2 * context.lineWidth]
+        } else if (lineStyle == 'dotted') {
+            return [0.5 * context.lineWidth, context.lineWidth]
+        }
+    }
+
+/**
+ * Helper function to draw or stroke polygon shapes.
+ * 
+ * @param {*} context context to draw on
+ * @param {*} points points of the polygon
+ * @param {String} type 'fill' or 'stroke'
+ * @param {String} lineStyle 'solid' (default), 'dashed' or 'dotted'
+ */
+function drawShape(context, points, type, lineStyle = 'solid') {
+    context.beginPath()
+    context.moveTo(points[0][0], points[0][1])
+    for (var i = 1; i < points.length; i++) {
+        context.lineTo(points[i][0], points[i][1])
+    }
+    context.closePath()
+    if (type == 'fill') {
+        context.fill()
+    } else if (type == 'stroke') {
+        context.setLineDash(getLineDash(lineStyle))
+        context.stroke()
+    }
+}
+
+/**
+ * 
+ * @param {*} shapesList List of shapes with their current state that are going to be drawn
+ */
+function redrawCanvas(shapesList) {
+    var theCanvas = document.getElementById('the-canvas')
+    // Set canvas drawing surface to match displayed size for pixel-perfect drawing
+    var context = theCanvas.getContext('2d')
+    context.clearRect(0, 0, theCanvas.width, theCanvas.height)
+
+    // Draw grid if enabled
+    if (gridOn) {
+        var gridColor = '#d0d0d0'
+        var step = 50
+        var ch = theCanvas.height
+        var cw = theCanvas.width
+        context.strokeStyle = gridColor
+        context.lineWidth = 1
+        context.beginPath()
+        for (var i = 1; i < cw / step; i++) {
+            context.moveTo(i * step, 0)
+            context.lineTo(i * step, ch)
+        }
+        for (var i = 1; i < ch / step; i++) {
+            context.moveTo(0, i * step)
+            context.lineTo(cw, i * step)
+        }
+        context.stroke()
+    }
+
+    // Draw labels if enabled
+    if (labelsOn) {
+        var labelColor = '#d0d0d0'
+        var step = 50
+        var ch = theCanvas.height
+        var cw = theCanvas.width
+        context.fillStyle = labelColor
+        context.font = '8pt sans-serif'
+        for (var i = 0; i < cw / step; i++) {
+            context.fillText((i * step), i * step + 2, 10)
+        }
+        for (var i = 1; i < ch / step; i++) {
+            context.fillText((i * step), 2, i * step + 10)
+        }
+    }
+
+    shapesList.forEach((shape) => {
+        context.fillStyle = shape.fillColor
+        context.strokeStyle = shape.lineColor
+        context.lineWidth = shape.lineWidth
+        context.lineJoin = 'milter'
+        if (shape.type == 'triangle') {
+            // define points, offset by shape position
+            var offsetX = shape.x
+            var offsetY = shape.y - shape.h
+            var points = [
+                [offsetX + 0, offsetY + shape.h],
+                [offsetX + shape.w, offsetY + shape.h],
+                [offsetX + shape.w / 2, offsetY + 0],
+                [offsetX + 0, offsetY + shape.h]
+            ]
+            // fill the area of the triangle
+            drawShape(context, points, 'fill')
+            // draw stroke
+            drawShape(context, points, 'stroke', shape.lineStyle)
+        } else if (shape.type == 'circle') {
+            context.beginPath()
+            context.arc(shape.x, shape.y, shape.w / 2, 0, 2 * Math.PI, false)
+            context.stroke()
+            context.fill()
+            /*
+            context.lineWidth = context.lineWidth / 2
+            context.beginPath()
+            context.arc(shape.w / 2, shape.h / 2, shape.w / 2 - context.lineWidth / 2.0, 0, 2 * Math.PI, false)
+            context.setLineDash(getLineDash(shape.lineStyle))
+            context.stroke()
+            */
+        } else if (shape.type == 'rectangle') {
+            context.fillRect(shape.x, shape.y - shape.h, shape.w, shape.h)
+            context.setLineDash(getLineDash(shape.lineStyle))
+            context.strokeRect(shape.x, shape.y - shape.h, shape.w, shape.h)
+        }
+    })
 }
 
 /**
@@ -297,7 +393,7 @@ function updateObjectCards(shape) {
                 }
                 var value = shape[attr.name2]
                 if (shape.constructor.name == 'KREIS' && attr.name == 'radius') {
-                    value = shape['w']/2
+                    value = shape['w'] / 2
                 }
                 if (attr.name.includes('farbe')) {
                     for (var n in globalColorNames) {
@@ -401,7 +497,7 @@ function setSemanticError(errorLine, error) {
     editor.addLineClass(errorLine, "background", "error-line")
     console.log('Semantics error')
 
-    displayPopover('<p>' + error.germanText +'<br>Hast du dich vertippt?</p><div class="text-center"><small><i>Anklicken zum Schließen</i></small></div>')
+    displayPopover('<p>' + error.germanText + '<br>Hast du dich vertippt?</p><div class="text-center"><small><i>Anklicken zum Schließen</i></small></div>')
 }
 
 /**
@@ -432,26 +528,26 @@ function displayPopover(content) {
  */
 function saveFile(filename, data) {
     filenameInput = document.getElementById('save-filename')
-    
+
     if (!filename.trim()) {
         filenameInput.classList.add('is-invalid');
         return
     } else {
         filenameInput.classList.remove('is-invalid');
-    } 
+    }
 
     filename += ".txt"
 
-    const blob = new Blob([data], {type: 'text/plain'});
-    if(window.navigator.msSaveOrOpenBlob) {
+    const blob = new Blob([data], { type: 'text/plain' });
+    if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, filename);
     }
-    else{
+    else {
         const elem = window.document.createElement('a');
         elem.href = window.URL.createObjectURL(blob);
-        elem.download = filename;        
+        elem.download = filename;
         document.body.appendChild(elem);
-        elem.click();        
+        elem.click();
         document.body.removeChild(elem);
     }
 }

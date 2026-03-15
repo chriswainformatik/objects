@@ -42,8 +42,9 @@ class CodeRunner {
      * @param {function} semanticError callback function if a semantic error occurs
      * @param {function} setActiveLine callback function to mark the active line
      * @param {function} updateDOMObject callback function to update a DOM object
+     * @param {function} redrawCanvas callback function to redraw the whole canvas (instead of updating single objects)
      */
-    runCode(syntaxError, semanticError, setActiveLine, updateDOMObject) {
+    runCode(syntaxError, semanticError, setActiveLine, updateDOMObject, redrawCanvas = null) {
         for (var i = 0; i < this.lines.length; i++) {
             var line = this.lines[i].toString()
             // 1. check syntax
@@ -51,7 +52,7 @@ class CodeRunner {
                 //this.linesAsTokensList.push(this.getTokensFromLine(i, line))
                 this.checkSyntax(i, line)
             } catch (error) {
-                var output = 'Error in line ' + (i+1) + ':\n' + error.lineText + '\n'
+                var output = 'Error in line ' + (i + 1) + ':\n' + error.lineText + '\n'
                 var indicator = ''
                 for (var j = 0; j < error.charNumber; j++) {
                     indicator += ' '
@@ -79,21 +80,21 @@ class CodeRunner {
 
         // 3. execute commands
         i = 0
-        this.runLine(i, updateDOMObject)
+        this.runLine(i, updateDOMObject, redrawCanvas)
         i++
         var steps = setInterval(() => {
-            this.runLine(i, updateDOMObject)
+            this.runLine(i, updateDOMObject, redrawCanvas)
             i++
             if (i == this.lines.length) {
                 clearInterval(steps)
-                setTimeout(function() {
+                setTimeout(function () {
                     setActiveLine(-1)
-                }, this.stepDelay*1000)
+                }, this.stepDelay * 1000)
             }
-        }, this.stepDelay*1000)
+        }, this.stepDelay * 1000)
     }
 
-    runLine(lineNumber, updateDOMObject) {
+    runLine(lineNumber, updateDOMObject, redrawCanvas = null) {
         setActiveLine(lineNumber)
         if (this.lines[lineNumber] === undefined)
             return
@@ -117,7 +118,8 @@ class CodeRunner {
                 default:
                     console.error('An error occured while running the code (after checking syntax and semantics)')
             }
-            
+
+            /*
             var shapeCanvas = document.createElement('canvas')
             shapeCanvas.id = shape.instanceName
             shapeCanvas.classList.add('shape-canvas')
@@ -130,14 +132,17 @@ class CodeRunner {
                 shapeCanvas.style.top = shape.y - shape.h
             }
             document.getElementById('the-canvas').appendChild(shapeCanvas)
-            updateDOMObject(shape)
+            */
+            if (updateDOMObject != null)
+                updateDOMObject(shape)
 
             this.shapesList.push(shape)
+            redrawCanvas(this.shapesList)
         } else if (line.includes('.')) {
             // call methods
-            var theInstance = this.instancesList.find(inst => inst.name ==  line.split('.')[0])
+            var theInstance = this.instancesList.find(inst => inst.name == line.split('.')[0])
             var methodName = line.split('.')[1].split('(')[0]
-            var methodArguments = line.split('(')[1].substring(0, line.split('(')[1].length-1).split(',')
+            var methodArguments = line.split('(')[1].substring(0, line.split('(')[1].length - 1).split(',')
             methodArguments.forEach((arg, i) => {
                 methodArguments[i] = arg.replaceAll(' ', '')
                 methodArguments[i] = arg.replaceAll('"', '')
@@ -146,9 +151,11 @@ class CodeRunner {
             // TODO: case sensitive methods
             // call the method on the shape object
             var theShape = this.shapesList.find(inst => inst.instanceName == theInstance.name)
-            theShape[methodName.toLowerCase()].apply(theShape,methodArguments)
+            theShape[methodName.toLowerCase()].apply(theShape, methodArguments)
             // notify DOM object
-            updateDOMObject(theShape)
+            if (updateDOMObject != null)
+                updateDOMObject(theShape)
+            redrawCanvas(this.shapesList)
         } else if (line == '') {
             // skip empty line
         } else {
@@ -191,22 +198,22 @@ class CodeRunner {
 
             var theClass = undefined
             // check if instance exists
-            if (this.instancesList.find(inst => inst.name == instanceName) == undefined) 
+            if (this.instancesList.find(inst => inst.name == instanceName) == undefined)
                 throw new NoSuchInstanceError(lineNumber, instanceName)
-            
+
             var className = this.instancesList.find(inst => inst.name == instanceName).class
             theClass = this.classesList.find(cls => cls.name == className)
             // check if instance knows method
             var theMethod = undefined
             if (this.methodsCaseSensitive) {
-                if (theClass.methods.find(m => m.name == methodName) == undefined) 
+                if (theClass.methods.find(m => m.name == methodName) == undefined)
                     throw new NoSuchMethodError(lineNumber, methodName)
-                
+
                 theMethod = theClass.methods.find(m => m.name == methodName)
             } else {
-                if (theClass.methods.find(m => m.name.toLowerCase() == methodName.toLowerCase()) == undefined) 
+                if (theClass.methods.find(m => m.name.toLowerCase() == methodName.toLowerCase()) == undefined)
                     throw new NoSuchMethodError(lineNumber, methodName)
-                
+
                 theMethod = theClass.methods.find(m => m.name.toLowerCase() == methodName.toLowerCase())
             }
             // check if parameters list is correct
@@ -216,9 +223,9 @@ class CodeRunner {
             for (var i = 0; i < methodArguments.length; i++) {
                 if (theMethod.parameters[i] == 'number') {
                     // check if argument is a number
-                    if (isNaN(Number.parseInt(methodArguments[i]))) 
+                    if (isNaN(Number.parseInt(methodArguments[i])))
                         throw new MyIllegalArgumentError(lineNumber, methodName, methodArguments[i], theMethod.parameters[i])
-                    
+
                 } else if (theMethod.parameters[i] == 'string') {
                     // check if string is allowed value
                     if (globalAllowedValues.find(v => v == methodArguments[i]) == undefined)
@@ -226,7 +233,7 @@ class CodeRunner {
                 }
             }
         }
-        
+
         return true
     }
 
@@ -265,7 +272,7 @@ class CodeRunner {
         }
         var quoteOpen = false
         for (var i = 1; i < line.length; i++) {
-            switch(state) {
+            switch (state) {
                 case 1:
                     if (line[i].match('[a-zA-Z0-9]')) {
                         state = 1
@@ -382,12 +389,12 @@ class CodeRunner {
     invalidInputCharacterError(lineNumber, line, charNumber) {
         throw new InvalidInputCharacterError(lineNumber, line, charNumber)
     }
-    
+
 }
 
 class Token {
-    constructor (name) {
-        this.name = name   
+    constructor(name) {
+        this.name = name
     }
     getName() {
         return this.name
@@ -398,26 +405,26 @@ class Token {
 }
 
 class InstanceName extends Token {
-    constructor (name) {
+    constructor(name) {
         super(name)
     }
 }
 
 class ClassName extends Token {
-    constructor (name) {
+    constructor(name) {
         super(name)
     }
 }
 
 class MethodCall extends Token {
-    constructor (name, value) {
+    constructor(name, value) {
         super(name)
         this.value = value
     }
 }
 
 class Seperator extends Token {
-    constructor (name) {
+    constructor(name) {
         super(name)
     }
 }
