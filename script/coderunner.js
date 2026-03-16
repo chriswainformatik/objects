@@ -43,8 +43,9 @@ class CodeRunner {
      * @param {function} setActiveLine callback function to mark the active line
      * @param {function} updateDOMObject callback function to update a DOM object
      * @param {function} redrawCanvas callback function to redraw the whole canvas (instead of updating single objects)
+     * @param {function} onComplete callback function called when execution completes
      */
-    runCode(syntaxError, semanticError, setActiveLine, updateDOMObject, redrawCanvas = null) {
+    runCode(syntaxError, semanticError, setActiveLine, updateDOMObject, redrawCanvas = null, onComplete = null) {
         for (var i = 0; i < this.lines.length; i++) {
             var line = this.lines[i].toString()
             // 1. check syntax
@@ -89,6 +90,7 @@ class CodeRunner {
                 clearInterval(steps)
                 setTimeout(function () {
                     setActiveLine(-1)
+                    if (onComplete) onComplete()
                 }, this.stepDelay * 1000)
             }
         }, this.stepDelay * 1000)
@@ -143,9 +145,10 @@ class CodeRunner {
             var theInstance = this.instancesList.find(inst => inst.name == line.split('.')[0])
             var methodName = line.split('.')[1].split('(')[0]
             var methodArguments = line.split('(')[1].substring(0, line.split('(')[1].length - 1).split(',')
-            methodArguments.forEach((arg, i) => {
-                methodArguments[i] = arg.replaceAll(' ', '')
-                methodArguments[i] = arg.replaceAll('"', '')
+            methodArguments = methodArguments.map(arg => {
+                arg = arg.replaceAll(' ', '').replaceAll('"', '')
+                let num = Number(arg)
+                return isNaN(num) ? arg : num
             })
 
             // TODO: case sensitive methods

@@ -1,6 +1,6 @@
 class SHAPE {
-    x = 50
-    y = 50
+    x = 100
+    y = 100
     w = 150
     h = 100
     fillColor = 'red'
@@ -36,8 +36,8 @@ class KREIS extends SHAPE {
         super(instanceName)
         this.w = 50
         this.h = 50
-        this.y = 75
-        this.x = 50
+        this.y = 150
+        this.x = 100
         this.type = 'circle'
     }
 
@@ -62,8 +62,8 @@ class RECHTECK extends SHAPE {
 
     constructor(instanceName) {
         super(instanceName)
-        this.x = 75
-        this.y = 75
+        this.x = 150
+        this.y = 150
         this.fillColor = 'blue'
         this.type = 'rectangle'
     }
@@ -86,10 +86,10 @@ class RECHTECK extends SHAPE {
 class DREIECK extends SHAPE {
     constructor(instanceName) {
         super(instanceName)
-        this.w = 75
-        this.h = 50
-        this.y = 100
-        this.x = 75
+        this.w = 150
+        this.h = 100
+        this.y = 200
+        this.x = 150
         this.fillColor = 'green'
         this.type = 'triangle'
 

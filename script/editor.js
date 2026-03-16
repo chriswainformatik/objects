@@ -51,7 +51,8 @@ var editorExampleCode = undefined
  */
 document.addEventListener('DOMContentLoaded', function () {
     runner = new CodeRunner(globalClassesList)
-    document.getElementById('btn-run-code').addEventListener('click', runCode)
+    document.getElementById('btn-run-code').addEventListener('click', () => runCode())
+    document.getElementById('btn-record-video').addEventListener('click', recordVideo)
     // enable popovers
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
@@ -137,16 +138,8 @@ function toggleAutocompletion(enabled) {
 /**
  * Clears all elements and re-runs the whole code.
  */
-function runCode() {
+function runCode(onComplete = null) {
     // remove elements
-    //document.getElementById('the-canvas').replaceChildren()
-    /*
-    Array.from(document.getElementById('the-canvas').childNodes).forEach(c => {
-        if (c.classList.contains('graphical-object')) {
-            c.remove()
-        }
-    })
-    */
     runner.clearObjects()
     clearObjectCards()
     // remove error marking
@@ -160,7 +153,10 @@ function runCode() {
     popovers = []
     clearLineBackgrounds()
     runner.setLines(editor.getValue().split('\n'))
-    runner.runCode(setSyntaxError, setSemanticError, setActiveLine, null, redrawCanvas)
+    var result = runner.runCode(setSyntaxError, setSemanticError, setActiveLine, null, redrawCanvas, onComplete)
+    if (result === -1 && onComplete) {
+        onComplete()
+    }
 }
 
 /**
@@ -170,6 +166,7 @@ function runCode() {
  * 
  * @param {SHAPE} shape The shape which the DOM object is representing
  */
+/*
 function updateDOMObject(shape) {
 
     
@@ -221,6 +218,7 @@ function updateDOMObject(shape) {
     }
     updateObjectCards(shape)
 }
+*/
 
 /**
  * Helper function to define different line styles.
@@ -229,14 +227,14 @@ function updateDOMObject(shape) {
  * @returns 
  */
 function getLineDash(lineStyle) {
-        if (lineStyle == 'solid') {
-            return []
-        } else if (lineStyle == 'dashed') {
-            return [2 * context.lineWidth, 2 * context.lineWidth]
-        } else if (lineStyle == 'dotted') {
-            return [0.5 * context.lineWidth, context.lineWidth]
-        }
+    if (lineStyle == 'solid') {
+        return []
+    } else if (lineStyle == 'dashed') {
+        return [2 * context.lineWidth, 2 * context.lineWidth]
+    } else if (lineStyle == 'dotted') {
+        return [0.5 * context.lineWidth, context.lineWidth]
     }
+}
 
 /**
  * Helper function to draw or stroke polygon shapes.
@@ -270,6 +268,8 @@ function redrawCanvas(shapesList) {
     // Set canvas drawing surface to match displayed size for pixel-perfect drawing
     var context = theCanvas.getContext('2d')
     context.clearRect(0, 0, theCanvas.width, theCanvas.height)
+    context.fillStyle = '#ffffff'
+    context.fillRect(0, 0, theCanvas.width, theCanvas.height)
 
     // Draw grid if enabled
     if (gridOn) {
@@ -343,6 +343,8 @@ function redrawCanvas(shapesList) {
             context.setLineDash(getLineDash(shape.lineStyle))
             context.strokeRect(shape.x, shape.y - shape.h, shape.w, shape.h)
         }
+
+        updateObjectCards(shape)
     })
 }
 
@@ -550,4 +552,35 @@ function saveFile(filename, data) {
         elem.click();
         document.body.removeChild(elem);
     }
+}
+
+function recordVideo() {
+
+    var videoStream = canvas.captureStream(30)
+    var mimeType = 'video/mp4';
+    if (!MediaRecorder.isTypeSupported(mimeType)) {
+        mimeType = 'video/webm';
+        console.log('MP4 not supported for canvas capture, falling back to WebM');
+    }
+    var mediaRecorder = new MediaRecorder(videoStream, { mimeType: mimeType })
+
+    var chunks = []
+    mediaRecorder.ondataavailable = function (e) {
+        chunks.push(e.data);
+    }
+
+    mediaRecorder.onstop = function (e) {
+        var blob = new Blob(chunks, { 'type': mimeType })
+        chunks = []
+        var videoURL = URL.createObjectURL(blob)
+        const elem = document.createElement('a');
+        elem.href = videoURL;
+        elem.download = 'recorded-video.' + mimeType.split('/')[1];
+        document.body.appendChild(elem);
+        elem.click();
+        document.body.removeChild(elem);
+    }
+
+    mediaRecorder.start()
+    runCode(() => mediaRecorder.stop())
 }
