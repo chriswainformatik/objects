@@ -1,71 +1,83 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Objects!</title>
 
-        <link rel="stylesheet" href="plugins/codemirror-5.65.10/lib/codemirror.css">
-        <link rel="stylesheet" href="plugins/codemirror-5.65.10/addon/hint/show-hint.css">
-        <link rel="stylesheet" href="plugins/bootstrap-5.2.3-dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="plugins/bootstrap-icons-1.10.2/bootstrap-icons.css">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title>Objects!</title>
 
-        <div id="wrapper" class="container-fluid py-4 vh-100 position-relative">
-            <div id="header" class="container mt-4 d-flex flex-row align-items-center">
-                <div id="logo" style="max-width:200px;" class="me-3">
-                    <img src="assets/Logo.png" class="img-fluid" alt="Objects! Logo" />
-                </div>
-                <h1 style="display: none;">Objects!</h1>
-                <h2 class="logo-font my-auto">Eine einfache objektorientierte Sprache mit Grafikobjekten</h2>
+    <link rel="stylesheet" href="plugins/codemirror-5.65.10/lib/codemirror.css">
+    <link rel="stylesheet" href="plugins/codemirror-5.65.10/addon/hint/show-hint.css">
+    <link rel="stylesheet" href="plugins/bootstrap-5.2.3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/bootstrap-icons-1.10.2/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="wrapper" class="container-fluid py-4 vh-100 position-relative">
+        <div id="header" class="container mt-4 d-flex flex-row align-items-center">
+            <div id="logo" style="max-width:200px;" class="me-3">
+                <img src="assets/Logo.png" class="img-fluid" alt="Objects! Logo" />
             </div>
-            
-            <div id="content" class="container mt-3">
-                <div class="row d-flex align-items-stretch">
-                    <div class="col" id="code-wrapper">
-                        <div id="code-top-panel" class="my-2 d-flex align-items-center justify-content-start">
-                            
-                            <button id="btn-run-code" class="btn btn-success my-btn">
-                                <span class="bi bi-play-fill"></span>
-                            </button>
-                            <!--<button id="btn-stop-code" class="btn btn-outline-secondary ms-2" disabled>
+            <h1 style="display: none;">Objects!</h1>
+            <h2 class="logo-font my-auto">Eine einfache objektorientierte Sprache mit Grafikobjekten</h2>
+        </div>
+
+        <div id="content" class="container mt-3">
+            <div class="row d-flex align-items-stretch">
+                <div class="col" id="code-wrapper">
+                    <div id="code-top-panel" class="my-2 d-flex align-items-center justify-content-start">
+
+                        <button id="btn-run-code" class="btn btn-success my-btn">
+                            <span class="bi bi-play-fill"></span>
+                        </button>
+                        <!--<button id="btn-stop-code" class="btn btn-outline-secondary ms-2" disabled>
                                 <span class="bi bi-stop-fill"></span>
                             </button>-->
-                            <button id="btn-record-video" class="btn btn-success my-btn ms-2">
-                                <span class="bi bi-record-circle-fill"></span>
-                            </button>
-                            
-                            <label for="velocity" class="form-label ms-5 my-auto">Geschwindigkeit</label>
-                            <input type="range" class="form-range ms-4 my-range" min="0" max="2" step="0.1" value="1.5" id="velocity">
-                        </div>
-                        <textarea id="myTextarea"></textarea>
+
+                        <label for="velocity" class="form-label ms-5 my-auto">Geschwindigkeit</label>
+                        <input type="range" class="form-range ms-4 my-range" min="0" max="2" step="0.1" value="1.5"
+                            id="velocity">
                     </div>
-                    <div class="col" id="canvas-wrapper">
-                        <div id="canvas-top-panel" class="my-2 d-flex justify-content-end">
-                            <button type="button" id="btn-load-sourcecode" class="btn btn-outline-secondary ms-2">
-                                <span class="bi bi-folder2-open"></span> Öffnen
-                            </button>
-                            <input type="file" id="file-input" accept=".txt" style="display:none;">
-                            <button type="button" id="btn-save-sourcecode" class="btn btn-outline-secondary ms-2" data-bs-toggle="modal" data-bs-target="#save-file-modal">
+                    <textarea id="myTextarea"></textarea>
+                </div>
+                <div class="col" id="canvas-wrapper">
+                    <div id="canvas-top-panel" class="my-2 d-flex justify-content-end">
+                        <button type="button" id="btn-load-sourcecode" class="btn btn-outline-secondary ms-2">
+                            <span class="bi bi-folder2-open"></span> Öffnen
+                        </button>
+                        <input type="file" id="file-input" accept=".txt" style="display:none;">
+
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary ms-2 dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <span class="bi bi-download"></span> Speichern
                             </button>
-                            <button type="button" id="btn-sidebar-settings-show" class="btn btn-outline-secondary ms-2">
-                                <span class="bi bi-gear-fill"></span> Einstellungen
-                            </button>
-                            <button type="button" id="btn-sidebar-help-show" class="btn btn-outline-primary ms-2 my-outline-btn">
-                                <span class="bi bi-question-lg"></span> Hilfe
-                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" id="btn-save-sourcecode" data-bs-toggle="modal" data-bs-target="#save-file-modal">Programmcode als Textdatei</a></li>
+                                <li><a class="dropdown-item" href="#" id="btn-save-video">Zeichenfläche als Video</a></li>
+                            </ul>
                         </div>
-                        <canvas id="the-canvas" class="border"></canvas>
-                    </div>
-                    <!--<div class="" id="sidebar-shrink-helper-col"></div>-->
-                </div>
 
-                <!-- Save File Modal -->
-                <div class="modal fade" id="save-file-modal" tabindex="-1" aria-labelledby="save-file-modal" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+                        <button type="button" id="btn-sidebar-settings-show" class="btn btn-outline-secondary ms-2">
+                            <span class="bi bi-gear-fill"></span> Einstellungen
+                        </button>
+                        
+                        <button type="button" id="btn-sidebar-help-show"
+                            class="btn btn-outline-primary ms-2 my-outline-btn">
+                            <span class="bi bi-question-lg"></span> Hilfe
+                        </button>
+                    </div>
+                    <canvas id="the-canvas" class="border"></canvas>
+                </div>
+                <!--<div class="" id="sidebar-shrink-helper-col"></div>-->
+            </div>
+
+            <!-- Save File Modal -->
+            <div class="modal fade" id="save-file-modal" tabindex="-1" aria-labelledby="save-file-modal"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Dein Programm als Datei speichern</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -74,7 +86,8 @@
                             <div class="mb-3">
                                 <form class="needs-validation" id="form-save-filename" novalidate>
                                     <label for="filename" class="form-label">Dateiname</label>
-                                    <input type="text" class="form-control" id="save-filename" name="save-filename" required>
+                                    <input type="text" class="form-control" id="save-filename" name="save-filename"
+                                        required>
                                     <div class="invalid-feedback">
                                         Bitte gib einen Dateinamen ein.
                                     </div>
@@ -85,18 +98,20 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
                             <button type="button" class="btn btn-primary" id="btn-confirm-save-file">Speichern</button>
                         </div>
-                        </div>
                     </div>
                 </div>
+            </div>
 
 
-                <!-- Load File Error Modal -->
-                <div class="modal fade" id="error-modal" tabindex="-1" aria-labelledby="error-modal-label" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+            <!-- Load File Error Modal -->
+            <div class="modal fade" id="error-modal" tabindex="-1" aria-labelledby="error-modal-label"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="error-modal-label">Fehler</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Schließen"></button>
                         </div>
                         <div class="modal-body" id="error-modal-body">
                             <!-- Error message will be inserted here -->
@@ -104,106 +119,111 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
                         </div>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="row mt-4">
-                    <div class="row collapse" id="object-cards-wrapper">
-                        <div class="row">
-                            <h5>Objektkarten:</h5>
-                        </div>
                     </div>
                 </div>
             </div>
 
 
-            <!-- Settings sidebar -->
-            <div id="sidebar-settings" class="sidebar container p-1 h-100 bg-white border-start">
-                <div class="d-flex justify-content-between">
-                    <h2 class="mt-4 ps-2">Einstellungen</h2>
-                    <button type="button" id="btn-sidebar-settings-close" class="btn-close" aria-label="Close"></button>
-                </div>
-                
-                <div class="container">
-                    <!-- TODO: enable case sensitivity toggle -->
-                    <div class="form-check d-none">
-                        <input class="form-check-input" type="checkbox" value="" id="check-methods-case-sensitive">
-                        <label class="form-check-label" for="check-methods-case-sensitive">
-                            Methoden sind case-sensitiv
-                        </label>
+            <div class="row mt-4">
+                <div class="row collapse" id="object-cards-wrapper">
+                    <div class="row">
+                        <h5>Objektkarten:</h5>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="check-show-grid">
-                        <label class="form-check-label" for="check-show-grid">
-                            Gitternetzlinien anzeigen
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="check-show-grid-labels">
-                        <label class="form-check-label" for="check-show-grid-labels">
-                            Zahlen anzeigen
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="check-enable-autocomplete">
-                        <label class="form-check-label" for="check-enable-autocomplete">
-                            Automatische Code-Vervollständigung (mit Strg + Leertaste)
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="check-show-object-cards">
-                        <label class="form-check-label" for="check-show-object-cards">
-                            Objektkarten anzeigen
-                        </label>
-                    </div>
-                </div>
-                <div class="container mt-4">
-                    <button type="button" class="btn btn-primary" id="btn-sidebar-settings-save">Speichern</button>
-                    <button type="button" class="btn btn-secondary" id="btn-sidebar-settings-cancel">Schließen</button>
-                </div>
-                <div class="container mt-4 text-secondary d-none" id="settings-saved-confirmation">
-                    Einstellungen wurden gespeichert!
                 </div>
             </div>
+        </div>
 
 
-            <!-- Help sidebar -->
-            <div id="sidebar-help" class="sidebar container p-1 h-100 bg-white border-start">
-                <div class="d-flex justify-content-end sticky-top">
-                    <button type="button" id="btn-sidebar-help-close" class="btn-close" aria-label="Close"></button>
+        <!-- Settings sidebar -->
+        <div id="sidebar-settings" class="sidebar container p-1 h-100 bg-white border-start">
+            <div class="d-flex justify-content-between">
+                <h2 class="mt-4 ps-2">Einstellungen</h2>
+                <button type="button" id="btn-sidebar-settings-close" class="btn-close" aria-label="Close"></button>
+            </div>
+
+            <div class="container">
+                <!-- TODO: enable case sensitivity toggle -->
+                <div class="form-check d-none">
+                    <input class="form-check-input" type="checkbox" value="" id="check-methods-case-sensitive">
+                    <label class="form-check-label" for="check-methods-case-sensitive">
+                        Methoden sind case-sensitiv
+                    </label>
                 </div>
-                
-                <div class="d-flex justify-content-between">
-                    <h2 class="ps-2" id="helpModalLabel">Hilfe</h2>
-                    
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check-show-grid">
+                    <label class="form-check-label" for="check-show-grid">
+                        Gitternetzlinien anzeigen
+                    </label>
                 </div>
-                <div class="">
-                    <div class="container mt-2 mb-5">
-                        <h5>Inhalt</h5>
-                        <ul class="list-unstyled">
-                            <li><a href="#befehle">Wie gibt man Befehle ein?</a></li>
-                            <li><a href="#klassen">Welche Klassen gibt es?</a></li>
-                            <li><a href="#erlaubte-werte">Welche Werte sind für Farben und Linienarten erlaubt?</a></li>
-                        </ul>
-                    </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check-show-grid-labels">
+                    <label class="form-check-label" for="check-show-grid-labels">
+                        Zahlen anzeigen
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check-enable-autocomplete">
+                    <label class="form-check-label" for="check-enable-autocomplete">
+                        Automatische Code-Vervollständigung (mit Strg + Leertaste)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="check-show-object-cards">
+                    <label class="form-check-label" for="check-show-object-cards">
+                        Objektkarten anzeigen
+                    </label>
+                </div>
+            </div>
+            <div class="container mt-4">
+                <button type="button" class="btn btn-primary" id="btn-sidebar-settings-save">Speichern</button>
+                <button type="button" class="btn btn-secondary" id="btn-sidebar-settings-cancel">Schließen</button>
+            </div>
+            <div class="container mt-4 text-secondary d-none" id="settings-saved-confirmation">
+                Einstellungen wurden gespeichert!
+            </div>
+        </div>
 
-                    <div class="container mb-5">
-                        <a name="befehle"><h5>Befehle eingeben</h5></a>
 
-                        <button type="button" id="btn-show-example-code" class="btn btn-outline-secondary mb-2" data-bs-toggle="modal" data-bs-target="#example-code-modal">
-                            <span class="bi bi-text-left"></span> Beispiel anzeigen
-                        </button>
+        <!-- Help sidebar -->
+        <div id="sidebar-help" class="sidebar container p-1 h-100 bg-white border-start">
+            <div class="d-flex justify-content-end sticky-top">
+                <button type="button" id="btn-sidebar-help-close" class="btn-close" aria-label="Close"></button>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <h2 class="ps-2" id="helpModalLabel">Hilfe</h2>
+
+            </div>
+            <div class="">
+                <div class="container mt-2 mb-5">
+                    <h5>Inhalt</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#befehle">Wie gibt man Befehle ein?</a></li>
+                        <li><a href="#klassen">Welche Klassen gibt es?</a></li>
+                        <li><a href="#erlaubte-werte">Welche Werte sind für Farben und Linienarten erlaubt?</a></li>
+                    </ul>
+                </div>
+
+                <div class="container mb-5">
+                    <a name="befehle">
+                        <h5>Befehle eingeben</h5>
+                    </a>
+
+                    <button type="button" id="btn-show-example-code" class="btn btn-outline-secondary mb-2"
+                        data-bs-toggle="modal" data-bs-target="#example-code-modal">
+                        <span class="bi bi-text-left"></span> Beispiel anzeigen
+                    </button>
 
                     <p>
-                        <strong>Objects</strong> kann zwei verschiedene Befehle verarbeiten: Erzeugen von Objekten und Methodenaufrufe.
+                        <strong>Objects</strong> kann zwei verschiedene Befehle verarbeiten: Erzeugen von Objekten und
+                        Methodenaufrufe.
                     </p>
                     <h6>Erzeugen von Objekten</h6>
                     <p>
-                        Du kannst Objekte erzeugen, indem du die Kurzschreibweise für <i>Objekte gehört zu Klasse</i> verwendest. Beispiel:
+                        Du kannst Objekte erzeugen, indem du die Kurzschreibweise für <i>Objekte gehört zu Klasse</i>
+                        verwendest. Beispiel:
                     </p>
-                    
+
                     <div class="help-code-example">
                         <code>vorderrad:KREIS</code>
                     </div>
@@ -216,13 +236,15 @@
                     <p>
                         Du kannst Methoden von Objekten aufrufen, indem du die Punktschreibweise verwendest. Beispiel:
                     </p>
-                    
+
                     <div class="help-code-example">
                         <code>vorderrad.MittelpunktSetzen(20, 50)</code>
                     </div>
 
                     <p>
-                        Der Befehl setzt den Mittelpunkt des Objekts <i>vorderrad</i> auf die Koordinaten (20|50). Hat eine Methode mehrere Eingabewerte (wie im Beispiel die x- und die y-Koordinate), so werden diese durch ein Komma abgetrennt.
+                        Der Befehl setzt den Mittelpunkt des Objekts <i>vorderrad</i> auf die Koordinaten (20|50). Hat
+                        eine Methode mehrere Eingabewerte (wie im Beispiel die x- und die y-Koordinate), so werden diese
+                        durch ein Komma abgetrennt.
                     </p>
 
                     <p>
@@ -234,237 +256,341 @@
                     </div>
 
                     <p>
-                        <span class="text-danger">Achtung:</span> Du kannst nur Methoden von Objekten aufrufen, die du vorher erzeugt hast!
+                        <span class="text-danger">Achtung:</span> Du kannst nur Methoden von Objekten aufrufen, die du
+                        vorher erzeugt hast!
                     </p>
-                    </div>
-                    
-                    <div class="container mb-5">
-                        <a name="klassen"><h5>Klassen</h5></a>
-                        <p>Du kannst Objekte folgender Klassen erzeugen. Du kannst die genannten Methoden verwenden.</p>
-                        <div>
-                            <select class="form-select" aria-label="class card listing toggle" id="class-card-method-listing-toggle">
-                                <option value="listing" selected>Methodenauflistung verwenden</option>
-                                <option value="class-card">Klassenkarten verwenden</option>
-                              </select>
-                        </div>
-                        <p>
-                            <div class="class-card-wrapper">
-                                <table class="class-card">
-                                    <tr><th class="class-card-heading">KREIS</th></tr>
-
-                                    <tr><td>füllfarbe</td></tr>
-                                    <tr><td>linienart</td></tr>
-                                    <tr><td>linienfarbe</td></tr>
-                                    <tr><td>linienstärke</td></tr>
-                                    <tr><td>mittelpunktX</td></tr>
-                                    <tr><td>mittelpunktY</td></tr>
-                                    <tr><td class="class-card-last-attr">radius</td></tr>
-
-                                    <tr><td>FüllfarbeSetzen(neueFarbe)</td></tr>
-                                    <tr><td>LinienartSetzen(neueArt)</td></tr>
-                                    <tr><td>LinienfarbeSetzen(neueFarbe)</td></tr>
-                                    <tr><td>LinienstärkeSetzen(neueStärke)</td></tr>
-                                    <tr><td>MittelpunktSetzen(neueXKoordinate, neueYKoordinate)</td></tr>
-                                    <tr><td>RadiusSetzen(neuerRadius)</td></tr>
-                                </table>
-                            </div>
-                            
-                            <div class="method-listing-wrapper">
-                                <h6>KREIS</h6>
-                                <ul>
-                                    <li><code>MittelpunktSetzen(neueXKoordinate, neueYKoordinate)</code></li>
-                                    <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
-                                    <li><code>RadiusSetzen(neuerRadius)</code></li>
-                                    <li><code>LinienartSetzen(neueArt)</code></li>
-                                    <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
-                                    <li><code>LinienstärkeSetzen(neueStärke)</code></li>
-                                </ul>
-                            </div>
-                            
-                        </p>
-                        <p class="mt-4">
-                            <div class="class-card-wrapper">
-                                <table class="class-card">
-                                    <tr><th class="class-card-heading">RECHTECK</th></tr>
-
-                                    <tr><td>breite</td></tr>
-                                    <tr><td>füllfarbe</td></tr>
-                                    <tr><td>länge</td></tr>
-                                    <tr><td>linienart</td></tr>
-                                    <tr><td>linienfarbe</td></tr>
-                                    <tr><td>linienstärke</td></tr>
-                                    <tr><td>xKoordinate</td></tr>
-                                    <tr><td class="class-card-last-attr">yKoordinate</td></tr>
-
-                                    <tr><td>BreiteSetzen(neueBreite)</td></tr>
-                                    <tr><td>FüllfarbeSetzen(neueFarbe)</td></tr>
-                                    <tr><td>LängeSetzen(neueLänge)</td></tr>
-                                    <tr><td>LinienartSetzen(neueArt)</td></tr>
-                                    <tr><td>LinienfarbeSetzen(neueFarbe)</td></tr>
-                                    <tr><td>LinienstärkeSetzen(neueStärke)</td></tr>
-                                    <tr><td>PositionSetzen(neueXKoordinate, neueYKoordinate)*</td></tr>
-                                </table>
-                                <span class="text-secondary">*setzt die Position der linken unteren Ecke</span>
-                            </div>
-                            
-                            <div class="method-listing-wrapper">
-                                <h6>RECHTECK</h6>
-                                <ul>
-                                    <li><code>PositionSetzen(neueXKoordinate, neueYKoordinate)</code><br><span class="text-secondary">(setzt die Position der linken unteren Ecke)</span></li>
-                                    <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
-                                    <li><code>LängeSetzen(neueLänge)</code></li>
-                                    <li><code>BreiteSetzen(neueBreite)</code></li>
-                                    <li><code>LinienartSetzen(neueArt)</code></li>
-                                    <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
-                                    <li><code>LinienstärkeSetzen(neueStärke)</code></li>
-                                </ul>
-                            </div>
-                            
-                        </p>
-                        <p>
-                            <div class="class-card-wrapper">
-                                <table class="class-card">
-                                    <tr><th class="class-card-heading">DREIECK</th></tr>
-
-                                    <tr><td>breite</td></tr>
-                                    <tr><td>füllfarbe</td></tr>
-                                    <tr><td>länge</td></tr>
-                                    <tr><td>linienart</td></tr>
-                                    <tr><td>linienfarbe</td></tr>
-                                    <tr><td>linienstärke</td></tr>
-                                    <tr><td>xKoordinate</td></tr>
-                                    <tr><td class="class-card-last-attr">yKoordinate</td></tr>
-
-                                    <tr><td>BreiteSetzen(neueBreite)</td></tr>
-                                    <tr><td>FüllfarbeSetzen(neueFarbe)</td></tr>
-                                    <tr><td>LängeSetzen(neueLänge)</td></tr>
-                                    <tr><td>LinienartSetzen(neueArt)</td></tr>
-                                    <tr><td>LinienfarbeSetzen(neueFarbe)</td></tr>
-                                    <tr><td>LinienstärkeSetzen(neueStärke)</td></tr>
-                                    <tr><td>PositionSetzen(neueXKoordinate, neueYKoordinate)*</td></tr>
-                                </table>
-                                <span class="text-secondary">*setzt die Position der linken unteren Ecke</span>
-                            </div>
-                        
-                            <div class="method-listing-wrapper">
-                                <h6>DREIECK</h6>
-                                <ul>
-                                    <li><code>PositionSetzen(neueXKoordinate, neueYKoordinate)</code><br><span class="text-secondary">(setzt die Position der linken unteren Ecke)</span></li>
-                                    <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
-                                    <li><code>HöheSetzen(neueHöhe)</code></li>
-                                    <li><code>BreiteSetzen(neueBreite)</code></li>
-                                    <li><code>LinienartSetzen(neueArt)</code></li>
-                                    <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
-                                    <li><code>LinienstärkeSetzen(neueStärke)</code></li>
-                                </ul>
-                            </div>
-                        
-                        </p>
-                    </div>
-
-                    <div class="container mb-5">
-                        <a name="erlaubte-werte"><h5>Erlaubte Werte</h5></a>
-
-                        <p class="text-secondary">
-                        </p>
-
-                        <p>
-                            <h6>Farbwerte</h6>
-                            <ul id="list-allowed-values-color"></ul>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', () => {
-                                    var list = document.getElementById('list-allowed-values-color')
-                                    var colorNames = []
-                                    for (var key in globalColorNames) {
-                                        colorNames.push(key)
-                                    }
-                                    for (var key in colorNames.sort()) {
-                                        var li = document.createElement('li')
-                                        li.innerHTML = colorNames[key]
-                                        list.append(li)
-                                    }
-                                })
-                            </script>
-                        </p>
-
-                        <p>
-                            <h6>Linienarten</h6>
-                            <ul id="list-allowed-values-liststyle"></ul>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', () => {
-                                    var list = document.getElementById('list-allowed-values-liststyle')
-                                    var lineStyles = []
-                                    for (var key in globalLineStyleNames) {
-                                        lineStyles.push(key)
-                                    }
-                                    for (var key in lineStyles.sort()) {
-                                        var li = document.createElement('li')
-                                        li.innerHTML = lineStyles[key]
-                                        list.append(li)
-                                    }
-                                })
-                            </script>
-                        </p>
-                    </div>
-                    
                 </div>
-                <div class="container mt-4">
-                    <div class="d-flex flex-column">
-                        <div class="d-flex flex-row justify-content-between align-items-center">
-                            <div>Version: 1.1.1</div>
-                            <div><a id="github-logo" href="https://github.com/chriswainformatik/objects"><img src="assets/github-mark.png" width="50" height="50"></a></div>
-                        </div>
+
+                <div class="container mb-5">
+                    <a name="klassen">
+                        <h5>Klassen</h5>
+                    </a>
+                    <p>Du kannst Objekte folgender Klassen erzeugen. Du kannst die genannten Methoden verwenden.</p>
+                    <div>
+                        <select class="form-select" aria-label="class card listing toggle"
+                            id="class-card-method-listing-toggle">
+                            <option value="listing" selected>Methodenauflistung verwenden</option>
+                            <option value="class-card">Klassenkarten verwenden</option>
+                        </select>
                     </div>
+                    <p>
+                    <div class="class-card-wrapper">
+                        <table class="class-card">
+                            <tr>
+                                <th class="class-card-heading">KREIS</th>
+                            </tr>
+
+                            <tr>
+                                <td>füllfarbe</td>
+                            </tr>
+                            <tr>
+                                <td>linienart</td>
+                            </tr>
+                            <tr>
+                                <td>linienfarbe</td>
+                            </tr>
+                            <tr>
+                                <td>linienstärke</td>
+                            </tr>
+                            <tr>
+                                <td>mittelpunktX</td>
+                            </tr>
+                            <tr>
+                                <td>mittelpunktY</td>
+                            </tr>
+                            <tr>
+                                <td class="class-card-last-attr">radius</td>
+                            </tr>
+
+                            <tr>
+                                <td>FüllfarbeSetzen(neueFarbe)</td>
+                            </tr>
+                            <tr>
+                                <td>LinienartSetzen(neueArt)</td>
+                            </tr>
+                            <tr>
+                                <td>LinienfarbeSetzen(neueFarbe)</td>
+                            </tr>
+                            <tr>
+                                <td>LinienstärkeSetzen(neueStärke)</td>
+                            </tr>
+                            <tr>
+                                <td>MittelpunktSetzen(neueXKoordinate, neueYKoordinate)</td>
+                            </tr>
+                            <tr>
+                                <td>RadiusSetzen(neuerRadius)</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="method-listing-wrapper">
+                        <h6>KREIS</h6>
+                        <ul>
+                            <li><code>MittelpunktSetzen(neueXKoordinate, neueYKoordinate)</code></li>
+                            <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
+                            <li><code>RadiusSetzen(neuerRadius)</code></li>
+                            <li><code>LinienartSetzen(neueArt)</code></li>
+                            <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
+                            <li><code>LinienstärkeSetzen(neueStärke)</code></li>
+                        </ul>
+                    </div>
+
+                    </p>
+                    <p class="mt-4">
+                    <div class="class-card-wrapper">
+                        <table class="class-card">
+                            <tr>
+                                <th class="class-card-heading">RECHTECK</th>
+                            </tr>
+
+                            <tr>
+                                <td>breite</td>
+                            </tr>
+                            <tr>
+                                <td>füllfarbe</td>
+                            </tr>
+                            <tr>
+                                <td>länge</td>
+                            </tr>
+                            <tr>
+                                <td>linienart</td>
+                            </tr>
+                            <tr>
+                                <td>linienfarbe</td>
+                            </tr>
+                            <tr>
+                                <td>linienstärke</td>
+                            </tr>
+                            <tr>
+                                <td>xKoordinate</td>
+                            </tr>
+                            <tr>
+                                <td class="class-card-last-attr">yKoordinate</td>
+                            </tr>
+
+                            <tr>
+                                <td>BreiteSetzen(neueBreite)</td>
+                            </tr>
+                            <tr>
+                                <td>FüllfarbeSetzen(neueFarbe)</td>
+                            </tr>
+                            <tr>
+                                <td>LängeSetzen(neueLänge)</td>
+                            </tr>
+                            <tr>
+                                <td>LinienartSetzen(neueArt)</td>
+                            </tr>
+                            <tr>
+                                <td>LinienfarbeSetzen(neueFarbe)</td>
+                            </tr>
+                            <tr>
+                                <td>LinienstärkeSetzen(neueStärke)</td>
+                            </tr>
+                            <tr>
+                                <td>PositionSetzen(neueXKoordinate, neueYKoordinate)*</td>
+                            </tr>
+                        </table>
+                        <span class="text-secondary">*setzt die Position der linken unteren Ecke</span>
+                    </div>
+
+                    <div class="method-listing-wrapper">
+                        <h6>RECHTECK</h6>
+                        <ul>
+                            <li><code>PositionSetzen(neueXKoordinate, neueYKoordinate)</code><br><span
+                                    class="text-secondary">(setzt die Position der linken unteren Ecke)</span></li>
+                            <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
+                            <li><code>LängeSetzen(neueLänge)</code></li>
+                            <li><code>BreiteSetzen(neueBreite)</code></li>
+                            <li><code>LinienartSetzen(neueArt)</code></li>
+                            <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
+                            <li><code>LinienstärkeSetzen(neueStärke)</code></li>
+                        </ul>
+                    </div>
+
+                    </p>
+                    <p>
+                    <div class="class-card-wrapper">
+                        <table class="class-card">
+                            <tr>
+                                <th class="class-card-heading">DREIECK</th>
+                            </tr>
+
+                            <tr>
+                                <td>breite</td>
+                            </tr>
+                            <tr>
+                                <td>füllfarbe</td>
+                            </tr>
+                            <tr>
+                                <td>länge</td>
+                            </tr>
+                            <tr>
+                                <td>linienart</td>
+                            </tr>
+                            <tr>
+                                <td>linienfarbe</td>
+                            </tr>
+                            <tr>
+                                <td>linienstärke</td>
+                            </tr>
+                            <tr>
+                                <td>xKoordinate</td>
+                            </tr>
+                            <tr>
+                                <td class="class-card-last-attr">yKoordinate</td>
+                            </tr>
+
+                            <tr>
+                                <td>BreiteSetzen(neueBreite)</td>
+                            </tr>
+                            <tr>
+                                <td>FüllfarbeSetzen(neueFarbe)</td>
+                            </tr>
+                            <tr>
+                                <td>LängeSetzen(neueLänge)</td>
+                            </tr>
+                            <tr>
+                                <td>LinienartSetzen(neueArt)</td>
+                            </tr>
+                            <tr>
+                                <td>LinienfarbeSetzen(neueFarbe)</td>
+                            </tr>
+                            <tr>
+                                <td>LinienstärkeSetzen(neueStärke)</td>
+                            </tr>
+                            <tr>
+                                <td>PositionSetzen(neueXKoordinate, neueYKoordinate)*</td>
+                            </tr>
+                        </table>
+                        <span class="text-secondary">*setzt die Position der linken unteren Ecke</span>
+                    </div>
+
+                    <div class="method-listing-wrapper">
+                        <h6>DREIECK</h6>
+                        <ul>
+                            <li><code>PositionSetzen(neueXKoordinate, neueYKoordinate)</code><br><span
+                                    class="text-secondary">(setzt die Position der linken unteren Ecke)</span></li>
+                            <li><code>FüllfarbeSetzen(neueFarbe)</code></li>
+                            <li><code>HöheSetzen(neueHöhe)</code></li>
+                            <li><code>BreiteSetzen(neueBreite)</code></li>
+                            <li><code>LinienartSetzen(neueArt)</code></li>
+                            <li><code>LinienfarbeSetzen(neueFarbe)</code></li>
+                            <li><code>LinienstärkeSetzen(neueStärke)</code></li>
+                        </ul>
+                    </div>
+
+                    </p>
                 </div>
-                <div class="container mt-4">
-                    <button type="button" class="btn btn-secondary" id="btn-sidebar-help-cancel">Schließen</button>
+
+                <div class="container mb-5">
+                    <a name="erlaubte-werte">
+                        <h5>Erlaubte Werte</h5>
+                    </a>
+
+                    <p class="text-secondary">
+                    </p>
+
+                    <p>
+                    <h6>Farbwerte</h6>
+                    <ul id="list-allowed-values-color"></ul>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            var list = document.getElementById('list-allowed-values-color')
+                            var colorNames = []
+                            for (var key in globalColorNames) {
+                                colorNames.push(key)
+                            }
+                            for (var key in colorNames.sort()) {
+                                var li = document.createElement('li')
+                                li.innerHTML = colorNames[key]
+                                list.append(li)
+                            }
+                        })
+                    </script>
+                    </p>
+
+                    <p>
+                    <h6>Linienarten</h6>
+                    <ul id="list-allowed-values-liststyle"></ul>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            var list = document.getElementById('list-allowed-values-liststyle')
+                            var lineStyles = []
+                            for (var key in globalLineStyleNames) {
+                                lineStyles.push(key)
+                            }
+                            for (var key in lineStyles.sort()) {
+                                var li = document.createElement('li')
+                                li.innerHTML = lineStyles[key]
+                                list.append(li)
+                            }
+                        })
+                    </script>
+                    </p>
+                </div>
+
+            </div>
+            <div class="container mt-4">
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        <div>Version: 1.1.1</div>
+                        <div><a id="github-logo" href="https://github.com/chriswainformatik/objects"><img
+                                    src="assets/github-mark.png" width="50" height="50"></a></div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="modal fade" id="example-code-modal" tabindex="-1" aria-labelledby="example-code-modal-label" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="error-modal-label">Beispielbefehle</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
-                        </div>
-                        <div class="modal-body" id="error-modal-body">
-                            <textarea id="example-code-editor"></textarea>
-                            <div class="mt-3 text-secondary">Möchtest du die Beispielbefehle direkt einfügen?</div>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="btn-insert-example-code" type="button" class="btn btn-primary" data-bs-dismiss="modal">Einfügen</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="container mt-4">
+                <button type="button" class="btn btn-secondary" id="btn-sidebar-help-cancel">Schließen</button>
             </div>
-
         </div>
 
-        <!-- Globals -->
-        <script>
-            var runner = null
-            var globalInstancesList = []
-        </script>
-        <script src="script/classes.js"></script>
-        <script src="script/allowedValues.js"></script>
+        <div class="modal fade" id="example-code-modal" tabindex="-1" aria-labelledby="example-code-modal-label"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="error-modal-label">Beispielbefehle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                    </div>
+                    <div class="modal-body" id="error-modal-body">
+                        <textarea id="example-code-editor"></textarea>
+                        <div class="mt-3 text-secondary">Möchtest du die Beispielbefehle direkt einfügen?</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-insert-example-code" type="button" class="btn btn-primary"
+                            data-bs-dismiss="modal">Einfügen</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <!-- Create a simple CodeMirror instance -->
-        <script src="plugins/codemirror-5.65.10/lib/codemirror.js"></script>
-        <!-- Addons to CodeMirror -->
-        <script src="plugins/codemirror-5.65.10/addon/mode/simple.js"></script>
-        <script src="plugins/codemirror-5.65.10/addon/hint/show-hint.js"></script>
-        <script src="script/objectslang-hint.js"></script>
-        <script src="plugins/codemirror-5.65.10/addon/display/panel.js"></script>
+    </div>
 
-        <script src="script/errors.js"></script>
-        <script src="script/shapes.js"></script>
-        <script src="script/coderunner.js"></script>
-        <script src="script/editor.js"></script>
-        <script src="script/canvas.js"></script>
-        <script src="script/sidebar.js"></script>
+    <!-- Globals -->
+    <script>
+        var runner = null
+        var globalInstancesList = []
+    </script>
+    <script src="script/classes.js"></script>
+    <script src="script/allowedValues.js"></script>
 
-        <script src="plugins/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+    <!-- Create a simple CodeMirror instance -->
+    <script src="plugins/codemirror-5.65.10/lib/codemirror.js"></script>
+    <!-- Addons to CodeMirror -->
+    <script src="plugins/codemirror-5.65.10/addon/mode/simple.js"></script>
+    <script src="plugins/codemirror-5.65.10/addon/hint/show-hint.js"></script>
+    <script src="script/objectslang-hint.js"></script>
+    <script src="plugins/codemirror-5.65.10/addon/display/panel.js"></script>
+
+    <script src="script/errors.js"></script>
+    <script src="script/shapes.js"></script>
+    <script src="script/coderunner.js"></script>
+    <script src="script/editor.js"></script>
+    <script src="script/canvas.js"></script>
+    <script src="script/sidebar.js"></script>
+
+    <script src="plugins/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

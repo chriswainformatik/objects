@@ -52,7 +52,7 @@ var editorExampleCode = undefined
 document.addEventListener('DOMContentLoaded', function () {
     runner = new CodeRunner(globalClassesList)
     document.getElementById('btn-run-code').addEventListener('click', () => runCode())
-    document.getElementById('btn-record-video').addEventListener('click', recordVideo)
+    document.getElementById('btn-save-video').addEventListener('click', recordVideo)
     // enable popovers
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
@@ -554,6 +554,9 @@ function saveFile(filename, data) {
     }
 }
 
+/**
+ * Re-runs the code and saves a video of the canvas content afterwards.
+ */
 function recordVideo() {
 
     var videoStream = canvas.captureStream(30)

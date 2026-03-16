@@ -80,17 +80,17 @@ class CodeRunner {
         }
 
         // 3. execute commands
-        i = 0
-        this.runLine(i, updateDOMObject, redrawCanvas)
-        i++
-        var steps = setInterval(() => {
-            this.runLine(i, updateDOMObject, redrawCanvas)
-            i++
-            if (i == this.lines.length) {
-                clearInterval(steps)
+        var step = 0
+        this.runLine(step, updateDOMObject, redrawCanvas)
+        step++
+        var running = setInterval(() => {
+            this.runLine(step, updateDOMObject, redrawCanvas)
+            step++
+            if (step >= this.lines.length) {
                 setTimeout(function () {
                     setActiveLine(-1)
                     if (onComplete) onComplete()
+                    clearInterval(running)
                 }, this.stepDelay * 1000)
             }
         }, this.stepDelay * 1000)
