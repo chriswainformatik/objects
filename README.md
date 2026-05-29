@@ -24,7 +24,8 @@ The settings can be saved to the web storage of your browser.
 
 ## Future plans:
  - add more methods (e.g. animated move)
- - add the option to have case sensitive methods
- - add stop button
+ - visible/invisible attribute and methods
+ - object groups
+ - stage object (change background etc.)
 
 Made with [Bootstrap](https://getbootstrap.com/) and [CodeMirror](https://codemirror.net/)
