@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // save and load handlers
     document.getElementById('btn-confirm-save-file').addEventListener('click', () => {
         saveFile(document.getElementById('save-filename').value, editor.getValue())
+        bootstrap.Modal.getInstance(document.getElementById('save-file-modal')).hide()
     })
     document.getElementById('btn-load-sourcecode').addEventListener('click', () => {
         document.getElementById('file-input').click()
