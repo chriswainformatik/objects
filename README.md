@@ -53,11 +53,11 @@ curl -sSL [https://raw.githubusercontent.com/chriswainformatik/objects/main/inst
 ---
 
 ## 🗺️ Weitere geplante Features
-[ ] Hinzufügen weiterer Methoden (z.B. animierte Bewegung)
-[ ] Sichtbar bzw. unsichtbar setzen von Objekten
-[ ] Gruppieren von Objekten
-[ ] Bühnen-Objekt (z.B. zur Manipulation des Hintergrunds)
-[ ] Kontrollstrukturen
+ - [ ] Hinzufügen weiterer Methoden (z.B. animierte Bewegung)
+ - [ ] Sichtbar bzw. unsichtbar setzen von Objekten
+ - [ ] Gruppieren von Objekten
+ - [ ] Bühnen-Objekt (z.B. zur Manipulation des Hintergrunds)
+ - [ ] Kontrollstrukturen
 
 ---
 
