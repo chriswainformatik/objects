@@ -8,7 +8,7 @@
 
 Objects! is an interactive, browser-based educational tool designed to provide a hands-on introduction to object-oriented programming (OOP) concepts and notations. With Objects!, users can create graphic objects via simple text commands and manipulate them using method calls. The immediate effects of commands are visualized in real time on a drawing canvas and tracked via interactive object cards.
 
-
+![Objects! Screenshot](objects-screenshot.png)
 
 ---
 
