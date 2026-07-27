@@ -3,6 +3,9 @@
 # Objects!
 ## **Objektorientierung mit Grafikobjekten**
 
+[![GitHub Release](https://img.shields.io/github/v/release/chriswainformatik/objects?color=blue&style=flat-square)](https://github.com/chriswainformatik/objects/releases)
+[![Live Demo](https://img.shields.io/badge/Demo-Launch_Objects!-brightgreen?style=flat-square&logo=github)](https://chriswainformatik.github.io/objects/)
+
 Objects! ist ein browserbasiertes, didaktisches Werkzeug, das einen handlungsorientierten Zugang zu objektorientierten Sichtweisen und Notationsformen ermöglicht. Mit Objects! lassen sich per Textbefehl Grafikobjekte erzeugen und durch Methodenaufrufe manipulieren. Die Auswirkungen der Befehle können in einem Grafikfenster und an Objektkarten beobachtet werden.
 
 ---
