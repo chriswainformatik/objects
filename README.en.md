@@ -1,7 +1,7 @@
 [🇩🇪 Zur deutschen Version wechseln](README.md)
 
 # Objects!
-> **Interactive Object-Oriented Programming for Computer Science Education**
+## Interactive Object-Oriented Programming for Computer Science Education
 
 [![GitHub Release](https://img.shields.io/github/v/release/chriswainformatik/objects?color=blue&style=flat-square)](https://github.com/chriswainformatik/objects/releases)
 [![Live Demo](https://img.shields.io/badge/Demo-Launch_Objects!-brightgreen?style=flat-square&logo=github)](https://chriswainformatik.github.io/objects/)
