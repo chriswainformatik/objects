@@ -54,8 +54,8 @@ curl -sSL [https://raw.githubusercontent.com/chriswainformatik/objects/main/inst
 ---
 
 ## 🗺️ Roadmap
-[ ] Additional methods (e.g., animated movement)
-[ ] Object visibility controls (show / hide)
-[ ] Object grouping & compound shapes
-[ ] Stage/Canvas management object (e.g., background manipulation)
-[ ] Control structures (loops, conditional branching)
+ - [ ] Additional methods (e.g., animated movement)
+ - [ ] Object visibility controls (show / hide)
+ - [ ] Object grouping & compound shapes
+ - [ ] Stage/Canvas management object (e.g., background manipulation)
+ - [ ] Control structures (loops, conditional branching)
