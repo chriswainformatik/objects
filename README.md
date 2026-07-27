@@ -1,9 +1,7 @@
 [🇬🇧 Switch to English version](README.en.md)
 
 # Objects!
-> **Objektorientierung mit Grafikobjekten**
-
-[Objects! starten](https://chriswainformatik.github.io/objects/)
+## **Objektorientierung mit Grafikobjekten**
 
 Objects! ist ein browserbasiertes, didaktisches Werkzeug, das einen handlungsorientierten Zugang zu objektorientierten Sichtweisen und Notationsformen ermöglicht. Mit Objects! lassen sich per Textbefehl Grafikobjekte erzeugen und durch Methodenaufrufe manipulieren. Die Auswirkungen der Befehle können in einem Grafikfenster und an Objektkarten beobachtet werden.
 
