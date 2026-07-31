@@ -48,7 +48,7 @@ You can use Objects! directly in your web browser without any installation:
 ### Option 2: Installation Script
 Run the automated installation script via bash:
 ```bash
-curl -sSL [https://raw.githubusercontent.com/chriswainformatik/objects/main/install.sh](https://raw.githubusercontent.com/chriswainformatik/objects/main/install.sh) | bash
+curl -sSL https://raw.githubusercontent.com/chriswainformatik/objects/main/install.sh | bash
 ```
 
 ---
