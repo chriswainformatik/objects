@@ -49,7 +49,7 @@ Objects! ohne Installation direkt im Browser ausprobieren:
 ### Option 2: Installationsskript
 Führe das automatisierte Installationsskript über die Bash aus:
 ```bash
-curl -sSL [https://raw.githubusercontent.com/chriswainformatik/objects/main/install.sh](https://raw.githubusercontent.com/chriswainformatik/objects/main/install.sh) | bash
+curl -sSL https://raw.githubusercontent.com/chriswainformatik/objects/main/install.sh | bash
 ```
 
 ---
