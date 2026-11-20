@@ -24,53 +24,59 @@
         </div>
 
         <div id="content" class="container mt-3">
-            <div class="row d-flex align-items-stretch">
-                <div class="col" id="code-wrapper">
-                    <div id="code-top-panel" class="my-2 d-flex align-items-center justify-content-start">
-
-                        <button id="btn-run-code" class="btn btn-success my-btn">
+            <div class="row editor-row">
+                <div class="col pane" id="code-wrapper">
+                    <div id="code-top-panel" class="pane-top d-flex align-items-center justify-content-start">
+                        <button id="btn-run-code" class="btn btn-success my-btn" aria-label="Ausführen"
+                            title="Ausführen">
                             <span class="bi bi-play-fill"></span>
                         </button>
-                        <!--<button id="btn-stop-code" class="btn btn-outline-secondary ms-2" disabled>
-                                <span class="bi bi-stop-fill"></span>
-                            </button>-->
 
-                        <label for="velocity" class="form-label ms-5 my-auto">Geschwindigkeit</label>
+                        <label for="velocity" class="form-label ms-5 mb-0">Geschwindigkeit</label>
                         <input type="range" class="form-range ms-4 my-range" min="0" max="2" step="0.1" value="1.5"
                             id="velocity">
                     </div>
-                    <textarea id="myTextarea"></textarea>
+                    <div class="pane-body">
+                        <textarea id="myTextarea"></textarea>
+                    </div>
                 </div>
-                <div class="col" id="canvas-wrapper">
-                    <div id="canvas-top-panel" class="my-2 d-flex justify-content-end">
-                        <button type="button" id="btn-load-sourcecode" class="btn btn-outline-secondary ms-2">
-                            <span class="bi bi-folder2-open"></span> Öffnen
+
+                <div class="col pane" id="canvas-wrapper">
+                    <div id="canvas-top-panel" class="pane-top d-flex align-items-center justify-content-end gap-2">
+                        <button type="button" id="btn-load-sourcecode" class="btn btn-outline-secondary" title="Öffnen">
+                            <span class="bi bi-folder2-open"></span><span class="d-none d-xl-inline ms-1">Öffnen</span>
                         </button>
-                        <input type="file" id="file-input" accept=".txt" style="display:none;">
+                        <input type="file" id="file-input" accept=".txt" hidden>
 
                         <div class="dropdown">
-                            <button class="btn btn-outline-secondary ms-2 dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <span class="bi bi-download"></span> Speichern
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false" title="Speichern">
+                                <span class="bi bi-download"></span><span
+                                    class="d-none d-xl-inline ms-1">Speichern</span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#" id="btn-save-sourcecode" data-bs-toggle="modal" data-bs-target="#save-file-modal">Programmcode als Textdatei</a></li>
-                                <li><a class="dropdown-item" href="#" id="btn-save-video">Zeichenfläche als Video</a></li>
+                                <li><button type="button" class="dropdown-item" id="btn-save-sourcecode"
+                                        data-bs-toggle="modal" data-bs-target="#save-file-modal">Programmcode als
+                                        Textdatei</button></li>
+                                <li><button type="button" class="dropdown-item" id="btn-save-video">Zeichenfläche als
+                                        Video</button></li>
                             </ul>
                         </div>
 
-                        <button type="button" id="btn-sidebar-settings-show" class="btn btn-outline-secondary ms-2">
-                            <span class="bi bi-gear-fill"></span> Einstellungen
+                        <button type="button" id="btn-sidebar-settings-show" class="btn btn-outline-secondary"
+                            title="Einstellungen">
+                            <span class="bi bi-gear-fill"></span><span
+                                class="d-none d-xl-inline ms-1">Einstellungen</span>
                         </button>
-                        
-                        <button type="button" id="btn-sidebar-help-show"
-                            class="btn btn-outline-primary ms-2 my-outline-btn">
-                            <span class="bi bi-question-lg"></span> Hilfe
+                        <button type="button" id="btn-sidebar-help-show" class="btn btn-outline-primary my-outline-btn"
+                            title="Hilfe">
+                            <span class="bi bi-question-lg"></span><span class="d-none d-xl-inline ms-1">Hilfe</span>
                         </button>
                     </div>
-                    <canvas id="the-canvas" class="border"></canvas>
+                    <div class="pane-body border">
+                        <canvas id="the-canvas"></canvas>
+                    </div>
                 </div>
-                <!--<div class="" id="sidebar-shrink-helper-col"></div>-->
             </div>
 
             <!-- Save File Modal -->
@@ -533,7 +539,7 @@
             <div class="container mt-4">
                 <div class="d-flex flex-column">
                     <div class="d-flex flex-row justify-content-between align-items-center">
-                        <div>Version: 1.2.2</div>
+                        <div>Version: 1.2.3</div>
                         <div><a id="github-logo" href="https://github.com/chriswainformatik/objects"><img
                                     src="assets/github-mark.png" width="50" height="50"></a></div>
                     </div>

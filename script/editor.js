@@ -267,10 +267,10 @@ function drawShape(context, points, type, lineStyle = 'solid') {
 function redrawCanvas(shapesList) {
     var theCanvas = document.getElementById('the-canvas')
     // Set canvas drawing surface to match displayed size for pixel-perfect drawing
-    var context = theCanvas.getContext('2d')
-    context.clearRect(0, 0, theCanvas.width, theCanvas.height)
-    context.fillStyle = '#ffffff'
-    context.fillRect(0, 0, theCanvas.width, theCanvas.height)
+    var ctx = theCanvas.getContext('2d')
+    var w = canvas.clientWidth, h = canvas.clientHeight
+    ctx.clearRect(0, 0, w, h)
+    ctx.save()
 
     // Draw grid if enabled
     if (gridOn) {
@@ -278,18 +278,18 @@ function redrawCanvas(shapesList) {
         var step = 50
         var ch = theCanvas.height
         var cw = theCanvas.width
-        context.strokeStyle = gridColor
-        context.lineWidth = 1
-        context.beginPath()
+        ctx.strokeStyle = gridColor
+        ctx.lineWidth = 1
+        ctx.beginPath()
         for (var i = 1; i < cw / step; i++) {
-            context.moveTo(i * step, 0)
-            context.lineTo(i * step, ch)
+            ctx.moveTo(i * step, 0)
+            ctx.lineTo(i * step, ch)
         }
         for (var i = 1; i < ch / step; i++) {
-            context.moveTo(0, i * step)
-            context.lineTo(cw, i * step)
+            ctx.moveTo(0, i * step)
+            ctx.lineTo(cw, i * step)
         }
-        context.stroke()
+        ctx.stroke()
     }
 
     // Draw labels if enabled
@@ -298,21 +298,21 @@ function redrawCanvas(shapesList) {
         var step = 50
         var ch = theCanvas.height
         var cw = theCanvas.width
-        context.fillStyle = labelColor
-        context.font = '8pt sans-serif'
+        ctx.fillStyle = labelColor
+        ctx.font = '8pt sans-serif'
         for (var i = 0; i < cw / step; i++) {
-            context.fillText((i * step), i * step + 2, 10)
+            ctx.fillText((i * step), i * step + 2, 10)
         }
         for (var i = 1; i < ch / step; i++) {
-            context.fillText((i * step), 2, i * step + 10)
+            ctx.fillText((i * step), 2, i * step + 10)
         }
     }
 
     shapesList.forEach((shape) => {
-        context.fillStyle = shape.fillColor
-        context.strokeStyle = shape.lineColor
-        context.lineWidth = shape.lineWidth
-        context.lineJoin = 'milter'
+        ctx.fillStyle = shape.fillColor
+        ctx.strokeStyle = shape.lineColor
+        ctx.lineWidth = shape.lineWidth
+        ctx.lineJoin = 'milter'
         if (shape.type == 'triangle') {
             // define points, offset by shape position
             var offsetX = shape.x
@@ -324,14 +324,14 @@ function redrawCanvas(shapesList) {
                 [offsetX + 0, offsetY + shape.h]
             ]
             // fill the area of the triangle
-            drawShape(context, points, 'fill')
+            drawShape(ctx, points, 'fill')
             // draw stroke
-            drawShape(context, points, 'stroke', shape.lineStyle)
+            drawShape(ctx, points, 'stroke', shape.lineStyle)
         } else if (shape.type == 'circle') {
-            context.beginPath()
-            context.arc(shape.x, shape.y, shape.w / 2, 0, 2 * Math.PI, false)
-            context.stroke()
-            context.fill()
+            ctx.beginPath()
+            ctx.arc(shape.x, shape.y, shape.w / 2, 0, 2 * Math.PI, false)
+            ctx.stroke()
+            ctx.fill()
             /*
             context.lineWidth = context.lineWidth / 2
             context.beginPath()
@@ -340,13 +340,15 @@ function redrawCanvas(shapesList) {
             context.stroke()
             */
         } else if (shape.type == 'rectangle') {
-            context.fillRect(shape.x, shape.y - shape.h, shape.w, shape.h)
-            context.setLineDash(getLineDash(shape.lineStyle))
-            context.strokeRect(shape.x, shape.y - shape.h, shape.w, shape.h)
+            ctx.fillRect(shape.x, shape.y - shape.h, shape.w, shape.h)
+            ctx.setLineDash(getLineDash(shape.lineStyle))
+            ctx.strokeRect(shape.x, shape.y - shape.h, shape.w, shape.h)
         }
 
         updateObjectCards(shape)
     })
+
+    ctx.restore()
 }
 
 /**

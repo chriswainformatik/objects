@@ -9,38 +9,47 @@
     font-family: 'BPRelay';
 }
 
+:root {
+    --editor-top-panel-height: 3.5rem;
+    --editor-pane-height: calc(325px + var(--editor-top-panel-height));
+}
+
+body {
+  min-width: 800px;
+}
+
 /* ########## */
 
 
 /* Customizing Bootstrap components */
 
 .my-btn {
-    background-color: #373F51!important;
-    border-color: #373F51!important;
+    background-color: #373F51 !important;
+    border-color: #373F51 !important;
 }
 
 .my-btn:hover {
-    background-color: #292f3d!important;
+    background-color: #292f3d !important;
 }
 
 .my-outline-btn {
-    color: #373F51!important;
-    border-color: #373F51!important;
+    color: #373F51 !important;
+    border-color: #373F51 !important;
 }
 
 .my-outline-btn:hover {
-    color: var(--bs-btn-hover-color)!important;
-    background-color: #373F51!important;
+    color: var(--bs-btn-hover-color) !important;
+    background-color: #373F51 !important;
 }
 
 .my-range::-webkit-slider-thumb {
     background: #292f3d;
 }
-  
+
 .my-range::-moz-range-thumb {
     background: #292f3d;
 }
-  
+
 .my-range::-ms-thumb {
     background: #292f3d;
 }
@@ -71,11 +80,42 @@
     opacity: 0.5;
 }
 
-#the-canvas {
-    width: 100%;
-    height: 325px;
-    overflow: hidden;
+/* editor and canvas row  */
+.editor-row {
+    height: var(--editor-pane-height);
+}
+
+.pane {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.pane-top {
+    flex: 0 0 var(--editor-top-panel-height);
+    height: var(--editor-top-panel-height);
+}
+
+.pane-body {
     position: relative;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.pane-body .CodeMirror {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    border: 1px solid var(--bs-border-color);
+}
+
+#the-canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
     image-rendering: pixelated;
 }
 
@@ -186,7 +226,8 @@
     border-width: 1px;
 }
 
-.class-card th, td {
+.class-card th,
+td {
     padding-left: 0.5em;
     padding-right: 0.5em;
 }
@@ -210,7 +251,7 @@
     margin-bottom: 1.5em;
 }
 
-.object-card > div {
+.object-card>div {
     padding-left: 0.5em;
     padding-right: 0.5em;
 }
@@ -227,7 +268,8 @@
     -ms-transition: opacity linear;
     -o-transition: opacity linear;
     transition: opacity linear;
-    -webkit-transition-duration: 0.25s; /* Safari */
+    -webkit-transition-duration: 0.25s;
+    /* Safari */
     transition-duration: 0.25s;
 }
 
